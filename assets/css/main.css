@@ -2261,7 +2261,7 @@ input, select, textarea {
 		padding-bottom: 0;
 	}
 
-		#contact .box {
+		#contact .browser {
 			-moz-transition: -moz-transform 1s ease;
 			-webkit-transition: -webkit-transform 1s ease;
 			-ms-transition: -ms-transform 1s ease;
@@ -2273,7 +2273,7 @@ input, select, textarea {
 			position: relative;
 		}
 
-		#contact.inactive .box {
+		#contact.inactive .browser {
 			-moz-transform: translateY(100%);
 			-webkit-transform: translateY(100%);
 			-ms-transform: translateY(100%);
@@ -2282,7 +2282,7 @@ input, select, textarea {
 
 		@media screen and (max-width: 736px) {
 
-			#contact .box {
+			#contact .browser {
 				padding: 1.5em 1.5em 2em 1.5em;
 			}
 
@@ -2290,7 +2290,7 @@ input, select, textarea {
 
 		@media screen and (max-width: 480px) {
 
-			#contact .box {
+			#contact .browser {
 				padding: 1em 1em 2em 1em;
 			}
 
