@@ -158,6 +158,16 @@
 							leave:		function() { $(this).addClass('inactive'); }
 						});
 
+						$('#project')
+						.scrollex({
+							top:		'50%',
+							delay:		50,
+							initialize:	function() { $(this).addClass('inactive'); },
+							terminate:	function() { $(this).removeClass('inactive'); },
+							enter:		function() { $(this).removeClass('inactive'); },
+							leave:		function() { $(this).addClass('inactive'); }
+						});
+
 			};
 
 			var off = function() {
@@ -175,6 +185,9 @@
 
 				// Contact.
 					$('#contact')
+						.unscrollex();
+
+					$('#project')
 						.unscrollex();
 
 			};
