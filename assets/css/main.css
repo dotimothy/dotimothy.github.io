@@ -107,6 +107,20 @@ input, select, textarea {
 			transition: none !important;
 		}
 
+		.icon {
+		text-decoration: none;
+		position: relative;
+	}
+
+		.icon:hover {
+			-moz-osx-font-smoothing: grayscale;
+			-webkit-font-smoothing: antialiased;
+			font-family: FontAwesome;
+			font-style: normal;
+			font-weight: normal;
+			text-transform: none !important;
+		}
+
 /* Spinner */
 
 	@-moz-keyframes spinner-rotate {
