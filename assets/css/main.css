@@ -121,6 +121,7 @@ input, select, textarea {
 			text-transform: none !important;
 		}
 
+
 /* Spinner */
 
 	@-moz-keyframes spinner-rotate {
@@ -517,6 +518,14 @@ input, select, textarea {
 
 	.logo:active {
   		transform: translateY(10px);
+	}
+
+	.textref:hover {
+		opacity: 0.5
+	}
+
+	.textref:active {
+		transform: translateY(5px);
 	}
 
 /* Type */
