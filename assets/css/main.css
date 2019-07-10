@@ -511,6 +511,14 @@ input, select, textarea {
 
 	}
 
+	.logo:hover {
+		opacity: 0.5
+	}
+
+	.logo:active {
+  		transform: translateY(10px);
+	}
+
 /* Type */
 
 	body, input, textarea, select {
