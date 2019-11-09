@@ -6,7 +6,7 @@
 <link rel="shortcut icon" type="image/png" href="code.png">
 </head>
 <body>
-	<p id ="prompt"></p>
+	<p id ="prompt" onclick=clearWriter()></p>
 	<script>
 			var i = 0;
 			var txt = ' A place where I experiment with code (meant for the CS community)'; /* The text */
@@ -18,8 +18,17 @@
 				i++;
 				setTimeout(typeWriter, speed);
 			  }
+			  i = 0;
 			}
 			typeWriter();
+			function clearWriter() {
+				if(txt.length > i) {
+				document.getElementById("prompt").innerHTML -= txt.charAt(i);
+				i++;
+				setTimeout(clearWriter, speed);
+				}
+				i = 0;
+			}
 	</script>
 	
 	<p> Choose a Language:</p>
