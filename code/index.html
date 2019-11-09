@@ -6,9 +6,24 @@
 <link rel="shortcut icon" type="image/png" href="code.png">
 </head>
 <body>
-	<p> A place where I experiment with code (meant for programmers) </p>
+	<p id ="prompt"></p>
+	<script>
+			var i = 0;
+			var txt = ' A place where I experiment with code (meant for the CS community)'; /* The text */
+			var speed = 45; /* The speed/duration of the effect in milliseconds */
+			
+			function typeWriter() {
+			  if (i < txt.length) {
+				document.getElementById("prompt").innerHTML += txt.charAt(i);
+				i++;
+				setTimeout(typeWriter, speed);
+			  }
+			}
+			typeWriter();
+	</script>
+	
 	<p> Choose a Language:</p>
-	<p> Python</p>
+	<p> <a href=python.py>Python</a></p>
 </body>
 
 <style>
