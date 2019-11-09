@@ -6,39 +6,45 @@
 <link rel="shortcut icon" type="image/png" href="code.png">
 </head>
 <body>
-	<p id ="prompt" onclick=clearWriter()></p>
-	<script>
-			var i = 0;
-			var txt = ' A place where I experiment with code (meant for the CS community)'; /* The text */
-			var speed = 45; /* The speed/duration of the effect in milliseconds */
-			
-			function typeWriter() {
-			  if (i < txt.length) {
-				document.getElementById("prompt").innerHTML += txt.charAt(i);
-				i++;
-				setTimeout(typeWriter, speed);
-			  }
-			  i = 0;
-			}
-			typeWriter();
-			function clearWriter() {
-				if(txt.length > i) {
-				document.getElementById("prompt").innerHTML -= txt.charAt(i);
-				i++;
-				setTimeout(clearWriter, speed);
-				}
-				i = 0;
-			}
-	</script>
-	
+	<div class ="typewriter">
+	<h1 >A place where I experiment with code (meant for the CS community).</h1>
+	</div>
+
 	<p> Choose a Language:</p>
 	<p> <a href=python.py>Python</a></p>
 </body>
 
 <style>
-	p {
-		font-family: courier;
+	h1 {
+		font-family: Courier;
+		font-size: 14pt;
 	}
+	p {
+		font-family: Courier;
+		font-size: 12pt;
+	}
+.typewriter h1 {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .10em solid black; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .10em; /* Adjust as needed */
+  animation: 
+    typing 3.5s steps(50, end),
+    blink-caret 1s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: gold }
+  50% { border-color: black; }
+}
 </style>
 
 </html>
