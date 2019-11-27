@@ -1,0 +1,103 @@
+Script started on Tue 26 Nov 2019 07:10:07 PM PST
+]0;timothd4@bondi:hw7[timothd4@bondi hw7]$ ./Photoal[K[KLab
+
+----------------------------------------------
+1: Load a PPM image
+2: Save the image in PPM and JPEG format
+3: Change the color image to black and white
+4: Make a negative of the image
+5: Flip the image horizontally
+6: Mirror the image horizontally
+7: Zoom into the image
+8: Sharpen the image
+9: Exchange the red and green color channels
+10: Add noise to an image
+11: Add overlay to an image
+12: Add border to an image
+13: Test all functions
+14: Exit
+----------------------------------------------
+Please make your choice: 13
+Iceland.ppm was read successfully!
+"Black & White" operation is done!
+bw.ppm was saved successfully. 
+bw.jpg was stored for viewing. 
+Black & White tested!
+
+Iceland.ppm was read successfully!
+"Negative" operation is done!
+negative.ppm was saved successfully. 
+negative.jpg was stored for viewing. 
+Negative tested!
+
+Iceland.ppm was read successfully!
+"HFlip" operation is done!
+hflip.ppm was saved successfully. 
+hflip.jpg was stored for viewing. 
+HFlip tested!
+
+Iceland.ppm was read successfully!
+"HMirror" operation is done!
+hmirror.ppm was saved successfully. 
+hmirror.jpg was stored for viewing. 
+HMirror tested!
+
+Iceland.ppm was read successfully!
+"Zoom" operation is done!
+zoomin.ppm was saved successfully. 
+zoomin.jpg was stored for viewing. 
+Zoomin tested!
+
+Iceland.ppm was read successfully!
+"Sharpen" operation is done!
+sharpen.ppm was saved successfully. 
+sharpen.jpg was stored for viewing. 
+Sharpen tested!
+
+Iceland.ppm was read successfully!
+"Exchange RG" operation is done!
+xRG.ppm was saved successfully. 
+xRG.jpg was stored for viewing. 
+ExRG tested!
+
+Iceland.ppm was read successfully!
+"Add noise" operation is done!
+noise.ppm was saved successfully. 
+noise.jpg was stored for viewing. 
+AddNoise tested!
+
+Iceland.ppm was read successfully!
+anteater.ppm was read successfully!
+"Overlay" operation is done!
+overlay.ppm was saved successfully. 
+overlay.jpg was stored for viewing. 
+Overlay tested!
+
+Iceland.ppm was read successfully!
+"Add Border" operation is done!
+border.ppm was saved successfully. 
+border.jpg was stored for viewing. 
+AddBorder tested!
+
+
+----------------------------------------------
+1: Load a PPM image
+2: Save the image in PPM and JPEG format
+3: Change the color image to black and white
+4: Make a negative of the image
+5: Flip the image horizontally
+6: Mirror the image horizontally
+7: Zoom into the image
+8: Sharpen the image
+9: Exchange the red and green color channels
+10: Add noise to an image
+11: Add overlay to an image
+12: Add border to an image
+13: Test all functions
+14: Exit
+----------------------------------------------
+Please make your choice: 14
+]0;timothd4@bondi:hw7[timothd4@bondi hw7]$ exit
+exit
+
+Script done on Tue 26 Nov 2019 07:10:16 PM PST
