@@ -1,10 +1,14 @@
 <body onload="calculate()">
-	<p>Quick Screen Resolution Checker by Timothy Do
+	<p>Quick Screen Resolution & FPS Checker by Timothy Do</p>
+	<div id="resolution"></div>
+	<div id="aspectRatio"></div>
+	<div id="fps"></div>
 </body>
 
 <script>
 	var width = screen.width;
 	var height = screen.height;
+	var t = [];
 
 	//For Calculating Everything
 	function calculate() {
@@ -14,8 +18,7 @@
 
 	//Displaying Width and Height
 	function displayResolution() {
-		document.write("Screen resolution is " + width + "x" + height);
-		document.write("<br></br>");
+		document.getElementById('resolution').innerHTML = " Screen Resolution: " + width + "x" + height + "<br></br>";
 	}
 	
 	//Displaying Aspect Ratio
@@ -23,13 +26,32 @@
 		var factor = gcd(width, height);
 		var widthAspect = width / factor;
 		var heightAspect = height / factor;
-		document.write("Aspect Ratio is " + widthAspect + ":" + heightAspect);
-		document.write("<br></br>");
+		document.getElementById('aspectRatio').innerHTML = "Aspect Ratio is " + widthAspect + ":" + heightAspect + "<br></br>" ;
 	}
 
 	 function gcd (a, b) {
-            return (b == 0) ? a : gcd (b, a%b);
+        return (b == 0) ? a : gcd (b, a%b);
      }
+
+     if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame =
+        window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame;
+	}
+
+
+
+	function animate(now) {
+	    t.unshift(now);
+	    if (t.length > 10) {
+	        var t0 = t.pop();
+	        var fps = Math.floor(1000 * 10 / (now - t0));
+	        document.getElementById('fps').innerHTML = "Current Refresh Rate: " + fps + " fps <br></br>";
+	    }
+	    window.requestAnimationFrame(animate);
+		};
+
+		window.requestAnimationFrame(animate);
 
 
 </script>
