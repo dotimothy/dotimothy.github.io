@@ -1,0 +1,35 @@
+<body onload="calculate()">
+	<p>Quick Screen Resolution Checker by Timothy Do
+</body>
+
+<script>
+	var width = screen.width;
+	var height = screen.height;
+
+	//For Calculating Everything
+	function calculate() {
+		displayResolution();
+		displayRatio();
+	}
+
+	//Displaying Width and Height
+	function displayResolution() {
+		document.write("Screen resolution is " + width + "x" + height);
+		document.write("<br></br>");
+	}
+	
+	//Displaying Aspect Ratio
+	function displayRatio() {
+		var factor = gcd(width, height);
+		var widthAspect = width / factor;
+		var heightAspect = height / factor;
+		document.write("Aspect Ratio is " + widthAspect + ":" + heightAspect);
+		document.write("<br></br>");
+	}
+
+	 function gcd (a, b) {
+            return (b == 0) ? a : gcd (b, a%b);
+     }
+
+
+</script>
