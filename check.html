@@ -1,5 +1,5 @@
 <body onload="calculate()">
-	<h1>Screen Resolution & FPS Checker by Timothy Do</h1>
+	<h1>Screen Resolution & FPS Checker by <a href="https://dotimothy.github.io/real.html">Timothy Do</a></h1>
 	<div id="resolution"></div>
 	<div id="aspectRatio"></div>
 	<div id="fps"></div>
@@ -40,9 +40,7 @@
      }
 
      if (!window.requestAnimationFrame) {
-    window.requestAnimationFrame =
-        window.mozRequestAnimationFrame ||
-        window.webkitRequestAnimationFrame;
+    	window.requestAnimationFrame = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
 	}
 
 
