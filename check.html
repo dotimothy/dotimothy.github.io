@@ -1,5 +1,6 @@
 <body onload="calculate()">
 	<h1>Screen Resolution & FPS Checker by <a href="https://dotimothy.github.io/real.html">Timothy Do</a></h1>
+	<h2 id="jscheck">Why Did You Disable Javascript :(</h2>
 	<div id="resolution"></div>
 	<div id="aspectRatio"></div>
 	<div id="fps"></div>
@@ -20,6 +21,11 @@
 	function calculate() {
 		displayResolution();
 		displayRatio();
+		hidejscheck();
+	}
+	
+	function hidejscheck() {
+		document.getElementById('jscheck').style.visiblity = hidden;
 	}
 
 	//Displaying Width and Height
@@ -36,11 +42,11 @@
 	}
 
 	 function gcd (a, b) {
-        return (b == 0) ? a : gcd (b, a%b);
-     }
+        	return (b == 0) ? a : gcd (b, a%b);
+    	 }	
 
-     if (!window.requestAnimationFrame) {
-    	window.requestAnimationFrame = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+     	if (!window.requestAnimationFrame) {
+    		window.requestAnimationFrame = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
 	}
 
 
