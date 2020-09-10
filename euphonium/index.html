@@ -9,6 +9,10 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<script>
 			//This is for all of the audio href from the texts
+			function playChromatic() {
+				var audio = document.getElementById("Chromatic");
+				audio.play();
+			}
 
 			function playIna(){
        			var audio = document.getElementById("Ina");
@@ -64,7 +68,7 @@
    		</script>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
-	<body class="is-preload">
+	<body class="is-preload" onload()="playChromatic()">
 
 		<!-- Wrapper -->
 			<div id="wrapper" class="divided">
@@ -354,7 +358,9 @@
 			</div>
 
 		<!-- Audio Files -->
-		<embed name="Chromatic" loop="true" hidden="true" src="Chromatic.m4a"></embed>
+		<audio id="Chromatic">
+			<source src="Chromatic.m4a type="audio/mpeg">
+		</audio>
 		<audio id="Ina">
 			<source src="Ina.m4a" type="audio/mpeg">
 		</audio>
