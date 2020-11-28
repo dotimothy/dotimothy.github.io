@@ -40,6 +40,11 @@
 		var factor = gcd(width, height);
 		var widthAspect = width / factor;
 		var heightAspect = height / factor;
+		//Special Case: 1366 x 768 is 16:9
+		if(width == 1366 & height == 768) {
+			widthAspect = 16;
+			heightAspect = 9;
+		}
 		document.getElementById('aspectRatio').innerHTML = "<h2> Aspect Ratio: " + widthAspect + ":" + heightAspect + "</h2>" ;
 	}
 
