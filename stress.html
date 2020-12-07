@@ -1,0 +1,11 @@
+<p>Make sure to allow pop-ups for this site. It will test how many tabs you can have open before reaching 100%.</p>
+
+<button onclick="stress()">Stress Test</button>
+<script>
+	function stress() {
+		for(var i = 0; i < 10; i++) {
+			window.open("ram.html","_blank");
+		}
+	}
+</script>
+	
