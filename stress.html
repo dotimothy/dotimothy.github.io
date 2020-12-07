@@ -3,8 +3,15 @@
 <button onclick="stress()">Stress Test</button>
 <script>
 	function stress() {
-		for(var i = 0; i < 10; i++) {
-			window.open("ram.html","_blank");
+		var stress = confirm("Press Ok to Start the Test")
+		if(stress == true) {
+			for(var i = 0; i < 10; i++) {
+				window.open("ram.html","_blank");
+			}
+			window.close();	
+		}
+		else {
+			window.close();
 		}
 	}
 </script>
