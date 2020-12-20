@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style> 
+	* {
+		font-family: Courier;
+	}
+	h1 {
+		font-size: 1.75em;
+	}
+	h2 {
+		font-size: 1.5em;
+	}
+	a {
+		color:rgba(0,0,255,1);
+		text-decoration: underline;
+		transition: color 0.25s;
+	}
+	a:hover {
+		color: rgba(0,0,255,0.5);	
+	}
+	div {
+		visibility: hidden;
+	}
+	#prompt {
+		visibility: visible;
+	}
+	iframe {
+		border: solid #000000;
+	}
+</style>
+
+<script>
+	function reveal(name) {
+		var lectures = ["Overview","Lecture1","Lecture1A","Lecture1B","Lecture1C","Lecture2","Lecture2A","Lecture2B","Lecture2C","Lecture2D"];
+		var div = document.getElementById(name);
+		var prompt = document.getElementById("prompt");
+		var footer = document.getElementById("footer");
+		for(var i = 0; i < lectures.length; i++) {
+			var test = document.getElementById(lectures[i]);
+			if(test != div)
+			{
+				test.remove();
+			}
+			else
+			{
+				test.style.visibility = "visible";
+			}
+		}
+		prompt.remove();
+		footer.remove();
+	}
+</script>
+
+<head>
+<title> EECS 22 Lecture Videos</title>
+<h1 id="title">EECS 22 Lecture Videos: (Courtesy of Professor QV Dang)</h1>
+</head>
+<body>
+<div id="prompt">
+
+<a onclick="reveal('Overview')"><h2>Course Overview</h2></a>
+
+<a onclick="reveal('Lecture1')"><h2>Lecture 1</h2></a>
+
+<a onclick="reveal('Lecture1A')"><h2>Lecture 1A</h2></a>
+
+<a onclick="reveal('Lecture1B')"><h2>Lecture 1B</h2></a>
+
+<a onclick="reveal('Lecture1C')"><h2>Lecture 1C</h2></a>
+
+<a onclick="reveal('Lecture2')"><h2>Lecture 2</h2></a>
+
+<a onclick="reveal('Lecture2A')"><h2>Lecture 2A</h2></a>
+
+<a onclick="reveal('Lecture2B')"><h2>Lecture 2B</h2></a>
+
+<a onclick="reveal('Lecture2C')"><h2>Lecture 2C</h2></a>
+
+<a onclick="reveal('Lecture2D')"><h2>Lecture 2D</h2></a>
+
+<a href="lecture.html"><h1>All Lecture Links</h1></a>
+
+<a href=".."><h1>Choose A Different Course</h1></a>
+
+</div>
+
+<div id="Overview">
+
+<h1>Course Overview</h1>
+
+<iframe src="https://player.vimeo.com/video/288263971" width="960" height="540" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+<a href="https://vimeo.com/288263971" target="_blank"><h2>Direct Link</h2></a>
+
+<a onclick="location.reload()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+<div id="Lecture1">
+
+<h1>Lecture 1: Introduction & Hello World</h1>
+
+<iframe src="https://player.vimeo.com/video/268047241" width="960" height="540" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+<a href="https://vimeo.com/268047241" target="_blank"><h2>Direct Link</h2></a>
+
+<a onclick="location.reload()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+
+<div id="Lecture1A">
+
+<h1>Lecture 1A: Course Administration & Setup</h1>
+
+<iframe src="https://player.vimeo.com/video/268047282" width="960" height="540" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+<a href="https://vimeo.com/268047282" target="_blank"><h2>Direct Link</h2></a>
+
+<a onclick="location.reload()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+<div id="Lecture1B">
+
+<h1>Lecture 1B: Linux Server and Commands</h1>
+
+<iframe src="https://player.vimeo.com/video/268047321" width="960" height="540" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+<a href="https://vimeo.com/268047321" target="_blank"><h2>Direct Link</h2></a>
+
+<a onclick="location.reload()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+<div id="Lecture1C">
+
+<a onclick="location.reload()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+<div id="Lecture2">
+
+<a onclick="location.reload()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+<div id="Lecture2A">
+
+<a onclick="location.reload()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+<div id="Lecture2B">
+
+<a onclick="location.reload()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+<div id="Lecture2C">
+
+<a onclick="location.reload()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+<div id="Lecture2D">
+
+<a onclick="location.reload()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+</body>
+
+</html>
