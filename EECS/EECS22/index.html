@@ -33,9 +33,8 @@
 <script>
 	function reveal(name) {
 		var lectures = ["Overview","Lecture1","Lecture1A","Lecture1B","Lecture1C","Lecture2","Lecture2A","Lecture2B","Lecture2C","Lecture2D"];
-		var div = document.getElementById(name);
 		var prompt = document.getElementById("prompt");
-		var footer = document.getElementById("footer");
+		var div = document.getElementById(name);
 		for(var i = 0; i < lectures.length; i++) {
 			var test = document.getElementById(lectures[i]);
 			if(test != div)
@@ -48,7 +47,6 @@
 			}
 		}
 		prompt.remove();
-		footer.remove();
 	}
 </script>
 
