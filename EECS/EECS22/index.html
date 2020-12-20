@@ -6,7 +6,7 @@
 		font-family: Courier;
 	}
 	h1 {
-		font-size: 1.5em;
+		font-size: 1.75em;
 	}
 	h2 {
 		font-size: 1.25em;
@@ -22,7 +22,7 @@
 	div {
 		display: none;
 	}
-	#prompt {
+	#prompt, #page1 {
 		display: block;
 	}
 	iframe {
@@ -35,11 +35,13 @@
 </style>
 
 <script>
+	var lectures = ["Overview","Lecture1","Lecture1A","Lecture1B","Lecture1C","Lecture2","Lecture2A","Lecture2B","Lecture2C","Lecture2D","Lecture3","Lecture3A","Lecture3B","Lecture3C","Lecture4","Lecture4A","Lecture4B","Lecture4C","Lecture4D"];
+	var pages = ["page1","page2"];
 	var current;
+
 	function reveal(name) {
 		current = name; 
 		var div = document.getElementById(name);
-		var lectures = ["Overview","Lecture1","Lecture1A","Lecture1B","Lecture1C","Lecture2","Lecture2A","Lecture2B","Lecture2C","Lecture2D","Lecture3","Lecture3A","Lecture3B","Lecture3C"];
 		var prompt = document.getElementById("prompt");
 		for(var i = 0; i < lectures.length; i++) {
 			var test = document.getElementById(lectures[i]);
@@ -53,6 +55,7 @@
 		}
 		prompt.style.display = "none";
 	}
+
 	function revert() {
 		/*
 		var prompt = document.getElementById("prompt");
@@ -62,6 +65,19 @@
 		*/
 		location.reload(); 
 	}
+
+	function goToPage(number) {
+		for(var i = 0; i < pages.length; i++) {
+			var page = document.getElementById(pages[i]);
+			if((number-1) == i) {
+				page.style.display = "block";
+			}
+			else {
+				page.style.display = "none";
+			}
+		}
+	}
+
 </script>
 
 <head>
@@ -70,6 +86,8 @@
 </head>
 <body>
 <div id="prompt">
+
+<div id="page1">
 
 <a onclick="reveal('Overview')"><h2>Course Overview</h2></a>
 
@@ -98,6 +116,27 @@
 <a onclick="reveal('Lecture3B')"><h2>Lecture 3B: Relational, Logical, Bitwise Operators</h2></a>
 
 <a onclick="reveal('Lecture3C')"><h2>Lecture 3C: Shift, Conditional, Other Operators</h2></a>
+
+<a onclick="reveal('Lecture4')"><h2>Lecture 4: Review of C Control-Flow</h2></a>
+
+<a onclick="reveal('Lecture4A')"><h2>Lecture 4A: Sequential/Compound Statements</h2></a>
+
+<a onclick="reveal('Lecture4B')"><h2>Lecture 4B: Conditional Statements</h2></a>
+
+<a onclick="reveal('Lecture4C')"><h2>Lecture 4C: Loops and Jump Statements</h2></a>
+
+<a onclick="reveal('Lecture4D')"><h2>Lecture 4D: Structured Program Composition</h2></a>
+
+<a onclick="goToPage(2)"><h1>Next Page</h1></a>
+
+</div>
+
+<div id="page2">
+	<h1>Page 2</h1>
+
+<a onclick="goToPage(1)"><h1>Previous Page</h1></a>
+
+</div>
 
 <a href="22.html"><h1>All Lecture Links</h1></a>
 
@@ -269,6 +308,66 @@
 <iframe src="https://player.vimeo.com/video/269785615" width="960" height="540" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
 <a href="https://vimeo.com/269785615" target="_blank"><h2>Direct Link</h2></a>
+
+<a onclick="revert()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+<div id="Lecture4">
+
+<h1>Lecture 4: Review of C Control-Flow</h1>
+
+<iframe src="https://player.vimeo.com/video/269785662" width="960" height="540" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+<a href="https://vimeo.com/269785662" target="_blank"><h2>Direct Link</h2></a>
+
+<a onclick="revert()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+<div id="Lecture4A">
+
+<h1>Lecture 4A: Sequential/Compound Statements</h1>
+
+<iframe src="https://player.vimeo.com/video/269785666" width="960" height="540" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+<a href="https://vimeo.com/269785666" target="_blank"><h2>Direct Link</h2></a>
+
+<a onclick="revert()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+<div id="Lecture4B">
+
+<h1>Lecture 4B: Conditional Statements</h1>
+
+<iframe src="https://player.vimeo.com/video/269785672" width="960" height="540" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+<a href="https://vimeo.com/269785672" target="_blank"><h2>Direct Link</h2></a>
+
+<a onclick="revert()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+<div id="Lecture4C">
+
+<h1>Lecture 4C: Loops and Jump Statements</h1>
+
+<iframe src="https://player.vimeo.com/video/269785676" width="960" height="540" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+<a href="https://vimeo.com/269785676" target="_blank"><h2>Direct Link</h2></a>
+
+<a onclick="revert()"><h2>Back to Main Page</h2></a>
+
+</div>
+
+<div id="Lecture4D">
+
+<h1>Lecture 4D: Structured Program Composition</h1>
+
+<iframe src="https://player.vimeo.com/video/269785679" width="960" height="540" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+<a href="https://vimeo.com/269785679" target="_blank"><h2>Direct Link</h2></a>
 
 <a onclick="revert()"><h2>Back to Main Page</h2></a>
 
