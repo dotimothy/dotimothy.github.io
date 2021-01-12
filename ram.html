@@ -6,8 +6,10 @@
 <script>
 	alert("You will see your CPU and RAM go up.")
 	txt = "a";
-	while(1) {
-		txt = txt += "a";
+	addtxt();
+
+	function addtxt() {
+		txt += "a";
+		addtxt();
 	}
-	window.close(); //close when finished
 </script>
