@@ -7,8 +7,9 @@
 <script>
 	function changeDoge()
 	{
-		console.log("changeDoge")
-		document.getElementById('doge').style.width = window.width * 0.4;
+		console.log("changeDoge");
+		document.getElementById('doge1').style.width = window.width * 0.4;
+		document.getElementById('doge2').style.width = window.width * 0.4;
 	}
 
 	function refresh()
@@ -42,10 +43,11 @@
 
 <body onload="refresh()">
 	<h1 hidden>Timothy Do's Doge Server</h1> 
-	<img id="doge" src="https://dotimothy.github.io/images/doge.png"style="position:absolute;top:15%;width:100%;pointer-events:none">
+	<img id="doge1" src="https://dotimothy.github.io/images/doge.png"style="position:absolute;top:15%;width:45%;pointer-events:none">
 	<div hidden>
 		<embed src="https://unmineable.com/coins/DOGE/address/DJGP6kgqh8BEsfEkHxxtrthqPHWu2PempY?fbclid=IwAR1xAMxLUwZ5PCJeK3-Iicb67C_nehgO5-YWBHPTHiNlefunkuOaBzK_4VE"/ width="100%" height="100%" scroll="no" style="position:absolute; pointer-events:none; top:-15%;">
-	</div> 
+	</div>
+	<img id="doge2" src="https://dotimothy.github.io/images/doge.png"style="position:absolute;top:15%;width:45%;left:55%;pointer-events:none">
 </body>
 
 
