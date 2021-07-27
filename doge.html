@@ -1,80 +1,116 @@
 <!DOCTYPE html>
-<head>
-	<title>Timothy's Doge</title>
-	 <link rel="shortcut icon" type="image/png" href="https://dotimothy.github.io/images/doge.png" />
-</head>
+	<head>
+		<title>DigDogeSJ Doge Pool</title>
+		<link rel="shortcut icon" type="image/png" href="https://dotimothy.github.io/images/doge.png" />
+	</head>
 
-<script>
-	function changeDoge()
-	{
-		console.log("changeDoge");
-		document.getElementById('doge1').style.width = window.width * 0.4;
-		document.getElementById('doge2').style.width = window.width * 0.4;
-	}
+	<script>
+		// Gets Doge Balance of Specified Unmineable Doge Address	
+		function getDogeBalance(address) {
+			//document.write(`https://api.unminable.com/v4/address/${address}?coin=DOGE`);
+			fetch(`https://api.unminable.com/v4/address/${address}?coin=DOGE`) 
+				.then( 
+					function(response) {
+						//examine the text in the response
+						response.json().then(function(data) {
+							console.log(data);			
+							let bal = document.getElementById("bal");
+							bal.innerHTML = "<h1>" + data.data.balance + " DOGE </h1>";
+						});
+					}).catch(function(err) {
+						console.log("Fetch Error :-S", err);
+					}
+				)
+		}
 
-	function refresh()
-	{
-		setTimeout(function() { 
-			document.querySelector('h1').hidden = false;
-			document.querySelector('h2').hidden = false;
-		},500);
-		setTimeout(function() { 
-			document.querySelector('div').hidden = false;
-			changeDoge();
-		},500);
-		setTimeout(function() { window.location.reload();
-		},14000);
-	}
-</script>
+		function getDogeWorkers(address) {
 
-<style> 
-	h1, h2 {
-		text-align: center;
-		font-family: courier;
-		z-index: 0;
-	}
-	div,embed
-	{
-		z-index: -1;
-	}
-	.doge {
-	  animation: rotation 5.0s infinite linear;
-	}
-	@keyframes rotation {
-	  0% {
-	    transform: rotate(0deg);
-	  }
-	  25% {
-	    transform: rotate(60deg);
-	  }
-	  50% {
-	  	transform: rotate(360deg);
-	  }
-	  75% {
-	  	transform:  rotate(-270deg);
-	  }
-	  100% {
-	  	transfrom: rotate(-360deg);
-	  }
-	}
+		}
+		
+		//refreshes the page every so often to get the most up to date information
+		function refresh() {
+			const length = 1000; 
+			do {
+				setTimeout(function() {
+					//legnth += 1000;
+					//getDogeBalance("DJGP6kgqh8BEsfEkHxxtrthqPHWu2PempY");
+				}, length);
+			} while(1); 
+		}
+	</script>
 
-</style>
+	<style>
+		body { 
+			background-color: whitesmoke;
+		}
+		h1, h2 {
+			text-align: center;
+			font-family: Courier ;
+			z-index: 0;
+		} 
+		h1 {
+			font-size: 3em;
+		}
+		h1:hover
+		{
+			color: gold;
+			transition: 0.25s;
+		}
+		h2 {
+			font-size: 2.5em;
+		}
+		a {
+			opacity: 100%;
+			color:blue;
+		}
+		a:hover {
+			opacity: 50%;
+		}
+		a:active {
+			color: goldenrod;
+			opacity: 100%;
+		}
+		div,embed {
+			z-index: -1;
+		}
+		.doge {
+		animation: rotation 5.0s infinite linear;
+		}
+		@keyframes rotation {
+			0% {
+				transform: rotate(0deg);
+			}
+			25% {
+				transform: rotate(60deg);
+			}
+			50% {
+				transform: rotate(360deg);
+			}
+			75% {
+				transform:  rotate(-270deg);
+			}
+			100% {
+				transfrom: rotate(-360deg);
+			}
+		}
 
-<body onload="refresh()">
-	<h1 hidden>Timothy Do's Doge Server</h1> 
-	<h2 hidden>
-		<a target="_blank" href="https://docs.google.com/spreadsheets/d/1o8M9dxhR1MCnDozz9fM5C06xAyAWE0OODNarMsj5qjY/edit#gid=0">GPU List</a>
-		&nbsp;&nbsp;&nbsp;
-		<a target="_blank" href="https://discord.gg/hVCuzeqJSf">Discord</a>
-	</h2>
-	<img id="doge1" class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:absolute;top:15%;width:40%;pointer-events:none">
-	<div hidden>
-		<embed src="https://unmineable.com/coins/DOGE/address/DJGP6kgqh8BEsfEkHxxtrthqPHWu2PempY?fbclid=IwAR1xAMxLUwZ5PCJeK3-Iicb67C_nehgO5-YWBHPTHiNlefunkuOaBzK_4VE/" width="100%" height="100%" scroll="no" style="position:absolute; pointer-events:none; top:-10%;">
-	</div>
-	<img id="doge2" class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:absolute;top:15%;width:40%;left:60%;pointer-events:none">
-</body>
+	</style>
 
+	<body onload="refresh()">
+		<h1>Timothy Do's Doge Server (DigDogeSJ)</h1> 
+		<h2>
+			<a target="_blank" href="https://docs.google.com/spreadsheets/d/1o8M9dxhR1MCnDozz9fM5C06xAyAWE0OODNarMsj5qjY/edit#gid=0">GPU List</a>
+			&nbsp;&nbsp;&nbsp;
+			<a target="_blank" href="https://discord.gg/hVCuzeqJSf">Discord</a>
+		</h2>
+		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;width:20%;pointer-events:none">
+		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;width:20%;bottom:5%;pointer-events:none">
+		<div id="bal">
+			<h1>Calculating Doge!</h1>
+		</div>
+		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;width:20%;left:80%;top:12.5%;pointer-events:none">
+		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;width:20%;left:80%;bottom:5%;pointer-events:none">
+		<iframe width="50%" height="50%" style="border-radius: 15px; position:absolute;left:25%;" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTdIVgQOEVStH6rFVaggMPg_IUkyfRHCeT6WhLrWBJ0ACbg20i5mboPBJ47I5ZSbu5B3H33tTseCAKK/pubhtml?widget=true&amp;headers=false"></iframe>
+	</body>
 
-
-
-</html>
+</html> 
