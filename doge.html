@@ -32,7 +32,7 @@
 			getDogeBalance("DJGP6kgqh8BEsfEkHxxtrthqPHWu2PempY");
 			setInterval(function () {
 				getDogeBalance("DJGP6kgqh8BEsfEkHxxtrthqPHWu2PempY");
-			},10000);
+			},3000);
 			/*
 			const length = 1000; 
 			do {
@@ -81,7 +81,12 @@
 			z-index: -1;
 		}
 		.doge {
-		animation: rotation 5.0s infinite linear;
+			animation: rotation 5.0s infinite linear;
+			pointer-events:auto;
+		}
+		.doge:hover {
+			transition: 0.25s;
+			filter: contrast(1.75);
 		}
 		@keyframes rotation {
 			0% {
@@ -110,13 +115,13 @@
 			&nbsp;&nbsp;&nbsp;
 			<a target="_blank" href="https://discord.gg/hVCuzeqJSf">Discord</a>
 		</h2>
-		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;top:12.5%;width:20%;pointer-events:none">
-		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;width:20%;bottom:5%;pointer-events:none">
+		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;top:12.5%;width:20%;">
+		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;width:20%;bottom:5%;">
 		<div id="bal">
 			<h1>Calculating Doge!</h1>
 		</div>
-		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;width:20%;left:80%;top:12.5%;pointer-events:none">
-		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;width:20%;left:80%;bottom:5%;pointer-events:none">
+		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;width:20%;left:80%;top:12.5%;">
+		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;width:20%;left:80%;bottom:5%;">
 		<iframe width="50%" height="50%" style="border-radius: 15px; position:absolute;left:25%;" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTdIVgQOEVStH6rFVaggMPg_IUkyfRHCeT6WhLrWBJ0ACbg20i5mboPBJ47I5ZSbu5B3H33tTseCAKK/pubhtml?widget=true&amp;headers=false"></iframe>
 	</body>
 
