@@ -30,6 +30,9 @@
 		//refreshes the page every so often to get the most up to date information
 		function refresh() {
 			getDogeBalance("DJGP6kgqh8BEsfEkHxxtrthqPHWu2PempY");
+			setInterval(function () {
+				getDogeBalance("DJGP6kgqh8BEsfEkHxxtrthqPHWu2PempY");
+			},10000);
 			/*
 			const length = 1000; 
 			do {
@@ -67,6 +70,7 @@
 			color:blue;
 		}
 		a:hover {
+			transition: 0.25s;
 			opacity: 50%;
 		}
 		a:active {
@@ -106,7 +110,7 @@
 			&nbsp;&nbsp;&nbsp;
 			<a target="_blank" href="https://discord.gg/hVCuzeqJSf">Discord</a>
 		</h2>
-		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;width:20%;pointer-events:none">
+		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;top:12.5%;width:20%;pointer-events:none">
 		<img class="doge" src="https://dotimothy.github.io/images/doge.png"style="position:fixed;width:20%;bottom:5%;pointer-events:none">
 		<div id="bal">
 			<h1>Calculating Doge!</h1>
