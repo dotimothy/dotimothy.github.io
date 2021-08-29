@@ -30,7 +30,7 @@
 
 	function displayIsMobile() {
     	let isMobile = (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-    	doocument.getElementById('isMobile').innerHTML = "<h2> Mobile Browser: " + (isMobile ? "True" : "False");
+    	document.getElementById('isMobile').innerHTML = "<h2> Mobile Browser: " + (isMobile ? "True" : "False");
 	}
 	
 	function hidejscheck() {
