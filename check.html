@@ -1,8 +1,9 @@
 <body onload="calculate()">
-	<h1>Screen Resolution & FPS Checker by <a href="https://dotimothy.github.io/real.html">Timothy Do</a></h1>
+	<h1>Screen Resolution, Mobile Browser & FPS Checker by <a href="https://dotimothy.github.io/real.html">Timothy Do</a></h1>
 	<div id="jscheck">
 		<h2>Why Did You Disable Javascript :(</h2>
 	</div>
+	<div id="isMobile"></div>
 	<div id="resolution"></div>
 	<div id="aspectRatio"></div>
 	<div id="fps"></div>
@@ -24,6 +25,11 @@
 		displayResolution();
 		displayRatio();
 		hidejscheck();
+	}
+
+	function displayIsMobile() {
+    	let isMobile = (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+    	doocument.getElementById('isMobile').innerHTML = "<h2> Mobile Browser: " + (isMobile ? "True" : "False");
 	}
 	
 	function hidejscheck() {
