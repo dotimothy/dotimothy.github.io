@@ -1,4 +1,6 @@
 <script>
-let isMobile = navigator.userAgentData.mobile; 
-document.write("<h1> " + isMobile + " </h1>");
+function isMobileDevice() {
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+};
+document.write("<h1 style='font-size:7.5em'>" + isMobileDevice() + " </h1>");
 </script>
