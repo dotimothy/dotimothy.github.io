@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>HTML5 local video file player example</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<h1>HTML5 local video file player example</h1>
+<input type="file" accept="video/*"><br>
+<video controls></video>
+<script type="text/javascript">
+ (function localFileVideoPlayer() {
+   'use strict'
+   var playSelectedFile = function(event) {
+   var file = this.files[0]
+   var URL = window.URL || window.webkitURL 
+   var fileURL = URL.createObjectURL(file)
+   var videoNode = document.querySelector('video')
+   videoNode.src = fileURL
+   }
+  var inputNode = document.querySelector('input')
+  inputNode.addEventListener('change', playSelectedFile, false)
+  videoNode.playbackRate = 0.0125
+ })()
+</script>
+</body>
+</html>
