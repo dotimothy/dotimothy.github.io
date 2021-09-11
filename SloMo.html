@@ -18,30 +18,81 @@
     background-color:  black;
   }
   button {
+  	font-size: 2em;
     background-color: yellow;
     color: black;
+  }
+  video {
+  	z-index: 2;
+  }
+  #controls {
+  	z-index: 3;
+  	position: absolute;
+  	bottom: 5%;
+  	right: 5%;
   }
 </style>
 
 
 <script>
-   function changeSpeed(percentage) {
-  document.querySelector('video').playbackRate = (percentage/100); 
- }
+	var currentSpeed = 100;
+	function updateCurrent() {
+		let current = document.getElementById('current');
+		current.innerHTML = "<h2>Current Speed: " + currentSpeed + "%</h2>";
+	}
+
+   	function changeSpeed(percentage) {
+		document.querySelector('video').playbackRate = (percentage/100); 
+	}
+
+	function slower() {
+		if(currentSpeed > 6.25) {
+			currentSpeed /= 2;
+			changeSpeed(currentSpeed);
+			updateCurrent();
+		}
+		else {
+			alert("Slowest Speed Reached.");
+		}
+	}
+
+	function faster() {
+		if(currentSpeed < 1600) {
+			currentSpeed *= 2;
+			changeSpeed(currentSpeed);
+			updateCurrent();
+		}
+		else  {
+			alert("Fastest Speed Reached.");
+		}
+	}
+
+	let isFullScreen = false;
+	function fullscreenToggle() {
+		let vid = document.querySelector('video');
+		if(!isFullScreen) {
+			vid.width = screen.width;
+			vid.height = screen.height;
+		}
+		else {
+			vid.width *= 0.33;
+			vid.height *= 0.33;
+		}
+		isFullScreen = !isFullScreen;
+	}
 </script>
 
-<body>
+<body onload="updateCurrent()">
   <h1>SloMo Video Player in Browser</h1>
   <input type="file" accept="video/*">
   <br> <br>
-  <video controls width="50%"></video>
+  <video onclick="fullscreenToggle()" width="75%" autoplay loop></video>
   <br><br>
-  <button onclick="changeSpeed(6.25)">6.25%</button>
-  <button onclick="changeSpeed(12.5)">12.5%</button>
-  <button onclick="changeSpeed(25)">25%</button>
-  <button onclick="changeSpeed(50)">50%</button>
-  <button onclick="changeSpeed(100)">100%</button>
-  <button onclick="changeSpeed(200)">200%</button>
+  <div id="controls" hidden>
+  	<div id="current"></div>
+  	<button onclick="faster()">x2</button>
+  	<button onclick="slower()">/2</button>
+  </div>
 </body>
 
 
@@ -49,6 +100,7 @@
  (function localFileVideoPlayer() {
     'use strict'
     var playSelectedFile = function(event) {
+    document.querySelector('div').hidden = false;
     var file = this.files[0]
     var URL = window.URL || window.webkitURL 
     var fileURL = URL.createObjectURL(file)
