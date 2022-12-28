@@ -91,7 +91,7 @@ input, select, textarea {
 	}
 
 	body {
-		background: #ffffff;
+		background: #000000;
 		height: 100%;
 		min-width: 320px;
 	}
@@ -475,7 +475,7 @@ input, select, textarea {
 			-webkit-animation: overlay-hide 1.5s ease-in forwards !important;
 			-ms-animation: overlay-hide 1.5s ease-in forwards !important;
 			animation: overlay-hide 1.5s ease-in forwards !important;
-			background: #ffffff;
+			background: #000000;
 			content: '';
 			display: block;
 			height: 100%;
@@ -535,7 +535,7 @@ input, select, textarea {
 		font-weight: 300;
 		font-size: 18pt;
 		line-height: 1.75em;
-		color: #39454b;
+		color: #ffffff;
 		letter-spacing: 0.025em;
 	}
 
@@ -652,8 +652,8 @@ input, select, textarea {
 /* Box */
 
 	.box {
-		background: #ffffff;
-		color: #39454b;
+		background: #000000;
+		color: #ffffff;
 		padding: 2em;
 	}
 
@@ -696,7 +696,7 @@ input, select, textarea {
 		background-color: #e1ad01;
 		border: 0;
 		border-radius: 3.5em;
-		color: #ffffff;
+		color: #000000;
 		cursor: pointer;
 		display: inline-block;
 		height: 3.5em;
@@ -889,7 +889,7 @@ input, select, textarea {
 		-webkit-transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		-ms-transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
-		color: #39454b;
+		color: #ffffff;
 		display: block;
 		width: 100%;
 		padding: 0.65em 0.75em;
@@ -996,7 +996,7 @@ input, select, textarea {
 		}
 
 		.image.fit {
-			display: block;
+			display: inline-block;
 			width: 100%;
 		}
 
@@ -1235,8 +1235,8 @@ input, select, textarea {
 			}
 
 			table.default thead {
-				background: #39454b;
-				color: #ffffff;
+				background: #ffffff;
+				color: #000000;
 			}
 
 			table.default tfoot {
@@ -1294,7 +1294,7 @@ input, select, textarea {
 			position: absolute;
 			bottom: 0;
 			left: 0;
-			background: #ffffff;
+			background: #000000;
 			width: 100%;
 			height: 3em;
 			line-height: 2.8em;
@@ -1393,7 +1393,7 @@ input, select, textarea {
 				border-radius: 100%;
 				box-shadow: inset 0 0 0 2px #fff;
 				background: url("images/poptrox-closer.svg") center center;
-				color: #ffffff !important;
+				color: #000000 !important;
 			}
 
 		.poptrox-popup:hover .closer {
@@ -1848,7 +1848,7 @@ input, select, textarea {
 		left: 0;
 		top: 0;
 		width: 100%;
-		background: rgba(255, 255, 255, 0.95);
+		background: rgba(0, 0, 0, 0.95);
 		height: 3em;
 		line-height: 3em;
 		box-shadow: 0 0 0.15em 0 rgba(0, 0, 0, 0.1);
@@ -2059,15 +2059,15 @@ input, select, textarea {
 			}
 
 			.main.style3.primary {
-				background: #ffffff;
+				background: #000000;
 			}
 
 			.main.style3.secondary {
-				background: #f5f6f7;
+				background: #000000;
 			}
 
 		.main.dark {
-			color: #ffffff;
+			color: #000000;
 		}
 
 			.main.dark a {
@@ -2075,7 +2075,7 @@ input, select, textarea {
 			}
 
 			.main.dark .button.style2 {
-				border-color: #ffffff;
+				border-color: #000000;
 			}
 
 				.main.dark .button.style2:hover {
@@ -2192,8 +2192,8 @@ input, select, textarea {
 		margin: 0;
 		line-height: 1em;
 		padding: 1.5em;
-		background: #39454b;
-		color: rgba(185, 186, 187, 0.5);
+		background: #000000;
+		color: rgba(255, 255, 255, 0.95);
 		overflow: hidden;
 	}
 
@@ -2260,17 +2260,26 @@ input, select, textarea {
 /* Intro */
 
 	#intro {
-		background: url("images/overlay.png"), url("../../images/NVIDIA.jpg");
+		background: url("images/overlay.png"), url("../../images/cory.jpg");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
-		background-position: top left, bottom center;
+		background-position: top left, top center;
 		background-repeat: repeat, no-repeat;
+	}
+
+	#introbox {
+		opacity: 0.05;
+		transition: 0.25s;
+	}
+	#introbox:hover {
+		opacity: 0.9;
+		transition: 0.25s;
 	}
 
 /* One */
 
 	#one {
-		background: url("images/overlay.png"), url("../../images/one.jpg");
+		background: url("images/overlay.png"), url("../../images/westerndigital.jpg");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
@@ -2279,10 +2288,10 @@ input, select, textarea {
 /* Two */
 
 	#two {
-		background: url("images/overlay.png"), url("../../images/two.jpg");
+		background: url("images/overlay.png"), url("../../images/timzot.jpg");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
-		background-position: top left, center center;
+		background-position: top left, bottom center;
 	}
 
 /* Contact */
