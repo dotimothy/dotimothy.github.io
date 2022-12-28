@@ -2261,7 +2261,7 @@ input, select, textarea {
 
 	#intro {
 		background: url("images/overlay.png"), url("../../images/cory.jpg");
-		background-size: 256px 256px, cover;
+		background-size: 100% 100%, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, top center;
 		background-repeat: repeat, no-repeat;
@@ -2280,7 +2280,7 @@ input, select, textarea {
 
 	#one {
 		background: url("images/overlay.png"), url("../../images/westerndigital.jpg");
-		background-size: 256px 256px, cover;
+		background-size: 100% 100% cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
 	}
@@ -2289,7 +2289,7 @@ input, select, textarea {
 
 	#two {
 		background: url("images/overlay.png"), url("../../images/timzot.jpg");
-		background-size: 256px 256px, cover;
+		background-size: 100% 100% cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, bottom center;
 	}
