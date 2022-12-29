@@ -25,7 +25,7 @@
 		$window.on('load', function() {
 			setTimeout(function() {
 				$body.removeClass('is-preload');
-			}, 100);
+			}, 50);
 		});
 
 	// Touch mode.
@@ -130,7 +130,7 @@
 					$('.main.style1')
 						.scrollex({
 							mode:		'middle',
-							delay:		100,
+							delay:		50,
 							initialize:	function() { $(this).addClass('inactive'); },
 							terminate:	function() { $(this).removeClass('inactive'); },
 							enter:		function() { $(this).removeClass('inactive'); },
@@ -140,7 +140,7 @@
 					$('.main.style2')
 						.scrollex({
 							mode:		'middle',
-							delay:		100,
+							delay:		50,
 							initialize:	function() { $(this).addClass('inactive'); },
 							terminate:	function() { $(this).removeClass('inactive'); },
 							enter:		function() { $(this).removeClass('inactive'); },
@@ -222,7 +222,7 @@
 							$window.trigger('scroll');
 						}, 0);
 
-				}, 100);
+				}, 50);
 
 			})
 			.on('load', function() {

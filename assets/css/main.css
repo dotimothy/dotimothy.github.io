@@ -673,7 +673,7 @@ input, select, textarea {
 
 				.box.style2 {
 					padding: 1.5em 1.25em 1.5em 1.25em;
-					background-color: rgba(255, 255, 255, 0.9);
+					background-color: rgba(0, 0, 0, 0.9);
 				}
 
 		}
@@ -1449,10 +1449,10 @@ input, select, textarea {
 	}
 
 		.gallery article {
-			-moz-transition: -moz-transform 1s ease, opacity 1s ease;
-			-webkit-transition: -webkit-transform 1s ease, opacity 1s ease;
-			-ms-transition: -ms-transform 1s ease, opacity 1s ease;
-			transition: transform 1s ease, opacity 1s ease;
+			-moz-transition: -moz-transform 0.5s ease, opacity 0.5s ease;
+			-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+			-ms-transition: -ms-transform 0.5s ease, opacity 0.5s ease;
+			transition: transform 0.5s ease, opacity 0.5s ease;
 			-moz-transform: translateX(0);
 			-webkit-transform: translateX(0);
 			-ms-transform: translateX(0);
@@ -1978,10 +1978,10 @@ input, select, textarea {
 			}
 
 			.main.style1 > .content {
-				-moz-transition: opacity 1s ease;
-				-webkit-transition: opacity 1s ease;
-				-ms-transition: opacity 1s ease;
-				transition: opacity 1s ease;
+				-moz-transition: opacity 0.5s ease;
+				-webkit-transition: opacity 0.5s ease;
+				-ms-transition: opacity 0.5s ease;
+				transition: opacity 0.5s ease;
 				-moz-transform: translateZ(0);
 				-webkit-transform: translateZ(0);
 				-ms-transform: translateZ(0);
@@ -2008,10 +2008,10 @@ input, select, textarea {
 		}
 
 			.main.style2 > .content {
-				-moz-transition: -moz-transform 1s ease;
-				-webkit-transition: -webkit-transform 1s ease;
-				-ms-transition: -ms-transform 1s ease;
-				transition: transform 1s ease;
+				-moz-transition: -moz-transform 0.5s ease;
+				-webkit-transition: -webkit-transform 0.5s ease;
+				-ms-transition: -ms-transform 0.5s ease;
+				transition: transform 0.5s ease;
 				-moz-transform: translateZ(0);
 				-webkit-transform: translateZ(0);
 				-ms-transform: translateZ(0);
@@ -2261,7 +2261,7 @@ input, select, textarea {
 
 	#intro {
 		background: url("images/overlay.png"), url("../../images/cory.jpg");
-		background-size: 100% 100%, cover;
+		background-size: cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, top center;
 		background-repeat: repeat, no-repeat;
@@ -2280,7 +2280,7 @@ input, select, textarea {
 
 	#one {
 		background: url("images/overlay.png"), url("../../images/westerndigital.jpg");
-		background-size: 100% 100% cover;
+		background-size: cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
 	}
@@ -2289,7 +2289,7 @@ input, select, textarea {
 
 	#two {
 		background: url("images/overlay.png"), url("../../images/timzot.jpg");
-		background-size: 100% 100% cover;
+		background-size: cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, bottom center;
 	}
@@ -2302,10 +2302,10 @@ input, select, textarea {
 	}
 
 		#contact .browser {
-			-moz-transition: -moz-transform 1s ease;
-			-webkit-transition: -webkit-transform 1s ease;
-			-ms-transition: -ms-transform 1s ease;
-			transition: transform 1s ease;
+			-moz-transition: -moz-transform 0.5s ease;
+			-webkit-transition: -webkit-transform 0.5s ease;
+			-ms-transition: -ms-transform 0.5s ease;
+			transition: transform 0.5s ease;
 			-moz-transform: translateY(0);
 			-webkit-transform: translateY(0);
 			-ms-transform: translateY(0);
