@@ -693,7 +693,7 @@ input, select, textarea {
 		-webkit-transition: background-color 0.2s ease-in-out;
 		-ms-transition: background-color 0.2s ease-in-out;
 		transition: background-color 0.2s ease-in-out;
-		background-color: #e1ad01;
+		background-color: #ffffff;
 		border: 0;
 		border-radius: 3.5em;
 		color: #000000;
@@ -758,7 +758,7 @@ input, select, textarea {
 		input[type="reset"]:active,
 		.button:active,
 		button:active {
-			background-color: #e1ad01;
+			background-color: #ffffff;
 		}
 
 		input[type="button"].style2,
@@ -767,7 +767,7 @@ input, select, textarea {
 		.button.style2,
 		button.style2 {
 			background-color: transparent;
-			border: solid 2px #e1ad01;
+			border: solid 2px #ffffff;
 			color: inherit;
 		}
 
@@ -2260,10 +2260,10 @@ input, select, textarea {
 /* Intro */
 
 	#intro {
-		background: url("images/overlay.png"), url("../../images/cory.jpg");
+		background: url("images/overlay.png"), url("../../images/davidpack.jpg");
 		background-size: cover;
 		background-attachment: fixed, fixed;
-		background-position: top left, top center;
+		background-position: top left, center center;
 		background-repeat: repeat, no-repeat;
 	}
 
@@ -2279,7 +2279,7 @@ input, select, textarea {
 /* One */
 
 	#one {
-		background: url("images/overlay.png"), url("../../images/westerndigital.jpg");
+		background: url("images/overlay.png"), url("../../images/cory.jpg");
 		background-size: cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
@@ -2292,6 +2292,15 @@ input, select, textarea {
 		background-size: cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, bottom center;
+	}
+
+/* Three */
+
+	#three {
+		background: url("images/overlay.png"), url("../../images/NVIDIA.jpg");
+		background-size: cover;
+		background-attachment: fixed, fixed;
+		background-position: top left, top center;
 	}
 
 /* Contact */
