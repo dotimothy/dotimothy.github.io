@@ -2,6 +2,7 @@
 /* Author: Timothy Do */
 
 let files = {
+	AcceleratedStatus: "TimothyDo_AcceleratedStatus.pdf",
 	APScholar: "TimothyDo_APScholar.pdf",
 	Billingual: "TimothyDo_Billingual.pdf",
 	CarolynClarkDiploma: "TimothyDo_CarolynClarkDiploma.pdf",
@@ -16,6 +17,7 @@ let files = {
 };
 
 let titles = {
+	Accelerated Status: "Accelerated Status Petition",
 	APScholar: "AP Scholar with Distinction",
 	Billingual: "Billingual Certification: Vietnamese",
 	CarolynClarkDiploma: "Carolyn Clark Elementary School Diploma",
