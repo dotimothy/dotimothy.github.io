@@ -17,7 +17,7 @@ let files = {
 };
 
 let titles = {
-	Accelerated Status: "Accelerated Status Petition",
+	AcceleratedStatus: "Accelerated Status Petition",
 	APScholar: "AP Scholar with Distinction",
 	Billingual: "Billingual Certification: Vietnamese",
 	CarolynClarkDiploma: "Carolyn Clark Elementary School Diploma",
