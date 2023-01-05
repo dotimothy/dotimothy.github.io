@@ -1,7 +1,9 @@
 /* awards.css:  Stylesheets to make the Awards look Glamorous */
 
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,900");
+
 * {
-	font-family:  Georgia;
+	font-family:  Source Sans Pro;
 	color:  white;
 }
 
