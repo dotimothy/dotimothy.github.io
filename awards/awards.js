@@ -19,7 +19,7 @@ let titles = {
 	APScholar: "AP Scholar with Distinction",
 	Billingual: "Billingual Certification: Vietnamese",
 	CarolynClarkDiploma: "Carolyn Clark Elementary School Diploma",
-	DeansHonorList: "Dean's Honor List for 2019-2020, 2020-2021, 2021-2022, and Fall 2022 Academic Quarters",
+	DeansHonorList: "Dean's Honor List for All Academic Quarters @ UCI",
 	EagleScout: "Eagle Scout with Bronze Palm",
 	EVHSBandScholar: "EVHS Band Scholar",
 	EVHSDiploma: "Evergreen Valley High School Diploma",
