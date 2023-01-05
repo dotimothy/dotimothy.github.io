@@ -1,0 +1,38 @@
+/* awards.css:  Stylesheets to make the Awards look Glamorous */
+
+* {
+	font-family:  Georgia;
+	color:  white;
+}
+
+body {
+	background-color:  black;
+}
+
+a:hover, li:hover, #back:hover {
+	opacity: 50%;
+	transition: 0.25s;
+}
+
+#back {
+	position: absolute; 
+	bottom: 5%;
+}
+
+footer {
+	position: absolute;
+	font-family: Verdana;
+	bottom: 1%;
+}
+
+h1 {
+	font-size: 1.75em;
+}
+
+h2 {
+	font-size:  1.25em;
+}
+
+h3 {
+	font-size: 1em;
+}

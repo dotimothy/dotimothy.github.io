@@ -1,0 +1,47 @@
+<!-- Awards Landing Page -->
+<!-- Author: Timothy Do -->
+
+<!DOCTYPE html>
+
+<html>
+
+<base target="_blank">
+
+<head>
+	<title>Timothy Do's Awards</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />	
+	<link rel="shortcut icon" type="image/png" href="../images/facecase.png" />
+	<link rel="stylesheet" href="awards.css" />
+	<script src="awards.js"></script>
+</head>
+
+<body>
+	<h1>Timothy Do's Awards</h1>
+	<div id="showAward" hidden>
+		<h1 id="title"></h1>
+		<div id="embed"></div>
+		<h2 id="back" onclick="revert()">Select Another Reward</h2>
+	</div>
+	<div id="selection">
+		<h2>UC Irvine (Sept. 2019 - June 2023)</h2>
+		<h2>Evergreen Valley High School (Aug. 2015- May 2019)</h2>
+			<ul>
+				<li onclick="showAward('EVHSDiploma')"><h3>Diploma</h3></li>
+			</ul>
+		<h2>Quimby Oak Middle School (Aug. 2013- June 2015)</h2>
+			<ul>
+				<li onclick="showAward('QuimbyOakDiploma')"><h3>Diploma</h3></li>
+			</ul>
+		<h2>Carolyn Clark Elementary School (Aug. 2011- June 2013)</h2>
+			<ul>
+				<li onclick="showAward('CarolynClarkDiploma')"><h3>Diploma</h3></li>
+			</ul>
+	</div>
+</body>
+
+<footer>
+	<h3>Showcased by <a href="https://timothydo.me">@Timothy Do</a> | Made With ⚡| All Rights Reserved 2023</h3>
+</footer>
+
+</html>
