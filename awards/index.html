@@ -21,21 +21,31 @@
 	<div id="showAward" hidden>
 		<h1 id="title"></h1>
 		<div id="embed"></div>
-		<h2 id="back" onclick="revert()">Select Another Reward</h2>
+		<h2 id="back" onclick="revert()">Select Another Award</h2>
 	</div>
 	<div id="selection">
+		<h1>Choose an Award:</h1>
 		<h2>UC Irvine (Sept. 2019 - June 2023)</h2>
+			<ul>
+				<li onclick="showAward('DeansHonorList')"><h3>Dean's Honor List </h3></li>
+				<li onclick="showAward('SixSigmaYellowBelt')"><h3>Six Sigma Yellow Belt @ WD</h3></li>
+			</ul>
 		<h2>Evergreen Valley High School (Aug. 2015- May 2019)</h2>
 			<ul>
-				<li onclick="showAward('EVHSDiploma')"><h3>Diploma</h3></li>
+				<li onclick="showAward('APScholar')"><h3>AP Scholar with Distinction</h3></li>
+				<li onclick="showAward('Billingual')"><h3>Billingual Certification</h3></li>
+				<li onclick="showAward('Eagle Scout')"><h3>Eagle Scout</h3></li>
+				<li onclick="showAward('EVHSBandScholar')"><h3>EVHS Band Scholar</h3></li>
+				<li onclick="showAward('GoldenStateDiploma')"><h3>Golden State Diploma</h3></li>
+				<li onclick="showAward('EVHSDiploma')"><h3>High School Diploma</h3></li>
 			</ul>
 		<h2>Quimby Oak Middle School (Aug. 2013- June 2015)</h2>
 			<ul>
-				<li onclick="showAward('QuimbyOakDiploma')"><h3>Diploma</h3></li>
+				<li onclick="showAward('QuimbyOakDiploma')"><h3>Middle School Diploma</h3></li>
 			</ul>
 		<h2>Carolyn Clark Elementary School (Aug. 2011- June 2013)</h2>
 			<ul>
-				<li onclick="showAward('CarolynClarkDiploma')"><h3>Diploma</h3></li>
+				<li onclick="showAward('CarolynClarkDiploma')"><h3>Elementary School Diploma</h3></li>
 			</ul>
 	</div>
 </body>

@@ -29,12 +29,20 @@ let titles = {
 	SixSigmaYellowBelt: "Six Sigma Yellow Belt Certified by Western Digital"
 };
 
+function isMobileDevice() {
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+};
+
 function showAward(award) {
 	document.getElementById('showAward').hidden = false;
 	document.getElementById('selection').hidden = true;
 	document.getElementById('title').innerHTML = `Selected Award: ${titles[award]}`;
-	document.getElementById('embed').innerHTML = `<iframe width="50%" height="50%" frameborder="0" src="https://docs.google.com/gview?url=https://timothydo.me/awards/${files[award]}&embedded=true"></iframe>`;
-	//document.getElementById('embed').innerHTML = `<embed width="50%" height="50%" frameborder="0" src="${files[award]}"/>`; //doesn't work for Android
+	if(isMobileDevice()) {
+		document.getElementById('embed').innerHTML = `<iframe width="100%" height="50%" frameborder="0" src="https://docs.google.com/gview?url=https://timothydo.me/awards/${files[award]}&embedded=true"></iframe>`;
+	}
+	else {
+		document.getElementById('embed').innerHTML = `<embed width="75%" height="75%" frameborder="0" src="${files[award]}#toolbar=0"/>`; //doesn't work for Android
+	}
 }
 
 function revert() {
