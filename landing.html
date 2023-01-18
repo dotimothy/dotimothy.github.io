@@ -2,7 +2,13 @@
 
 <!--- Redirect to Mobile Site if Browser on a Mobile Device --->
 <script>
-	if((typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)) {
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	let dev = false;
+	if(urlParams.has('mode') && urlParams.get('mode') == 'dev') {
+		dev == true;
+	}
+	if((typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1) && dev == false) {
 		window.location.href = './mobilelanding.html';
 	}
 </script>
@@ -129,7 +135,7 @@
 			<footer id="footer">
 				<!-- Menu -->
 					<ul class="menu">
-						<li>&copy; <a href="https://timothydo.me">Timothy Do</a></li><li> All Rights Reserved 2022</li><li>Design: <a href="https://html5up.net">HTML5 Up</a></li>
+						<li>&copy; <a href="https://timothydo.me">Timothy Do</a></li><li> All Rights Reserved 2023</li><li>Design: <a href="https://html5up.net">HTML5 Up</a></li>
 					</ul>
 			</footer>
 

@@ -2,7 +2,13 @@
 
 <!--- Redirect to Desktop Site if Browser on Desktop Device --->
 <script>
-	if(!(typeof window.orientation !== "undefined") && !(navigator.userAgent.indexOf('IEMobile') !== -1)) {
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	let dev = false;
+	if(urlParams.has('mode') && urlParams.get('mode') == 'dev') {
+		dev = true;
+	}
+	if(!(typeof window.orientation !== "undefined") && !(navigator.userAgent.indexOf('IEMobile') !== -1) && dev == false) {
 		window.location.href = './landing.html';
 	}
 </script>
@@ -117,6 +123,18 @@
 					<header>
 						<h2>Contact Me</h2>
 						<p>Let's Make the World a Better Place 🌎</p>
+						<nav>
+							<ul class="icons">					
+								<li><a href="mailto:timothydobsa@gmail.com" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+								<li><a href="sms:408-644-5538" class="icon solid alt fa-comments"><span class="label">Text</span></a></li>
+								<li><a href="https://github.com/dotimothy" class="icon fa-github"><span class="label">Github</span></a></li>
+								<li><a href="https://www.linkedin.com/in/do-timothy/" class="icon fa-linkedin"><span class="label">Linkedin</span></a></li>
+								<li><a href="https://www.facebook.com/tdo2001" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+								<li><a href="https://www.instagram.com/dotimothy" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+								<li><a href="https://www.twitter.com/tdo410" class="icon fa-twitter"><span class="label">Instagram</span></a></li>
+								<li><a href="https://www.youtube.com/channel/UCCKkvo3icf2oxmLlfHbDfxw?sub_confirmation=1" class="icon fa-youtube"><span class="label">youtube</span></a></li>
+							</ul>
+						</nav>
 						<a href="resume.html" class="button style2">Resume</a>
 						<a href="CV.html" class="button style2 ">Curriculum Vitae</a>
 					</header>
@@ -128,7 +146,7 @@
 			<footer id="footer">
 				<!-- Menu -->
 					<ul class="menu">
-						<li>&copy; <a href="https://timothydo.me">Timothy Do</a></li><li> All Rights Reserved 2022</li><li>Design: <a href="https://html5up.net">HTML5 Up</a></li>
+						<li>&copy; <a href="https://timothydo.me">Timothy Do</a></li><li> All Rights Reserved 2023</li><li>Design: <a href="https://html5up.net">HTML5 Up</a></li>
 					</ul>
 			</footer>
 

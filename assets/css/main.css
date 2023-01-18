@@ -619,7 +619,7 @@ input, select, textarea {
 		-webkit-transition: color 0.2s ease-in-out;
 		-ms-transition: color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out;
-		color: #98c593;
+		color: #FFFFFF;
 	}
 
 	a:hover {
@@ -959,7 +959,7 @@ input, select, textarea {
 		.icon:before {
 			display: inline-block;
 			font-family: FontAwesome;
-			font-size: 1.25em;
+			font-size: 2em;
 			text-decoration: none;
 			font-style: normal;
 			font-weight: normal;
