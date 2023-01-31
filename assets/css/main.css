@@ -2265,11 +2265,11 @@ input, select, textarea {
 /* Intro */
 
 	#intro {
-		background: url("images/overlay.png"), url("../../images/ucisamueli.jpg");
+		background: url("../../images/ucisamueli.jpg");
 		background-size: cover;
-		background-attachment: fixed, fixed;
-		background-position: top left, top center;
-		background-repeat: repeat, no-repeat;
+		background-attachment: fixed;
+		background-position: top center;
+		background-repeat: no-repeat;
 	}
 
 	#introbox {
@@ -2284,28 +2284,28 @@ input, select, textarea {
 /* One */
 
 	#one {
-		background: url("images/overlay.png"), url("../../images/cory.jpg");
+		background:  url("../../images/westerndigital.jpg");
 		background-size: cover;
-		background-attachment: fixed, fixed;
-		background-position: top left, center center;
+		background-attachment:  fixed;
+		background-position: center center;
 	}
 
 /* Two */
 
 	#two {
-		background: url("images/overlay.png"), url("../../images/davidpack.jpg");
+		background: url("../../images/davidpack.jpg");
 		background-size: cover;
-		background-attachment: fixed, fixed;
-		background-position: top left, bottom center;
+		background-attachment:  fixed;
+		background-position: center center;
 	}
 
 /* Three */
 
 	#three {
-		background: url("images/overlay.png"), url("../../images/NVIDIA.jpg");
+		background: url("../../images/cory.jpg");
 		background-size: cover;
-		background-attachment: fixed, fixed;
-		background-position: top left, top center;
+		background-attachment: fixed;
+		background-position: center center;
 	}
 
 /* Contact */
