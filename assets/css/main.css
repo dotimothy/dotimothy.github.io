@@ -2293,16 +2293,16 @@ input, select, textarea {
 /* Two */
 
 	#two {
-		background: url("../../images/davidpack.jpg");
+		background: url("../../images/TheDoProSolo.jpg");
 		background-size: cover;
 		background-attachment:  fixed;
-		background-position: center center;
+		background-position: center top;
 	}
 
 /* Three */
 
 	#three {
-		background: url("../../images/cory.jpg");
+		background: url("../../images/timzot.jpg");
 		background-size: cover;
 		background-attachment: fixed;
 		background-position: center center;
