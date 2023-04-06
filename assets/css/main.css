@@ -2265,10 +2265,10 @@ input, select, textarea {
 /* Intro */
 
 	#intro {
-		background: url("../../images/ucisamueli.jpg");
+		background: url("../../images/uclaroyce.jpg");
 		background-size: cover;
 		background-attachment: fixed;
-		background-position: top center;
+		background-position: center center;
 		background-repeat: no-repeat;
 	}
 
@@ -2293,7 +2293,7 @@ input, select, textarea {
 /* Two */
 
 	#two {
-		background: url("../../images/TheDoProSolo.jpg");
+		background: url("../../images/ucisamueli.jpg");
 		background-size: cover;
 		background-attachment:  fixed;
 		background-position: center top;
