@@ -2262,6 +2262,16 @@ input, select, textarea {
 
 		}
 
+/* Reveal Classes */ 
+	.reveal {
+		opacity: 0.05;
+		transition: 0.25s;
+	}
+	.reveal:hover {
+		opacity: 0.9;
+		transition: 0.25s;
+	}
+
 /* Intro */
 
 	#intro {
@@ -2270,15 +2280,6 @@ input, select, textarea {
 		background-attachment: fixed;
 		background-position: center center;
 		background-repeat: no-repeat;
-	}
-
-	#introbox {
-		opacity: 0.05;
-		transition: 0.25s;
-	}
-	#introbox:hover {
-		opacity: 0.9;
-		transition: 0.25s;
 	}
 
 /* One */
