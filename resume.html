@@ -48,7 +48,7 @@ function loadResume() {
 }
 
 function printResume() {
-	var printFrame = document.getElementById("printFrame").contentWindow.print();
+	var printFrame = document.getElementById("printFrame").contentWindow.document.print();
 	window.location.reload();
 }
 </script>
@@ -56,9 +56,7 @@ function printResume() {
 <body onload="loadResume()">
 
 <div id="resume-container"></div>
-<div id="printFrame">
-	<iframe src="./Resume_Latex.pdf"></iframe>
-</div>
+<iframe hidden id="printFrame" src="./Resume_Latex.pdf"></iframe>
 
 </body>
 
