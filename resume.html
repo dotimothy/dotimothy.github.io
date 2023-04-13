@@ -15,10 +15,8 @@
 		color: white;
 		background-color: black;
 		font-size: 3em;
-		position: fixed;
-		bottom: 1%;
-		right: 3%;
 		opacity: 0.75;
+		position:  fixed;
 	}
 	p:hover {
 		opacity: 0.25;
@@ -27,6 +25,14 @@
 	p:active {
 		opacity: 1;
 		transition: 0.25s;
+	}
+	#downloadResume {
+		bottom: 11%;
+		right: 3%;
+	}
+	#printResume {
+		bottom: 1%;
+		right:  3%;
 	}
 </style>
 
@@ -42,10 +48,10 @@ function loadResume() {
 }
 
 function printResume() {
-	var print = document.getElementById("print");
-	var printWindow = print.contentWindow;
+	var printFrame = document.getElementById("print");
+	var printWindow = printFrame.contentWindow;
 	printWindow.print();
-	document.reload();
+	window.location.reload();
 }
 </script>
 
@@ -53,14 +59,14 @@ function printResume() {
 
 <div id="resume-container"></div>
 <div id="print">
-	<iframe hidden src="./Resume_Latex.pdf">
+	<iframe src="./Resume_Latex.pdf"></iframe>
 </div>
 
 </body>
 
 
 
-<a href="./Resume_Latex.pdf" download="TimothyDo_Resume.pdf"><p>Download 📝</p></a>
-<p onclick='printResume()'>Print 🖨️</p>
+<a href="./Resume_Latex.pdf" download="TimothyDo_Resume.pdf"><p id="downloadResume">Download 📝</p></a>
+<p id="printResume" onclick='printResume()'>Print 🖨️</p>
 
 </html>
