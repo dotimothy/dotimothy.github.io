@@ -30,13 +30,6 @@
 	}
 </style>
 
-<body onload="loadResume()">
-
-<div id="resume-container"></div>
-<div id="print">
-	<iframe hidden src="./Resume_Latex.pdf">
-</div>
-
 <script>
 function loadResume() {
   var container = document.getElementById("resume-container");
@@ -56,6 +49,12 @@ function printResume() {
 }
 </script>
 
+<body onload="loadResume()">
+
+<div id="resume-container"></div>
+<div id="print">
+	<iframe hidden src="./Resume_Latex.pdf">
+</div>
 
 </body>
 
