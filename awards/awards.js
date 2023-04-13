@@ -13,7 +13,8 @@ let files = {
 	EVHSMagnaCumLaude: "TimothyDo_EVHSMagnaCumLaude.pdf",
 	GoldenStateDiploma: "TimothyDo_GoldenStateDiploma.pdf",
 	QuimbyOakDiploma: "TimothyDo_QuimbyOakDiploma.pdf",
-	SixSigmaYellowBelt: "TimothyDo_SixSigmaYellowBelt.pdf"
+	SixSigmaYellowBelt: "TimothyDo_SixSigmaYellowBelt.pdf",
+	TauBetaPi: "TimothyDo_TauBetaPi.pdf"
 };
 
 let titles = {
@@ -29,6 +30,7 @@ let titles = {
 	GoldenStateDiploma: "Golden State Diploma",
 	QuimbyOakDiploma: "Quimby Oak Middle School Diploma",
 	SixSigmaYellowBelt: "Six Sigma Yellow Belt Certified by Western Digital"
+	TauBetaPi:"Tau Beta Pi Member Initiation"
 };
 
 function isMobileDevice() {
