@@ -29,7 +29,7 @@ let titles = {
 	EVHSMagnaCumLaude: "Magna Cum Laude @ Evergreen Valley High School",
 	GoldenStateDiploma: "Golden State Diploma",
 	QuimbyOakDiploma: "Quimby Oak Middle School Diploma",
-	SixSigmaYellowBelt: "Six Sigma Yellow Belt Certified by Western Digital"
+	SixSigmaYellowBelt: "Six Sigma Yellow Belt Certified by Western Digital",
 	TauBetaPi:"Tau Beta Pi Member Initiation"
 };
 
