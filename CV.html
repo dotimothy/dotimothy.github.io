@@ -30,10 +30,6 @@
 	}
 </style>
 
-<body onload="loadCV()">
-
-<div id="CV-container"></div>
-
 <script>
 function loadCV() {
   var container = document.getElementById("CV-container");
@@ -44,10 +40,20 @@ function loadCV() {
   iframe.setAttribute("frameborder", "0");
   container.appendChild(iframe);
 }
+
+function printCV() {
+	document.getElementById("printFrame").contentWindow.print();
+}
 </script>
+
+<body onload="loadCV()">
+
+<div id="CV-container"></div>
+<iframe hidden id="printFrame" src="./Resume_Latex.pdf"></iframe>
 
 </body>
 
 <a href="./CV.pdf" download="TimothyDo_CV.pdf"><p>Download 📝</p></a>
+<p id="printFrame" onclick='printCV()'>Print 🖨️</p>
 
 </html>
