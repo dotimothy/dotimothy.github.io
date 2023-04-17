@@ -28,6 +28,14 @@
 		opacity: 1;
 		transition: 0.25s;
 	}
+	#downloadCV {
+		bottom: 11%;
+		right: 3%;
+	}
+	#printCV {
+		bottom: 1%;
+		right:  3%;
+	}
 </style>
 
 <script>
@@ -49,11 +57,11 @@ function printCV() {
 <body onload="loadCV()">
 
 <div id="CV-container"></div>
-<iframe hidden id="printFrame" src="./Resume_Latex.pdf"></iframe>
+<iframe hidden id="printFrame" src="./CV.pdf"></iframe>
 
 </body>
 
-<a href="./CV.pdf" download="TimothyDo_CV.pdf"><p>Download 📝</p></a>
-<p id="printFrame" onclick='printCV()'>Print 🖨️</p>
+<a href="./CV.pdf" download="TimothyDo_CV.pdf"><p id="downloadCV">Download 📝</p></a>
+<p id="printCV" onclick='printCV()'>Print 🖨️</p>
 
 </html>
