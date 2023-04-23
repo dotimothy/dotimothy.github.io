@@ -21,12 +21,6 @@
 	h1,h2 {
 		color: white;
 	}
-	h1 {
-		font-size: 2.5em;
-	}
-	h2 {
-		font-size: 2em;
-	}
 	a {
 		color:  blue;
 	}
@@ -47,7 +41,6 @@
 	}
 	.center {
 		margin: auto;
-		width: 50%;
 		border-radius: 50px;
 		padding: 0.5em;
 		text-align: center;
@@ -63,11 +56,25 @@
 		border: 0.25em solid white;
 		transition: 0.25s;
 	}
+	/* Desktop */
+	@media only screen and (min-width: 1000px) {
+		h1 { font-size:  2.5em; }
+		h2 { font-size:  2em; }
+		.center { width: 50%; }
+		.pfp { width: 30%; }
+	}
+	/* Mobile */
+	@media only screen and (max-width: 1000px) {
+		h1 { font-size: 5em; }
+		h2 { font-size:  4em; }
+		.center { width: 75%; }
+		.pfp { width: 50%; }
+	}
 </style>
 
 <body>
 	<div class="center">
-		<img width="30%" class="pfp" src="./images/roycepfp.jpg" alt="UCLA">
+		<img class="pfp" src="./images/roycepfp.jpg" alt="UCLA">
 		<h1>Timothy Do</h1>
 	</div>
 	<div class="center box">
