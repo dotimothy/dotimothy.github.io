@@ -14,7 +14,8 @@ let files = {
 	GoldenStateDiploma: "TimothyDo_GoldenStateDiploma.pdf",
 	QuimbyOakDiploma: "TimothyDo_QuimbyOakDiploma.pdf",
 	SixSigmaYellowBelt: "TimothyDo_SixSigmaYellowBelt.pdf",
-	TauBetaPi: "TimothyDo_TauBetaPi.pdf"
+	TauBetaPi: "TimothyDo_TauBetaPi.pdf",
+	IEEEStudent: "TimothyDo_IEEEStudentMember.pdf"
 };
 
 let titles = {
@@ -30,7 +31,8 @@ let titles = {
 	GoldenStateDiploma: "Golden State Diploma",
 	QuimbyOakDiploma: "Quimby Oak Middle School Diploma",
 	SixSigmaYellowBelt: "Six Sigma Yellow Belt Certified by Western Digital",
-	TauBetaPi:"Tau Beta Pi Member Initiation"
+	TauBetaPi: "Tau Beta Pi Member Initiation",
+	IEEEStudent: "IEEE Student Member"
 };
 
 function isMobileDevice() {
@@ -45,7 +47,7 @@ function showAward(award) {
 		document.getElementById('embed').innerHTML = `<iframe width="100%" height="50%" frameborder="0" src="https://docs.google.com/gview?url=https://timothydo.me/awards/${files[award]}&embedded=true"></iframe>`;
 	}
 	else {
-		document.getElementById('embed').innerHTML = `<embed width="75%" height="75%" frameborder="0" src="${files[award]}#toolbar=0"/>`; //doesn't work for Android
+		document.getElementById('embed').innerHTML = `<embed width="85%" height="85%" frameborder="0" src="${files[award]}#toolbar=0"/>`; //doesn't work for Android
 	}
 }
 
