@@ -33,7 +33,7 @@ let titles = {
 	QuimbyOakDiploma: "Quimby Oak Middle School Diploma",
 	SixSigmaYellowBelt: "Six Sigma Yellow Belt Certified by Western Digital",
 	TauBetaPi: "Tau Beta Pi (TBP) Member Initiation",
-	IEEEStudent: "IEEE Student Member"
+	IEEEStudent: "IEEE Student Member",
 	HKN: "IEEE Eta Kappa Nu (HKN) Member Initiation"
 };
 
