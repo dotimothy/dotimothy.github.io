@@ -49,7 +49,7 @@ function showAward(award) {
 		document.getElementById('embed').innerHTML = `<iframe width="100%" height="50%" frameborder="0" src="https://docs.google.com/gview?url=https://timothydo.me/awards/${files[award]}&embedded=true"></iframe>`;
 	}
 	else {
-		document.getElementById('embed').innerHTML = `<embed width="85%" height="85%" frameborder="0" src="${files[award]}#toolbar=0"/>`; //doesn't work for Android
+		document.getElementById('embed').innerHTML = `<embed width="85%" height="75%" frameborder="0" src="${files[award]}#toolbar=0"/>`; //doesn't work for Android
 	}
 }
 
