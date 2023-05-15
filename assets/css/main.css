@@ -2297,7 +2297,7 @@ input, select, textarea {
 		background: url("../../images/ucisamueli.jpg");
 		background-size: cover;
 		background-attachment:  fixed;
-		background-position: center top;
+		background-position: center 10%;
 	}
 
 /* Three */
@@ -2306,7 +2306,7 @@ input, select, textarea {
 		background: url("../../images/timzot.jpg");
 		background-size: cover;
 		background-attachment: fixed;
-		background-position: center center;
+		background-position: center 40%;
 	}
 
 /* Contact */
