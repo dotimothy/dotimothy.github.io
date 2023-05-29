@@ -1,0 +1,127 @@
+
+<html>
+
+<head>
+	<title>Timothy Do's Biography</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="shortcut icon" type="image/png" href="images/roycecase.png" />
+</head>
+
+<style>
+	@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,900");
+	* {
+		font-family: Source Sans Pro;
+	}
+	h1 {
+		color: black;
+		font-size: 2.5em;
+	}
+	p {
+		color: black;
+		font-size: 2em; 
+		line-height: 125%;
+	}
+	a {
+		color: black;
+		opacity: 100%;
+	}
+	a:hover {
+		opacity: 50%;
+		transition: 0.25s;
+	}
+	h1.dark, a.dark, p.dark {
+		color: white;
+		transition: 0.25s;
+	}
+	body {
+		background-color: white;
+	}
+	body.dark {
+		background-color: black;
+		transition: 0.25s;
+	}
+
+	#mode{
+		opacity: 100%;
+		position: fixed;
+		right: 5%;
+		bottom: 2.5%;
+		border: 0.15em solid black;
+		border-radius: 10em;
+		padding: 0.3em;
+	}
+	#talk {
+		opacity: 100%;
+		position: fixed;
+		bottom: 2.5%;
+		border: 0.15em solid black;
+		border-radius: 10em;
+		padding: 0.3em;	
+	}
+	#mode.dark, #talk.dark {
+		border: 0.15em solid white;
+	}
+	#mode:hover, #talk:hover {
+		opacity: 50%;
+		transition: 0.25s;
+	}
+
+	/* Desktop */
+	@media only screen and (min-width: 1000px) {
+		h1 { font-size:  2.5em; }
+		p { font-size: 2em; }
+		#talk {right: 20%;}
+	}
+	/* Mobile */
+	@media only screen and (max-width: 1000px) {
+		h1 { font-size:  1.5em; }
+		p { font-size: 1.1em; }
+		#talk {right: 25%;}
+	}
+
+</style>
+
+<script>
+	let speech = new SpeechSynthesisUtterance();
+	let config = ["Google UK English Male","Google US English","Microsoft Zira - English (United States)"];
+	speech.pitch = 1;
+	speech.rate = 1.25;
+	speech.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == config[2];})[0];
+	
+	function toggleDarkMode() {
+		document.querySelector('body').classList.toggle('dark');
+		document.querySelector('h1').classList.toggle('dark');
+		document.querySelector('p').classList.toggle('dark');
+		document.querySelector('a').classList.toggle('dark');
+		document.getElementById('mode').classList.toggle('dark');
+		document.getElementById('talk').classList.toggle('dark');
+		document.getElementById('mode').innerText = document.getElementById('mode').innerText == '🌙' ? '☀️' : '🌙'; 
+	}
+
+	function speak() {
+		window.speechSynthesis.cancel();
+		speech.text = document.querySelector('p').innerHTML;
+		speech.volume = 1;
+		window.speechSynthesis.speak(speech);
+	}
+
+	window.onbeforeunload = window.speechSynthesis.cancel();
+</script>
+
+<body class='dark'>
+
+<a class='dark' href="https://timothydo.me"><h1 class='dark'>Timothy Do's Biography</h1> </a>
+
+<p class='dark'>
+	Timothy Do is from San Jose, California graduating Magna Cum Laude with a Bachelor of Science in Electrical Engineering, double specializing in Digital Signal Processing and Communications, from the University of California, Irvine. He will pursue a Master of Science in Electrical and Computer Engineering, specializing in Signal Processing, at the University of California, Los Angeles. Timothy has initiated into the Tau Beta Pi Engineering Honor Society in the Fall of 2022, in addition to the IEEE Eta Kappa Nu (HKN) Honor Society in the same quarter. Timothy continues to prove his dedication to the engineering community through his involvement in these organizations in addition to his volunteerism to the Boy Scouts of America as a Merit Badge Counselor. His most fond memories at UC Irvine were leading the Institute of Printed Circuits Club (IPC) as its Vice President, researching wildfire hyperspectral imagery for the Irvine Computer Vision Laboratory (ICVL) under Professor Glenn Healey, and collecting over 25+ Petr Stickers while zipping on his electric scooter during his undergraduate studies. 
+</p>
+
+</body>
+
+<footer>
+	<h1 class='dark' id="talk" onclick="speak()">🔊</h1>
+	<h1 class='dark' id="mode" onclick="toggleDarkMode()">🌙</h1>
+</footer>
+
+</html>
