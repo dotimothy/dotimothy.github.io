@@ -1,0 +1,27 @@
+/* nps.css:  Stylesheet for TheDoVlog's NPS Blogs /*
+/* Author:  Timothy Do */
+
+body {
+	background-color:  black;
+}
+
+h1, h2, h3, p {
+	font-family: Georgia;
+	color:  white;
+}
+
+h1 { font-size: 2.5em; }
+p { font-size: 1.25em; }
+
+.inline {
+	display: inline-block;
+}
+
+.postcard {
+	width: 20em;
+}
+
+#favorite {
+	align: center;
+	width: 25em;
+}
