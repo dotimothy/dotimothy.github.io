@@ -30,9 +30,13 @@ let parks = {
 		name: 'Fort Point',
 		visited: '2023-11-10'
 	},
-	GoldenGate : {
+	GoldenGate: {
 		name: 'Golden Gate',
 		visited: '2023-11-10'
+	},
+	EugeneONeil: {
+		name: 'Eugene O\' Neil',
+		visited: '2023-11-11'
 	}
 };
 
