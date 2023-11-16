@@ -57,9 +57,39 @@ figure, figcaption, footer, p {
 }
 
 .postcard {
-	animation: fadeIn ease 1s;
+	animation: fadeIn ease 0.25s;
 	width: 18.5em;
 }
+
+.postcard:nth-child(1)   {
+	animiation-delay: .25s;
+}
+
+.postcard:nth-child(2)   {
+	animiation-delay: .5s;
+}
+
+.postcard:nth-child(3)   {
+	animiation-delay: .75s;
+}
+
+.postcard:nth-child(4)   {
+	animiation-delay: 1s;
+}
+
+.postcard:nth-child(5)   {
+	animiation-delay: 1.25s;
+}
+
+.postcard:nth-child(6)   {
+	animiation-delay: 1.5s;
+}
+
+.postcard:nth-child(7)   {
+	animiation-delay: 1.5s;
+}
+
+
 
 @keyframes fadeIn {
 	0% {
