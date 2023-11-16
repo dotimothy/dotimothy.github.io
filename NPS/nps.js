@@ -1,53 +1,27 @@
 /* nps.js:  Javascript Engine for TheDoVlog's NPS Blogs /*
 /* Author:  Timothy Do */
 
-let parks = {
-	Cabrillo: {
-		name: 'Cabrillo',
-		visited: '2023-02-26'
-	},
-	RosieTheRiveter: {
-		name: 'Rosie the Riveter',
-		visited: '2023-04-01'
-	},
-	PointReyes: {
-		name: 'Point Reyes',
-		visited: '2023-08-07'
-	},
-	Whiskeytown: {
-		name: 'Whiskeytown',
-		visited: '2023-09-02'
-	},
-	Lassen: {
-		name: 'Lassen Volcanic',
-		visited: '2023-09-03'
-	},
-	SantaMonicaMountains: {
-		name: 'Santa Monica Mountains',
-		visited: '2023-10-29'
-	},
-	FortPoint: {
-		name: 'Fort Point',
-		visited: '2023-11-10'
-	},
-	GoldenGate: {
-		name: 'Golden Gate',
-		visited: '2023-11-10'
-	},
-	EugeneONeil: {
-		name: 'Eugene O\' Neil',
-		visited: '2023-11-11'
-	}
-};
+/* feteching parks metadata */
+let parks;    
+fetch('./nps.json').then(function(response){ return response.json();}).then(function(json){parks = json;});
 
 function showRecent() {
 	let recent = document.getElementById('recent');
 	let recentCap = 3;
-	let numParks = 0 
+	let parksRendered = 0;
 	for (let park in parks) {
-		console.log(park);
-		recent.innerHTML += `<a href='./postcards/${park}.jpg''><img class='postcard' src='./postcards/${park}.jpg'></a>`;
-		setTimeout(function(){},numParks*100);
-		numParks++;
+		setTimeout(function () {
+			console.log(`Rendered Postcard for ${parks[park]["name"]} (${parks[park]["alpha"]})`);
+			recent.innerHTML += `<a href='./postcards/${park}.jpg' onmouseover=\'showVisited("${park}")\'><img class='postcard' src='./postcards/${park}.jpg'></a>`;
+			parksRendered++;
+		}, 1000*parksRendered);
 	}
+}
+
+function showVisited(park) {
+	let visited = document.getElementById('visited');
+	let visitedDate = new Date(parks[park]["visited"]);
+	let weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+	let visitedString = visitedDate.toLocaleDateString('en-US');
+	visited.innerHTML = `<h2>Visited: <a href=\"https://nps.gov/${parks[park]["alpha"]}\">${parks[park]["name"]} ${parks[park]["type"]}</a> (${parks[park]["alpha"]}) on ${weekday[visitedDate.getDay()]}, ${visitedString}!`
 }
