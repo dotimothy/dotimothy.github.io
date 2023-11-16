@@ -12,10 +12,9 @@
 	<meta charset='UTF-8'>
 	<link rel="stylesheet" href="./nps.css"/>
 	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌎</text></svg>">
-	<script src="./nps.js"></script>
 </head>
 
-<body onload="showRecent()">
+<body>
 	<h1>🦅<a href="https://timothydo.me/TheDoVlogs">TheDoVlogs</a> (Timothy's) Series: Exploring U.S. National Parks 🦅</h1>
 	
 	<figure>
@@ -26,7 +25,7 @@
 	<p class="inline">Welcome aboard my journey on exploring as many U.S. National Parks as I can! As an Eagle Scout alumni & recent college graduate, exploring these parks is second nature to me. During my youthful years, I've got to hike and appreciate the habitats open-mindedly. With the addition of the Junior Ranger program, I recently started to take these leisure opportunities more seriously to learn more about their historical significance. With some motivation and competition, my lifetime goal (although ambitious), is to earn all National Park Service (NPS) Junior Ranger Badges & Passport Cancellations in the United States! I am excited to share these experiences and have this gratifying blog site serve as an inspiration to this nation's future Junior Rangers. </p>
 	
 
-	<div id="recent" >
+	<div id="recent" onload="showRecent()">
 		<h2>🌄 Recent NPS Adventures 🏞️ </h2>
 		<div id="visited"></div>
 	</div>
@@ -35,5 +34,8 @@
 <footer>
 	<h2>Made for the 🌎 by <a href="https://timothydo.me">Timothy Do</a></h2>
 </footer>
+
+<script src="./dictionary.js"></script>
+<script src="./nps.js"></script>
 
 </html>

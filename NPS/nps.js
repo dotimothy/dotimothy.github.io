@@ -2,19 +2,20 @@
 /* Author:  Timothy Do */
 
 /* feteching parks metadata */
-let parks;    
-fetch('./nps.json').then(function(response){ return response.json();}).then(function(json){parks = json;});
+console.log('Loading NPS Blogs with nps.js...')
 
 function showRecent() {
+	console.log('Showing Recent Adventures!!!')
 	let recent = document.getElementById('recent');
 	let recentCap = 3;
 	let parksRendered = 0;
+	//let timeOut = setTimeout(function(){},100);
 	for (let park in parks) {
-		setTimeout(function () {
-			console.log(`Rendered Postcard for ${parks[park]["name"]} (${parks[park]["alpha"]})`);
-			recent.innerHTML += `<a href='./postcards/${park}.jpg' onmouseover=\'showVisited("${park}")\'><img class='postcard' src='./postcards/${park}.jpg'></a>`;
-			parksRendered++;
-		}, 1000*parksRendered);
+		parksRendered++;
+		console.log(`Rendered Postcard for ${parks[park]["name"]} (${parks[park]["alpha"]})`);
+		recent.innerHTML += `<a href='./postcards/${park}.jpg' onmouseover=\'showVisited("${park}")\'><img class='postcard' src='./postcards/${park}.jpg'></a>`;
+		// clearTimeout(timeOut);
+		// timeOut = setTimeout(function(){},100);
 	}
 }
 
@@ -25,3 +26,5 @@ function showVisited(park) {
 	let visitedString = visitedDate.toLocaleDateString('en-US');
 	visited.innerHTML = `<h2>Visited: <a href=\"https://nps.gov/${parks[park]["alpha"]}\">${parks[park]["name"]} ${parks[park]["type"]}</a> (${parks[park]["alpha"]}) on ${weekday[visitedDate.getDay()]}, ${visitedString}!`
 }
+
+window.addEventListener('load', showRecent);
