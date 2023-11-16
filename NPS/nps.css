@@ -5,7 +5,7 @@ body {
 	background-color:  black;
 }
 
-h1, h2, h3, p {
+h1, h2, h3, p, figcaption {
 	font-family: Georgia;
 	color:  white;
 }
@@ -13,12 +13,59 @@ h1, h2, h3, p {
 h1 { font-size: 2.5em; }
 p { font-size: 1.25em; }
 
+a {
+	color: blue;
+	opacity: 100%;
+}
+
+a:hover {
+	opacity: 50%;
+	transition: 0.25s;
+}
+
+img {
+	opacity: 100%;
+}
+
+img:hover {
+	opacity: 50%;
+	transition: 0.25s;
+}
+
+figure {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 40%;
+}
+
+figcaption {
+	font-size: 1em;
+	padding: 0.5em;
+	display: inline-block;
+}
+
+
+figure, figcaption, footer, p {
+	animation: fadeIn ease 1.5s;
+}
+
 .inline {
 	display: inline-block;
 }
 
 .postcard {
+	animation: fadeIn ease 1s;
 	width: 25em;
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0%;
+	}
+	100% {
+		opacity: 100%;
+	}
 }
 
 #favorite {

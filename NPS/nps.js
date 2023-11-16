@@ -43,8 +43,11 @@ let parks = {
 function showRecent() {
 	let recent = document.getElementById('recent');
 	let recentCap = 3;
+	let numParks = 0 
 	for (let park in parks) {
 		console.log(park);
 		recent.innerHTML += `<a href='./postcards/${park}.jpg''><img class='postcard' src='./postcards/${park}.jpg'></a>`;
+		setTimeout(function(){},numParks*100);
+		numParks++;
 	}
 }
