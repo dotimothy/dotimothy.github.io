@@ -16,7 +16,8 @@ let files = {
 	SixSigmaYellowBelt: "TimothyDo_SixSigmaYellowBelt.pdf",
 	TauBetaPi: "TimothyDo_TauBetaPi.pdf",
 	IEEEStudent: "TimothyDo_IEEEStudentMember.pdf",
-	HKN: "TimothyDo_HKN.pdf"
+	HKN: "TimothyDo_HKN.pdf",
+	UCIDiploma: "TimothyDo_UCIDiploma.pdf"
 };
 
 let titles = {
@@ -34,7 +35,8 @@ let titles = {
 	SixSigmaYellowBelt: "Six Sigma Yellow Belt Certified by Western Digital",
 	TauBetaPi: "Tau Beta Pi (TBP) Member Initiation",
 	IEEEStudent: "IEEE Student Member",
-	HKN: "IEEE Eta Kappa Nu (HKN) Member Initiation"
+	HKN: "IEEE Eta Kappa Nu (HKN) Member Initiation",
+	UCIDiploma: "Bachelor of Science in Electrical Engineering (Magna Cum Laude)"
 };
 
 function isMobileDevice() {
