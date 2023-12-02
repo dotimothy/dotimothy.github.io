@@ -23,7 +23,6 @@ function renderPostcard(park) {
 	recent.innerHTML += `<a href='./postcards/${park}.jpg' onmouseover=\'showVisited("${park}")\'><img class='postcard' src='./postcards/${park}.jpg'></a>`;
 }
 
-
 function showVisited(park) {
 	let visited = document.getElementById('visited');
 	let visitedDate = new Date(`${parks[park]["visited"]}T00:00`);
@@ -31,5 +30,10 @@ function showVisited(park) {
 	let visitedString = visitedDate.toLocaleDateString();
 	visited.innerHTML = `<h2>Visited: <a href=\"https://nps.gov/${parks[park]["alpha"]}\">${parks[park]["name"]} ${parks[park]["type"]}</a> (${parks[park]["alpha"]}) on ${weekday[visitedDate.getDay()]}, ${visitedString}!`
 }
+
+function toGame() {
+	window.open("game.html");
+}
+
 
 window.addEventListener('load', showRecent);

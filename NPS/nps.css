@@ -25,6 +25,13 @@ a:hover {
 	transition: 0.25s;
 }
 
+button {
+	color: black;
+	background-color: yellow;
+	font-size: 2em;
+	font-family: Georgia;
+}
+
 img {
 	opacity: 100%;
 }
@@ -32,6 +39,10 @@ img {
 img:hover {
 	opacity: 50%;
 	transition: 0.25s;
+}
+
+input {
+	font-size: 1.25em;
 }
 
 figure {
@@ -50,6 +61,19 @@ figcaption {
 
 figure, figcaption, footer, p {
 	animation: fadeIn ease 1.5s;
+}
+
+.gameFooter {
+	position: relative;
+	bottom: 1%;
+}
+
+.parkSite {
+	position: static;
+	height: 400px;
+	border: none;
+	overflow: hidden;
+	pointer-events: none;
 }
 
 .inline {
@@ -103,4 +127,17 @@ figure, figcaption, footer, p {
 #favorite {
 	align: center;
 	width: 25em;
+}
+
+#toGame, #toBlog {
+	position: fixed;
+	bottom: 1%;
+	right: 1%;
+	font-size: 5em;
+	opacity: 100%;
+}
+
+#toGame:hover, #toBlog:hover{
+	opacity: 50%;
+	transition:0.25s;
 }
