@@ -141,3 +141,9 @@ figure, figcaption, footer, p {
 	opacity: 50%;
 	transition:0.25s;
 }
+
+#counter {
+	position: fixed;
+	top:5%;
+	right:5%;
+}

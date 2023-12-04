@@ -1,3 +1,35 @@
+let typeToWord = {
+  "MEM": "Memorial",
+  "NB": "National Battlefield",
+  "NBP": "National Battlefield Park",
+  "NB Site": "National Battle Field Site",
+  "NHS": "National Historic Site",
+  "NHP": "National Historic Park",
+  "NHP & ECO PRES": "National Historic Park & Ecological Preserve",
+  "NHT": "National Historic Trail",
+  "NL": "National Lakeshore",
+  "NM": "National Monument",
+  "NMEM": "National Memorial",
+  "NMP": "National Memorial Park",
+  "NM&PRE": "National Monument & Preserve",
+  "NP": "National Park",
+  "NP&PRES": "National Park & Preserve",
+  "NPRES": "National Preserve",
+  "NRA": "National Recreational Area",
+  "NR": "National River",
+  "NR&RA": "National River & Recreation Area",
+  "NRR": "National Recreational River",
+  "NS": "National Seashore",
+  "NSR": "National Scenic Riverway",
+  "NST": "National Scenic Trail",
+  "OTHER" : "",
+  "PARK": "Park",
+  "PRES": "Preserve",
+  "PW": "Parkway",
+  "S&RR": "Scenic & Recreational River",
+  "W&SR": "Wild & Scenic River"
+}
+
 let gameData = [
   {
     "Name": "ABRAHAM LINCOLN BIRTHPLACE",
@@ -920,7 +952,7 @@ let gameData = [
     "Park Code": "HALE"
   },
   {
-    "Name": "HAMILTON GRANGE NM",
+    "Name": "HAMILTON GRANGE",
     "Type": "NMEM",
     "Park Code": "HAGR"
   },
@@ -1065,7 +1097,7 @@ let gameData = [
     "Park Code": "JOMU"
   },
   {
-    "Name": "JOHNSTOWN FLOOD NM",
+    "Name": "JOHNSTOWN FLOOD",
     "Type": "NMEM",
     "Park Code": "JOFL"
   },
@@ -1091,12 +1123,7 @@ let gameData = [
   },
   {
     "Name": "KATMAI",
-    "Type": "NP",
-    "Park Code": "KATM"
-  },
-  {
-    "Name": "KATMAI",
-    "Type": "NPRES",
+    "Type": "NP&PRES",
     "Park Code": "KATM"
   },
   {
