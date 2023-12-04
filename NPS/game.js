@@ -36,7 +36,7 @@ function generatePark() {
 }
 
 let code = document.getElementById('code');
-let guess = 3;
+let tries = 3;
 function verifyPark() {
   let parkGuess = code.value.toUpperCase();
   let correctCode = gameData[randIndex]["Park Code"];
@@ -54,9 +54,9 @@ function verifyPark() {
   }
   else {
     alert("Incorrect. Try Again.");
-    guess = guess - 1;
+    tries = tries - 1;
   }
-  if(guess == 0) {
+  if(tries == 0) {
     alert(`All Guesses are Out. The Correct Code is ${correctCode}`)
     gen.innerHTML = "Generate Another Park"
     gen.hidden = false;
