@@ -1,4 +1,5 @@
 /* NPS Alpha Code Guessing Game Engine */
+/* Author: Timothy Do (@dotimothy) */
 
 /* Variables */
 let randIndex = 0;
@@ -11,6 +12,8 @@ let tries = maxTries;
 let counter = document.getElementById('counter');
 let ding = document.getElementById('ding');
 let sizzle = document.getElementById('sizzle');
+let numPoints = 0;
+let points = document.getElementById('points');
 
 function toTitleCase(str) {
   return str.replace(
@@ -21,14 +24,22 @@ function toTitleCase(str) {
   );
 }
 
-
 function toBlog() {
   window.open("index.html");
 }
 
+function playSound(sound) {
+  sound.volume = 0.25;
+  sound.currentTime = 0;
+  sound.play();
+}
+
+function updatePoints() {
+  points.innerHTML = `<h3>Points: ${numPoints}</h3>`;
+}
+
 function displayRules() {
-  ding.volume = 0.25;
-  ding.play();
+  playSound(ding)
   let rules = "Read the Alpha Code Conventions:\n\n";
   rules += "1. If a NPS Unit has One Word, then it's corresponding Alpha Code is the First Four Letters of that Word. (Ex: Arches -> ARCH)\n\n";
   rules += "2. If a NPS Unit has Two Words or more, then it's corresponding Alpha Code is the First Two Letters of the First Two Words. (Ex: Golden Gate -> GOGA)\n\n";
@@ -38,8 +49,7 @@ function displayRules() {
 }
 
 function generatePark() {
-  sizzle.volume = 0.25;
-  sizzle.play();
+  playSound(sizzle);
   gen.hidden = true;
   guess.hidden = false;
   counter.hidden = false;
@@ -56,7 +66,7 @@ function updateTryCounter() {
 }
 
 function showAnswer() {
-  let correctCode = gameData[randIndex]["Park Code"]
+  let correctCode = gameData[randIndex]["Park Code"];
   gen.innerHTML = "Generate Another Park";
   gen.hidden = false;
   code.value = "";
@@ -67,24 +77,28 @@ function showAnswer() {
 }
 
 
+
 function correct() {
+  playSound(ding);
+  let correctCode = gameData[randIndex]["Park Code"];
   alert(`Correct! The Correct Code is ${correctCode}.`);
   showAnswer();
-  ding.volume = 0.25;
-  ding.play();
+  numPoints += 1;
+  updatePoints();
 }
 
 function incorrect() {
+  playSound(sizzle);
   alert("Incorrect. Try Again.");
-  sizzle.volume = 0.25;
-  sizzle.play();
+  
 }
 
 function failure() {
+  playSound(sizzle);
+  let correctCode = gameData[randIndex]["Park Code"];
   alert(`All Guesses are Out. The Correct Code is ${correctCode}`);
   showAnswer();
-  sizzle.volume = 0.25;
-  sizzle.play();
+  
 }
 
 
@@ -96,8 +110,7 @@ function verifyPark() {
   }
   else if(parkGuess.length == 0)
   {
-    sizzle.volume = 0.25;
-    sizzle.play();
+    playSound(sizzle);
     alert("Nothing Entered. Try Again.");
   }
   else {

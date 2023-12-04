@@ -144,6 +144,12 @@ figure, figcaption, footer, p {
 
 #counter {
 	position: fixed;
-	top:5%;
-	right:5%;
+	top:1%;
+	right:1%;
+}
+
+#points {
+	position: fixed;
+	bottom: 1%;
+	left: 1%;
 }
