@@ -1219,7 +1219,7 @@ let gameData = [
   {
     "Name": "LEWIS AND CLARK",
     "Type": "NHP",
-    "Park Code": "FOCL"
+    "Park Code": "LEWI"
   },
   {
     "Name": "LINCOLN",
