@@ -11,8 +11,7 @@ function showRecent() {
 	let recentCap = 3;
 	let parksRendered = 0;
 	for (let park in parks) {
-		//renderPostcard(park);
-		setTimeout(function(){renderPostcard(park)},250*parksRendered);
+		renderPostcard(park);
 		parksRendered++;
 	}
 }
