@@ -57,7 +57,19 @@ let parks = {
     "EugeneONeil": {
     	"alpha": "EUON",
         "name": "Eugene O' Neil",
-        "visited": "2023-11-11",
-        "type": "Historic Site"
+        "type": "Historic Site",
+        "visited": "2023-11-11"
+    },
+    "JohnMuir": {
+        "alpha": "JOMU",
+        "name": "John Muir",
+        "type": "Historic Site",
+        "visited": "2023-12-30"
+    },
+    "MuirWoods": {
+        "alpha": "MUWO",
+        "name": "Muir Woods",
+        "type": "Monument",
+        "visited": "2024-01-06"
     }
 };

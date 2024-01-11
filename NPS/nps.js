@@ -28,7 +28,7 @@ function showVisited(park) {
 	let visitedDate = new Date(`${parks[park]["visited"]}T00:00`);
 	let weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 	let visitedString = visitedDate.toLocaleDateString();
-	visited.innerHTML = `<h2>Visited: <a href=\"https://nps.gov/${parks[park]["alpha"]}\">${parks[park]["name"]} ${parks[park]["type"]}</a> (${parks[park]["alpha"]}) on ${weekday[visitedDate.getDay()]}, ${visitedString}!`
+	visited.innerHTML = `<h2>Visited: <a href=\"https://nps.gov/${parks[park]["alpha"]}\">${parks[park]["name"]} National ${parks[park]["type"]}</a> (${parks[park]["alpha"]}) on ${weekday[visitedDate.getDay()]}, ${visitedString}!`
 }
 
 function toGame() {
