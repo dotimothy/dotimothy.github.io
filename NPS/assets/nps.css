@@ -153,3 +153,7 @@ figure, figcaption, footer, p {
 	bottom: 1%;
 	left: 1%;
 }
+
+#overviewPrompt {
+	font-style: italic;
+}

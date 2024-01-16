@@ -25,7 +25,7 @@ function toTitleCase(str) {
 }
 
 function toBlog() {
-  window.open("index.html");
+  window.open("../index.html");
 }
 
 function playSound(sound) {
