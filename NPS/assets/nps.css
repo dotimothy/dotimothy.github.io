@@ -47,8 +47,6 @@ input {
 
 figure {
 	display: block;
-	margin-left: auto;
-	margin-right: auto;
 	width: 40%;
 }
 
@@ -156,4 +154,12 @@ figure, figcaption, footer, p {
 
 #overviewPrompt {
 	font-style: italic;
+}
+
+#map {
+	width: 75%;
+	height: 35em;
+	position: relative;
+	display: inline-block;
+	float: right;
 }
