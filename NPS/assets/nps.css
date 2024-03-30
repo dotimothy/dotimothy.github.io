@@ -124,7 +124,7 @@ figure, figcaption, footer, p {
 
 #favorite {
 	align: center;
-	width: 25em;
+	width: 20em;
 }
 
 #toGame, #toBlog {
@@ -157,8 +157,8 @@ figure, figcaption, footer, p {
 }
 
 #map {
-	width: 75%;
-	height: 35em;
+	width: 70%;
+	height: 26em;
 	position: relative;
 	display: inline-block;
 	float: right;
