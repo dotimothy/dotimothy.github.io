@@ -71,5 +71,12 @@ let parks = {
         "name": "Muir Woods",
         "type": "Monument",
         "visited": "2024-01-06"
+    },
+    "JoshuaTree": {
+        "alpha": "JOTR",
+        "name": "Joshua Tree",
+        "type": "Park",
+        "visited": "2024-02-03"
     }
+
 };
