@@ -44,7 +44,7 @@ function UrlExists(url)
 
 function renderPostcard(park) {
 	let container = document.getElementById('recent') == null ? document.getElementById('postcards') : document.getElementById('recent');
-	let href = Exists(`./blogs/${park}.html`) ? `./blogs/${park}.html` : `./postcards/${park}.jpg`;
+	let href = UrlExists(`./blogs/${park}.html`) ? `./blogs/${park}.html` : `./postcards/${park}.jpg`;
 	console.log(`Rendered Postcard for ${parks[park]["name"]} (${parks[park]["alpha"]})`);
 	container.innerHTML += `<a href='${href}' onmouseover=\'showVisited("${park}")\'><img class='postcard' src='./postcards/${park}.jpg'></a>`;
 }
