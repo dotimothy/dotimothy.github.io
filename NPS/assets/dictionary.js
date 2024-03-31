@@ -7,7 +7,7 @@ let parks = {
     },
     "RosieTheRiveter": {
     	"alpha": "RORI",
-        "name": "Rosie the Riveter",
+        "name": "Rosie the Riveter WWII Home Front",
         "type": "Historical Park",
         "visited": "2023-04-01"
     },
