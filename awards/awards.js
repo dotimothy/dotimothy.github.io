@@ -17,7 +17,9 @@ let files = {
 	TauBetaPi: "TimothyDo_TauBetaPi.pdf",
 	IEEEStudent: "TimothyDo_IEEEStudentMember.pdf",
 	HKN: "TimothyDo_HKN.pdf",
-	UCIDiploma: "TimothyDo_UCIDiploma.pdf"
+	UCIDiploma: "TimothyDo_UCIDiploma.pdf",
+	PredictumFoundations: "TimothyDo_Predictum_Foundations.pdf",
+	PredictumDOE: "TimothyDo_Predictum_DOE.pdf"
 };
 
 let titles = {
@@ -36,7 +38,9 @@ let titles = {
 	TauBetaPi: "Tau Beta Pi (TBP) Member Initiation",
 	IEEEStudent: "IEEE Student Member",
 	HKN: "IEEE Eta Kappa Nu (HKN) Member Initiation",
-	UCIDiploma: "Bachelor of Science in Electrical Engineering (Magna Cum Laude)"
+	UCIDiploma: "Bachelor of Science in Electrical Engineering (Magna Cum Laude)",
+	PredictumFoundations: "Foundations of Data Analytics Course by Cy Wegman",
+	PredictumDOE: "Design of Experiments Course by Cy Wegman"
 };
 
 function isMobileDevice() {
