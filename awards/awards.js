@@ -18,8 +18,8 @@ let files = {
 	IEEEStudent: "TimothyDo_IEEEStudentMember.pdf",
 	HKN: "TimothyDo_HKN.pdf",
 	UCIDiploma: "TimothyDo_UCIDiploma.pdf",
-	PredictumFoundations: "TimothyDo_Predictum_Foundations.pdf",
-	PredictumDOE: "TimothyDo_Predictum_DOE.pdf"
+	PredictumFoundations: "TimothyDo_PredictumFoundations.pdf",
+	PredictumDOE: "TimothyDo_PredictumDOE.pdf"
 };
 
 let titles = {
