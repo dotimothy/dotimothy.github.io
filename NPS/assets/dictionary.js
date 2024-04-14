@@ -77,6 +77,11 @@ let parks = {
         "name": "Joshua Tree",
         "type": "Park",
         "visited": "2024-02-03"
+    },
+    "ChannelIslands": {
+        "alpha": "CHIS",
+        "name": "Channel Islands",
+        "type": "Park",
+        "visited": "2024-04-07"
     }
-
 };
