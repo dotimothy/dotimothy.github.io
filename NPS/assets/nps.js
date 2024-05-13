@@ -17,6 +17,9 @@ function promptRecent() {
 	let recentCap = null;
 	while(recentCap == null) {
 		recentCap = window.prompt('How Many NPS Postcards to See?');
+		if(recentCap != null) {
+			recentCap = Math.min(recentCap,Object.keys(parks).length);
+		}
 		window.alert(recentCap != null ? `Showing ${recentCap} NPS Postcards!` : 'Nothing Inputted. Try Again.');
 		console.log(recentCap != null ? `Showing ${recentCap} NPS Postcards!` : 'Nothing Inputted. Try Again.')
 	}
