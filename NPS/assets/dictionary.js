@@ -15,7 +15,7 @@ let parks = {
     	"alpha": "PORE",
         "name": "Point Reyes",
         "type": "Seashore",
-        "visited": "2023-08-07"
+        "visited": "2023-08-05"
     },
     "Whiskeytown": {
     	"alpha": "WHIS",
