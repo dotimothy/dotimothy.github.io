@@ -21,6 +21,7 @@ PS: Not sure how to get that contact form working? Give formspree.io a try (it's
 
 
 Credits:
+	Website Dev: Timothy Do (timothydo.me)
 
 	Demo Images:
 		Unsplash (unsplash.com)

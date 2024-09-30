@@ -1,0 +1,68 @@
+<html>
+
+<title>Sean Gancayco's Acting Resume</title>
+<link rel="shortcut icon" type="image/png" href="images/Sean_Icon.png" />
+<meta charset="UTF-8">
+
+<style>
+	body {
+		width: 100%;
+		height:  100%;
+		margin: 0;
+		background-image:url('./images/background.jpg');
+	}
+	p {
+		font-family: Georgia;
+		color: white;
+		background-color: black;
+		font-size: 3em;
+		opacity: 0.75;
+		position:  fixed;
+	}
+	p:hover {
+		opacity: 0.25;
+		transition: 0.25s;
+	}
+	p:active {
+		opacity: 1;
+		transition: 0.25s;
+	}
+	#downloadResume {
+		bottom: 11%;
+		right: 3%;
+	}
+	#printResume {
+		bottom: 1%;
+		right:  3%;
+	}
+</style>
+
+<script>
+function loadResume() {
+  var container = document.getElementById("resume-container");
+  var iframe = document.createElement("iframe");
+  iframe.setAttribute("src", "https://docs.google.com/gview?url=https://dotimothy.github.io/sean/new/Acting_SeanGancayco.pdf&embedded=true");
+  iframe.setAttribute("width", "50%");
+  iframe.setAttribute("height", "100%");
+  iframe.setAttribute("frameborder", "0");
+  container.appendChild(iframe);
+}
+
+function printResume() {
+	document.getElementById("printFrame").contentWindow.print();
+}
+</script>
+
+<body onload="loadResume()">
+
+<div id="resume-container"></div>
+<iframe hidden id="printFrame" src="./Acting_TimothyDo.pdf"></iframe>
+
+</body>
+
+
+
+<a href="./media/Acting_SeanGancayco.pdf" download="SeanGancayco_Resume.pdf"><p id="downloadResume">Download 📝</p></a>
+<p id="printResume" onclick='printResume()'>Print 🖨️</p>
+
+</html>
