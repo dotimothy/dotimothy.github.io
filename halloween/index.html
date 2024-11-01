@@ -29,6 +29,7 @@
 		let count = sessionStorage.hasOwnProperty('count') ? parseInt(sessionStorage.getItem('count')) : 0;
 		let ding = new Audio('ding.mp3');
 		let spook = new Audio('spook.mp3');
+		let win = 25; 
 
 		function playAudio(audio) {
 			audio.currentTime = 0; 
@@ -52,7 +53,11 @@
 
 		}
 		function determineCandy() {
-			return count % 10 == 0;
+			return count % win == 0;
+		}
+		function setWin(newWin) {
+			win = newWin;
+			
 		}
 
 	</script>
