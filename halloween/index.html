@@ -50,6 +50,7 @@
 			count = 0;
 			sessionStorage.setItem('count',count);
 			console.log(`Button Count: ${sessionStorage.getItem('count')}`);
+			return count;
 
 		}
 		function determineCandy() {
@@ -58,6 +59,8 @@
 		function setWin(newWin) {
 			win = newWin;
 			console.log(`Win Condition set to ${win} Button Presses!`);
+			return win;
+
 		}
 
 	</script>
