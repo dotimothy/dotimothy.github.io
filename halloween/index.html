@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+	<style>
+		body {
+			background-color: black;
+			background-image: url('ghost.png');
+			background-size: 25em;
+		}
+        #redbutton {
+        	margin-top: 5%;
+        	margin-left: auto;
+        	margin-right: auto;
+        	display: block;
+        	opacity: 100%;
+        	z-index: 1;
+        }
+        #redbutton:hover {
+        	opacity: 90%;
+        	transition: 0.125s;
+        }
+        #redbutton:active {
+        	opacity: 85%;
+        	transform: translate(0px,4%);
+        	transition: 0.125s;
+        }
+	</style>
+	<script>
+		let count = sessionStorage.hasOwnProperty('count') ? parseInt(sessionStorage.getItem('count')) : 0;
+		let ding = new Audio('ding.mp3');
+		let spook = new Audio('spook.mp3');
+
+		function playAudio(audio) {
+			audio.currentTime = 0; 
+			audio.play();
+		}
+
+		function countButton() {
+			count += 1;
+			sessionStorage.setItem('count',count);
+			console.log(`Button Count: ${sessionStorage.getItem('count')}`);
+			let extraCandy = determineCandy();
+			playAudio(extraCandy ? spook : ding);
+			document.body.style.backgroundImage = `url(${extraCandy ? 'jumpscare' : 'ghost'}.png`
+			document.body.style.backgroundSize = extraCandy ? '50em' : '25em';
+		}
+
+		function resetCount() {
+			count = 0;
+			sessionStorage.setItem('count',count);
+			console.log(`Button Count: ${sessionStorage.getItem('count')}`);
+
+		}
+		function determineCandy() {
+			return count % 10 == 0;
+		}
+
+	</script>
+
+	<head>
+		<title>Spooky Button</title>
+		<link rel='icon' href='ghost.png'/>
+	</head>
+
+	<body>
+		<img id='redbutton' width='60%' src='redbutton.png' onclick='countButton()'/>
+	</body>
+
+</html>
