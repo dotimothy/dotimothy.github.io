@@ -2,16 +2,29 @@
 
 <html>
 	<script>
-		function switchBodyColor(color) {
-			console.log(`Changing Background Color to ${color}`);
-			document.body.style.backgroundColor = color; 
-		}	
 		const colors = ['black','white','orange'];
 		let i = 0;
-		setInterval(function() {
+		let period = 200;
+		
+		function switchBodyColor(color) {
+			document.body.style.backgroundColor = color; 
+		}	
+
+		let interval = setInterval(function() {
 			i += 1;
 			switchBodyColor(colors[i % colors.length]);
-		},200);
+		},period);
+
+		function changeInterval(newPeriod) {
+			period = newPeriod; 
+			clearInterval(interval);
+			interval = setInterval(function() {
+				i += 1;
+				switchBodyColor(colors[i % colors.length]);
+			},period);
+		}
+
+
 		
 	</script>
 	<style>
