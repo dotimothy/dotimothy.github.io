@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+	<script>
+		function switchBodyColor(color) {
+			console.log(`Changing Background Color to ${color}`);
+			document.body.style.backgroundColor = color; 
+		}	
+		const colors = ['black','white','orange'];
+		let i = 0;
+		setInterval(function() {
+			i += 1;
+			switchBodyColor(colors[i % colors.length]);
+		},200);
+		
+	</script>
+	<style>
+		body {
+			background-color: black;
+		}
+	</style>
+	<head>
+		<title>Halloween Attention Grabber</title>
+		<link rel='icon' href='ghost.png'/>
+	</head>
+	<body>
+	</body>
+</html>
