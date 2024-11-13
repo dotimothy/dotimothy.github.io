@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pompompurin!!! 🐶</title>
+        <link rel="icon" href="pompompurinwalking.gif"/>
+    </head>
+
+    <style>
+        body {
+            background-color: black;
+            background-image: url('pompompurinjiggle.gif');
+            background-size: 17%;
+        }
+        img {
+            position: fixed;
+            width: 10%;
+            user-select: none;
+        }
+        #biggerButton {
+            bottom: 5%;
+            left: 5%;
+            animation: spinCW 2s linear infinite;
+        }
+        #smallerButton {
+            bottom: 5%;
+            right: 5%;
+            animation: spinCCW 2s linear infinite;
+        }
+        @keyframes spinCW {
+            100% {transform: rotate(360deg)}
+        }
+        @keyframes spinCCW {
+            100% {transform: rotate(-360deg)}
+        }
+    </style>
+
+    <body>
+        <img onclick="biggerBackgroundImages()" id="biggerButton" src="pompompurinwalking.gif"/>
+        <img onclick="smallerBackgroundImages()" id="smallerButton" src="pompompurinchocolate.gif"/>
+    </body>
+
+    <script>
+        let backgroudSize = 20;
+        window.onload = setInterval(sayHappyBirthday,5000);
+        function sayHappyBirthday() {
+            console.log('Saying Happy Birthday!')
+            const message = new SpeechSynthesisUtterance();
+            message.pitch = 3;
+            message.speed = 2;
+
+            // set the text to be spoken
+            message.text = "Happy 24th Birthday, Catherine! From Pompompurin!";
+
+            // create an instance of the speech synthesis object
+            const speechSynthesis = window.speechSynthesis;
+
+            // start speaking
+            speechSynthesis.speak(message);
+        }
+        function setBackgroundImagePercentage(percent) {
+            console.log(`Setting Pompompurins to be ${percent}%!`);
+            document.body.style.backgroundSize = `${percent}%`;
+            document.body.style.backgroundImage = 'url("pompompurinjiggle.gif")';
+        }
+        function biggerBackgroundImages() {
+            backgroudSize = Math.min(backgroudSize + 5,100); 
+            setBackgroundImagePercentage(backgroudSize);
+        }
+        function smallerBackgroundImages() {
+            backgroudSize = Math.max(backgroudSize - 5,0);
+            setBackgroundImagePercentage(backgroudSize);
+        }
+    </script>
+</html>
