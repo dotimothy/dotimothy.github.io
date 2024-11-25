@@ -19,7 +19,8 @@ let files = {
 	HKN: "TimothyDo_HKN.pdf",
 	UCIDiploma: "TimothyDo_UCIDiploma.pdf",
 	PredictumFoundations: "TimothyDo_PredictumFoundations.pdf",
-	PredictumDOE: "TimothyDo_PredictumDOE.pdf"
+	PredictumDOE: "TimothyDo_PredictumDOE.pdf",
+	UCLADiploma: "TimothyDo_UCLADiploma.pdf"
 };
 
 let titles = {
@@ -40,7 +41,8 @@ let titles = {
 	HKN: "IEEE Eta Kappa Nu (HKN) Member Initiation",
 	UCIDiploma: "Bachelor of Science in Electrical Engineering (Magna Cum Laude)",
 	PredictumFoundations: "Foundations of Data Analytics Course by Cy Wegman",
-	PredictumDOE: "Design of Experiments Course by Cy Wegman"
+	PredictumDOE: "Design of Experiments Course by Cy Wegman",
+	UCLADiploma: "Master of Science in Electrical and Computer Engineering"
 };
 
 function isMobileDevice() {
@@ -48,14 +50,16 @@ function isMobileDevice() {
 };
 
 function showAward(award) {
+	const urlParams = new URLSearchParams(window.location.search);
 	document.getElementById('showAward').hidden = false;
 	document.getElementById('selection').hidden = true;
 	document.getElementById('title').innerHTML = `Selected Award: ${titles[award]}`;
+	folder = urlParms.has('original') ? 'original' : 'watermark';
 	if(isMobileDevice()) {
-		document.getElementById('embed').innerHTML = `<iframe width="100%" height="50%" frameborder="0" src="https://docs.google.com/gview?url=https://timothydo.me/awards/${files[award]}&embedded=true"></iframe>`;
+		document.getElementById('embed').innerHTML = `<iframe width="100%" height="50%" frameborder="0" src="https://docs.google.com/gview?url=https://timothydo.me/awards/${folder}/${files[award]}&embedded=true"></iframe>`;
 	}
 	else {
-		document.getElementById('embed').innerHTML = `<embed width="85%" height="75%" frameborder="0" src="${files[award]}#toolbar=0"/>`; //doesn't work for Android
+		document.getElementById('embed').innerHTML = `<embed width="85%" height="75%" frameborder="0" src="${folder}/${files[award]}#toolbar=0"/>`; //doesn't work for Android
 	}
 }
 
