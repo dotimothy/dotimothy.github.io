@@ -1,121 +1,405 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 
+<!--  Timothy Do's Photography Site! 📷-->
 <html>
-	<head>
-		<title>Timothy Do: Photos</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="shortcut icon" type="image/png" href="assets/css/images/favicon.png" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload-0 is-preload-1 is-preload-2">
+    <base target="_blank"/>
+    <head>
+        <title>Timothy's Photography Gallery</title>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" type="image/png" href="./images/favicon.png" />
+        <link href='https://fonts.googleapis.com/css?family=Product+Sans' rel='stylesheet' type='text/css'> 
+        <script src="imgNames.js"></script>
+    </head>
 
-		<!-- Main -->
-			<div id="main">
+    <style>
+        /* Mobile Phone */
+        @media(max-width: 480px) { 
+            .thumb,.thumbhidden {
+                width: calc(100%/2);
+            }
+        }
 
-				<!-- Header -->
-					<header id="header">
-						<h1>Timothy's Photo Stash</h1>
-						<h2> Yes, I am Photogenic. 📸 </h2>
-						<h3>On a daily basis, I take pictures & videos  with my Canon E0S Rebel SL1, iPhone 8 Plus, and occasionally, my iPad Pro! Here is a gallery of the photos I took over the past year! View more at my Flickr and Instagram linked below!</h3>
-						<ul class="icons">
-							<li><a href="https://www.flickr.com/people/169526448@N03/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
-							<li><a href="https://www.instagram.com/dotimothy" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="mailto:timothydobsa@gmail.com" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
-						</ul>
-					</header>
+        /* Global CSS */
+        body {
+            background-color: white;
+        }
+        h1, h2, p{
+            color: black;
+            font-family: Product Sans;
+        }
+        h1 { 
+            font-size: 3em;
+            font-weight: bolder;
+        }
+        h2 {
+            font-size: 2em;
+        }
+        p {
+            color: white;
+            font-size: 1.5em;
+            font-weight: lighter;
+        }
+        a {
+            color: blue;
+            transition: 0.25s;
+        }
+        a:hover {
+            opacity: 50%;
+            transition: 0.25s;
+        }
+        #gallery {
+            display: inline-block;
+        }
+        .thumbhidden {
+            width: calc(100%/5);
+            opacity: 0%;
+        }
+        .thumb {
+            width: calc(100%/5);
+            animation: fadein 0.5s;
+            opacity: 100%;
+        }
+        .thumb:hover {
+            opacity: 50%;
+            transition: 0.25s;
+        }
+        @keyframes fadein {
+            0% {opacity: 0%;}
+            100% {opacity: 100%;}
+        }
+        button {
+            font-size: 8em;
+            background-color: transparent;
+            border: none;
+            opacity: 100%;
+            transition: 0.25s;
+            user-select: none;
+        }
+        button:hover {
+            opacity: 50%; 
+            transition: 0.25s;
+        }
+        button:active {
+            transform: translateY(10px);
+            transition: 0.125s;
+        }
+        #imageViewer {
+            position: fixed;
+            top: 0%; 
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            margin: 0; 
+            padding: 0; 
+            z-index: 1;
+            user-select: none;
+        }
+        #full {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: grow 0.5s;
+            transition: 0.25s;
+            user-select: none;
+            pointer-events: none;
+        }
+        @keyframes grow {
+            0% {
+                top: 50%;
+                left: 50%;
+                width: 0%;
+                height: 0%; 
+            }
+            100% {
+                top: 0%;
+                left: 0%;
+                width: 100%; 
+                height: 100%;
+            }
+        }
+        #metadataViewer {
+            position: fixed;
+            background-color: black;
+            width: 100%;
+            height: 25%;
+            bottom: 0%;
+            opacity: 4%;
+            z-index: 2;
+            line-height: 1.25em;
+            animation: sneak 1s;
+            transition: 0.25s ease-in;
+        }
+        #metadataViewer:hover {
+            opacity: 90%;
+            transition: 0.25s ease-in-out
+        }
+        #metadataViewer h2 {
+            color: white;
+        }
+        #exitViewer {
+            position: fixed;
+            font-size: 7.5em;
+            color: white;
+            top: 5%;
+            right: 5%;
+            opacity: 4%;
+            transition: ease-in 0.25s;
+            animation: sneak 1s;
+            z-index: 2;
+        }
+        #exitViewer:hover {
+            opacity: 100%;
+            transition: 0.25s;
+        }
+        @keyframes sneak {
+            0% {opacity: 0%;}
+            25% {opacity: 0%;}
+            50% {opacity: 80%;}
+            75% {opacity: 80%;}
+            100% {opacity: 4%;}
+        }
+        #home {
+            position: fixed;
+            font-size: 6em;
+            bottom: 5%;
+            right: 4%;
+            opacity: 5%;
+            transition: ease-in 0.25s;
+        }
+        #home:hover {
+            opacity: 100%;
+            transition: 0.25s;
+        }
+    </style>
 
-				<!-- Thumbnail -->
-					<section id="thumbnails">
-						<article>
-							<a class="thumbnail" href="images/fulls/01.jpg" data-position="left center"><img src="images/thumbs/01.jpg" alt="" /></a>
-							<h2>Android Lawn Figures 🥧 </h2>
-							<h3> April 1st 2019 - Canon E0S Rebel SL1 📷</h3>
-							<p>Exploring the Google Lawn Suite during April Fools Day!! 😂</p>
-						</article>
-						<article>
-							<a class="thumbnail" href="images/fulls/02.jpg"><img src="images/thumbs/02.jpg" alt="" /></a>
-							<h2>Google Portrait Mode </h2>
-							<h3> April 1st 2019 - Canon E0S Rebel SL1 📷 </h3>
-							<p>Portrait of my friend at Google for Senior Prom 🕶</p>
-						</article>
-						<article>
-							<a class="thumbnail" href="images/fulls/03.jpg" data-position="top center"><img src="images/thumbs/03.jpg" alt="" /></a>
-							<h2>A Night at New York City 🌃</h2>
-							<h3> April 23rd 2018 - iPad Pro 9.7 </h3>
-							<p>A Nightview during a dinner cruise at NYC! </p>
-						</article>
-						<article>
-							<a class="thumbnail" href="images/fulls/04.jpg"><img src="images/thumbs/04.jpg" alt="" /></a>
-							<h2>New York by Day 🗽</h2>
-							<h3> April 22nd 2018 - iPad Pro 9.7 </h3>
-							<p>A View from the New York Sightseering tour cruise!</p>
-						</article>
-						<article>
-							<a class="thumbnail" href="images/fulls/05.jpg" data-position="top center"><img src="images/thumbs/05.jpg" alt="" /></a>
-							<h2>A Memorable Sunset 🌇</h2>
-							<h3> May 27th 2019 - iPhone 8 Plus 📱 </h3>
-							<p>I wanted to test out the exposure of this smartphone camera against the sun </p>
-						</article>
-						<article>
-							<a class="thumbnail" href="images/fulls/06.jpg"><img src="images/thumbs/06.jpg" alt="" /></a>
-							<h2>Midday Sun Vibes 😎</h2>
-							<h3> May 27th 2019 - iPhone 8 Plus 📱 </h3>
-							<p>Another sun exposure from the iPhone 8 Plus.</p>
-						</article>
-						<article>
-							<a class="thumbnail" href="images/fulls/07.jpg"><img src="images/thumbs/07.jpg" alt="" /></a>
-							<h2>Cloud Reflection on the Field 🌄</h2>
-							<h3> November 3rd 2018 - iPhone 8 Plus 📱 </h3>
-							<p>Took this picture during the Independence Marching Band competition, my last competitve show.</p>
-						</article>
-						<article>
-							<a class="thumbnail" href="images/fulls/08.jpg"><img src="images/thumbs/08.jpg" alt="" /></a>
-							<h2>Portrait Mode of a Duck 🦆</h2>
-							<h3> April 21st 2019 - iPhone 8 Plus 📱 </h3>
-							<p>Found this chill wild duck and took a picture of it.</p>
-						</article>
-						<article>
-							<a class="thumbnail" href="images/fulls/09.jpg"><img src="images/thumbs/09.jpg" alt="" /></a>
-							<h2>Stars with the iPhone 8 🌌</h2>
-							<h3> January 2nd 2019 - iPhone 8 Plus 📱 </h3>
-							<p>This was at Pinnacles National Park, wanted to test camera in dark areas.</p>
-						</article>
-						<article>
-							<a class="thumbnail" href="images/fulls/10.jpg"><img src="images/thumbs/10.jpg" alt="" /></a>
-							<h2>The Moon 🌕</h2>
-							<h3> July 20th 2018 - iPhone 8 Plus 📱 </h3>
-							<p>Combined with a superfocal telescope, the moon looks great with the iPhone 8!</p>
-						</article>
-						<article>
-							<a class="thumbnail" href="images/fulls/11.jpg"><img src="images/thumbs/11.jpg" alt="" /></a>
-							<h2>In-N-Out Meal 🍔</h2>
-							<h3> May 29th 2018 - iPhone 8 Plus 📱 </h3>
-							<p>A tasty meal like this is hard to forget without a portrait!</p>
-						</article>
-						<article>
-							<a class="thumbnail" href="images/fulls/12.jpg"><img src="images/thumbs/12.jpg" alt="" /></a>
-							<h2>Beach Times! 🏖</h2>
-							<h3> May 27th 2018 - iPhone 8 Plus 📱 </h3>
-							<p>A sick HDR beach picture taken by the iPhone 8 Plus!</p>
-						</article>
-					</section>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        let preload = urlParams.has('preload') && urlParams.get('preload') == 'true';
+        let doFullscreen = !isMobileDevice() && (!urlParams.has('fullscreen'));
+        let debug = urlParams.has('debug');
+        let gallery;
+        let imageViewer;
+        let metadata = {};
+        let metadataViewer;
+        let revealCounter = 0;
+        let revealInterval;
+        let madeFullscreen = false;
 
-				<!-- Footer -->
-					<footer id="footer">
-						<ul class="copyright">
-							<li>&copy; Timothy Do</li><li>All Rights Reserved 2019</li>
-						</ul>
-					</footer>
+        function isMobileDevice() {
+            return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1) && !dev;
+        }
 
-			</div>
+        function preloadFulls() {
+            for(let i = 0; i < imgNames.length; i++) {
+                preloadImage(`./images/fulls/${imgNames[i]}.jpg`); 
+            }
+        }
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/main.js"></script>
+        function preloadImage(url) {
+            var img = new Image();
+            img.src = url;
+        }
 
-	</body>
+        function loadThumbs() {
+            for (let i = 0; i < imgNames.length; i++) {
+                loadThumb(imgNames[i]);
+            }
+            document.querySelector('footer').hidden = false;
+        }
+
+        function getJSONData(url) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url, false); // `false` makes the request synchronous
+            try {
+                xhr.send(); // Send the request
+                if (xhr.status === 200) {
+                return JSON.parse(xhr.responseText); // Parse and return JSON data
+                } else {
+                console.error('Request failed with status:', xhr.status);
+                return null;
+                }
+            } catch (error) {
+                console.error('Error fetching JSON:', error);
+                return null;
+            }
+        }
+
+        function loadMetadata() { 
+            for (let i = 0; i < imgNames.length; i++) {
+                let metadataPath = `./images/metadata/${imgNames[i]}.json`;
+                metadata[imgNames[i]] = getJSONData(metadataPath);
+            }
+        }
+
+        function loadThumb(imgName) {
+            gallery.innerHTML += `<img onclick='viewFull("${imgName}")' id='${imgName}' src='./images/thumbs/${imgName}.jpg' class='thumbhidden' alt='${imgName}'/>`;
+        }
+
+        function revealThumb(imgName) {
+            let img = document.getElementById(imgName);
+            img.classList.remove('thumbhidden'); 
+            img.classList.add('thumb');
+        }
+
+        function revealThumbs() {
+            if(revealCounter < imgNames.length) {
+                revealThumb(imgNames[revealCounter]);
+                revealCounter++;
+            } else {
+                clearInterval(revealInterval);
+            }
+        }
+
+        function viewFull(imgName) {
+            viewMetadata(imgName);
+            madeFullscreen = doFullscreen && !document.fullscreenElement;
+            fullPath = `./images/fulls/${imgName}.jpg`;
+            if(!preload) {
+                preloadImage(fullPath);
+            }
+            if(madeFullscreen) {
+                document.body.requestFullscreen();
+            }
+            imageViewer.innerHTML += `<img id='full' src='${fullPath}'/>`;
+            imageViewer.innerHTML += `<button id="exitViewer" onclick="exitView()">X</button>`;
+            imageViewer.hidden = false;
+            let full = document.getElementById('full');
+            full.style.pointerEvents = 'none';
+        }
+
+        function exifToDate(exifTimestamp) {
+            const [datePart, timePart] = exifTimestamp.split(' ');
+            const [year, month, day] = datePart.split(':');
+            const [hour, minute, second] = timePart.split(':');
+            const jsDate = new Date(year, month - 1, day, hour, minute, second);
+            return jsDate;
+        }
+        function formatDate(date) {
+            const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const dayOfWeek = daysOfWeek[date.getDay()];
+            const month = months[date.getMonth()];
+            const dayOfMonth = date.getDate();
+            const year = date.getFullYear();
+            const hours = date.getHours() % 12   || 12; // 12-hour format
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
+            return `${dayOfWeek}, ${month} ${dayOfMonth}, ${year} @ ${hours}:${minutes} ${ampm}`;
+        }
+
+        function viewMetadata(imgName) {
+            let metadataViewer = document.createElement('div');
+            metadataViewer.id = 'metadataViewer';
+            /* Extracting Metadata for Image */
+            let imgData = metadata[imgName];
+            let cameraModel = imgData['Image Model'];
+            let captureDate = exifToDate(imgData['Image DateTime'])
+            let width = imgData['Image ImageWidth'];
+            let height = imgData['Image ImageLength'];
+            let resolution = width*height/(10**6);
+            let fileSizeMB = Math.round((imgData['File Size']/(1000**2)+Number.EPSILON)*100)/100;
+            let ISO = eval(imgData['EXIF ISOSpeedRatings']);
+            let exposureTime = eval(imgData['EXIF ExposureTime']);;
+            let fNumber = eval(imgData['EXIF FNumber']);
+            let focalLength35 = eval(imgData['EXIF FocalLengthIn35mmFilm']);
+            let ev = eval(imgData['EXIF ExposureBiasValue']);
+            
+            /* Displaying Metadata */
+            metadataViewer.innerHTML += `<h2>${imgName}.jpg</h2>`;
+            metadataViewer.innerHTML += `<p>🗓️ ${formatDate(captureDate)}</p>`;
+            metadataViewer.innerHTML += `<p>📷: ${cameraModel}</p>`;
+            metadataViewer.innerHTML += `<p>${fileSizeMB} MB | ${width}x${height} | ${resolution} MP</p>`;
+            metadataViewer.innerHTML += `<p>ISO ${ISO} | ${focalLength35}mm | ${ev}ev | F${fNumber} | ${exposureTime}" s</p>`
+            if(debug) {
+                console.log(metadataViewer);
+            }
+            imageViewer.appendChild(metadataViewer);
+        }
+
+        function goHome() {
+            window.location.href = "../index.html";
+        }
+
+        function exitView() {
+            let full = document.getElementById('full');
+            let metadataViewer = document.getElementById('metadataViewer');
+            let exitViewer = document.getElementById('exitViewer');
+            exitViewer.hidden = true;
+            metadataViewer.hidden = true;
+            if(full != null) {
+                full.style.width = '0%'; 
+                full.style.height = '0%';
+                if(madeFullscreen) {
+                    madeFullscreen = false;
+                    document.exitFullscreen();  
+                    if(debug) {
+                        console.log('Exiting Full Screen');
+                    }      
+                } 
+                setTimeout(function() {
+                    full.remove();
+                    metadataViewer.remove(); 
+                    exitViewer.remove();
+                    imageViewer.hidden = true;
+                },250);
+            }
+        }
+        
+        let title;
+        let thumbInterval;
+        let titleInterval;
+        let j = 0;
+        let completedTitle = `📷 Timothy's Photography Gallery!!! 📷`;
+        function fillTitle() {
+            if(j == 0 || j == completedTitle.length - 2) {
+                title.innerHTML += '📷';
+                j++;
+            } else {
+                title.innerHTML += completedTitle[j];
+            }
+            j++;
+            if(j == completedTitle.length) {
+                clearInterval(titleInterval);
+            }
+
+        }
+
+        window.onload = function() {
+            if(preload) {
+                if(debug) {
+                    console.log('Preloading Full Res Images!');
+                }
+                preloadFulls();
+            }
+            gallery = document.getElementById('gallery');
+            imageViewer = document.getElementById('imageViewer');
+            title = document.getElementById('title');
+            metadataViewer = document.getElementById('metadataViewer');
+            loadThumbs();
+            loadMetadata();
+            revealInterval = setInterval(revealThumbs,75);
+            titleInterval = setInterval(fillTitle,75);
+        }
+
+        document.addEventListener('fullscreenchange', function(e) {
+            if (!document.fullscreenElement) {
+                madeFullscreen = false;
+                exitView();
+            }
+        });
+    </script>
+
+    <body>
+        <h1 id="title"></h1>
+        <div id="gallery"></div>
+        <div hidden id="imageViewer"></div>
+    </body>
+
+    <footer hidden>
+        <h2>© <a href="https://timothydo.me">Timothy Do</a> 2024. All Rights Reserved.</h2>
+        <p>Checkout my <a href="https://timothydo.me/astronomy/photography">Astrophotography Gallery 🌌</a>!!!</p>
+        <button id="home" onclick="goHome()">🏠</button>
+    </footer>
+
 </html>
