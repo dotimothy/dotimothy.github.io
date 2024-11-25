@@ -54,7 +54,7 @@ function showAward(award) {
 	document.getElementById('showAward').hidden = false;
 	document.getElementById('selection').hidden = true;
 	document.getElementById('title').innerHTML = `Selected Award: ${titles[award]}`;
-	folder = urlParms.has('original') ? 'original' : 'watermark';
+	folder = urlParms.has('original') ? 'originals' : 'watermarks';
 	if(isMobileDevice()) {
 		document.getElementById('embed').innerHTML = `<iframe width="100%" height="50%" frameborder="0" src="https://docs.google.com/gview?url=https://timothydo.me/awards/${folder}/${files[award]}&embedded=true"></iframe>`;
 	}
