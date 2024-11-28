@@ -2285,19 +2285,19 @@ input, select, textarea {
 /* One */
 
 	#one {
-		background:  url("../../images/westerndigital.jpg");
+		background:  url("../../images/SiMaAnamoly.jpg");
 		background-size: cover;
 		background-attachment:  fixed;
-		background-position: center center;
+		background-position: center 15%;
 	}
 
 /* Two */
 
 	#two {
-		background: url("../../images/ucisamueli.jpg");
+		background: url("../../images/UCLAGradRoyce.jpg");
 		background-size: cover;
 		background-attachment:  fixed;
-		background-position: center 10%;
+		background-position: center 20%;
 	}
 
 /* Three */
