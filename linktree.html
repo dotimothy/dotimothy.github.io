@@ -34,6 +34,7 @@
 		margin-right:  auto;
 		display: block;
 		transition: 0.25s;
+		animation: fadein 1s;
 	}
 	.pfp:hover {
 		transform: scale(2.5) translateY(50%);
@@ -50,16 +51,21 @@
 		background-color: yellow;
 		padding: 0.5em;
 		margin-bottom: 1em;
+		animation: fadein 1s;
 	}
 	.box:hover {
 		background-color: white;
 		border: 0.25em solid white;
 		transition: 0.25s;
 	}
+	@keyframes fadein {
+		0% {opacity: 0%;}
+		100% {opacity: 100%;}
+	}
 	/* Desktop */
 	@media only screen and (min-width: 1000px) {
-		h1 { font-size:  2.5em; }
-		h2 { font-size:  2em; }
+		h1 { font-size:  3.5em; }
+		h2 { font-size:  3em; }
 		.center { width: 50%; }
 		.pfp { width: 30%; }
 	}
@@ -75,7 +81,7 @@
 <body>
 	<div class="center">
 		<img class="pfp" src="./images/roycepfp.jpg" alt="UCLA">
-		<h1>Timothy Do</h1>
+		<h1>⚡️ Timothy Do ⚡️</h1>
 	</div>
 	<div class="center box">
 		<h2>🌐<a href="https://timothydo.me">Website</a></h2>
@@ -94,6 +100,9 @@
 	</div>
 	<div class="center box">
 		<h2>🧑‍💻<a href="https://github.com/dotimothy">Github</a></h2>
+	</div>
+	<div class="center box">
+		<h2>📷<a href="https://timothydo.me/photography">Photography</a></h2>
 	</div>
 	<div class="center box">
 		<h2>🌌<a href="https://timothydo.me/astronomy">Astronomy</a></h2>
