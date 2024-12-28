@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<style>
+    * {
+        font-family: Roboto;
+        color: white;
+    }
+    body {
+        background-color: black;
+        align-items: center;
+    }
+    button {
+        position: absolute; 
+        top: 50%;
+        left: 50%;
+        background-color: lime;
+        color: black;
+        font-size: 3em;
+        opacity: 100%;
+        transition: 0.25s;
+    }
+    button:hover {
+        opacity: 50%;
+        transition: 0.25s;
+    }
+    button:active {
+        transform: translateY(30px);
+        transition: 0.25s;
+    }
+    h1 {
+        font-size: 3em;
+    }
+    p {
+        position: absolute;
+        font-size: 20em; 
+        animation: grow 1s;
+        display: block;
+    }
+    @keyframes grow {
+        0% {font-size: 0em;}
+        100% { font-size: 20em; }
+    }
+</style>
+
+<script>
+    let holidayStarter;
+    let treeInterval;
+    let treeSpeed = 250;
+
+    window.onload = function () {
+        holidayStarter = document.getElementById('holidayStarter');
+    }
+
+    function spawnTree() {
+        let top = Math.random() * (75-25) - 25;
+        let left = Math.random() * 50;
+        let tree = document.createElement('p');
+        console.log(top);
+        tree.style.top = `${top}%`; 
+        tree.style.left = `${left}%`;
+        tree.innerHTML = '🎄';
+        tree.addEventListener('animationend', () => {
+            tree.remove();
+        });
+        document.body.appendChild(tree);
+    }
+
+    function changeTreeSpeed(newSpeed) {
+        treeSpeed = newSpeed;
+        clearInterval(treeInterval);
+        treeInterval = setInterval(spawnTree,treeSpeed);
+        console.log(`New Tree Speed: ${treeSpeed} ms`);
+    }
+
+    function happyHolidays() {
+        console.log('Happy Holidays!!! 🎄');
+        holidayStarter.hidden = true;
+        treeInterval = setInterval(spawnTree,treeSpeed);
+    }
+</script>
+
+<head>
+    <title>Happy Holidays!!!</title>
+    <meta charset='UTF-8'>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
+</head>
+
+<body>
+    <button id="holidayStarter" onclick="happyHolidays()">Happy Holidays 🎄</button>
+</body>
