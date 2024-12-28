@@ -32,28 +32,28 @@
     }
     p {
         position: absolute;
-        font-size: 20em; 
+        font-size: 25em; 
         animation: grow 1s;
         display: block;
     }
     @keyframes grow {
         0% {font-size: 0em;}
-        100% { font-size: 20em; }
+        100% { font-size: 25em; }
     }
 </style>
 
 <script>
     let holidayStarter;
     let treeInterval;
-    let treeSpeed = 250;
+    let treeSpeed = 200;
 
     window.onload = function () {
         holidayStarter = document.getElementById('holidayStarter');
     }
 
     function spawnTree() {
-        let top = Math.random() * (75-25) - 25;
-        let left = Math.random() * 50;
+        let top = Math.random() * (75-25) - 15;
+        let left = Math.random() * 80;
         let tree = document.createElement('p');
         console.log(top);
         tree.style.top = `${top}%`; 
@@ -75,6 +75,7 @@
     function happyHolidays() {
         console.log('Happy Holidays!!! 🎄');
         holidayStarter.hidden = true;
+        document.body.requestFullscreen();
         treeInterval = setInterval(spawnTree,treeSpeed);
     }
 </script>
