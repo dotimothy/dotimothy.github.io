@@ -69,9 +69,16 @@
         margin-top: 20px;
         animation: fadein 1s;
     }
+    /* This class is now used for both social links and the fullscreen button */
     .social-logo {
         opacity: 1;
         transition: opacity 0.25s;
+        color: white; /* Explicitly set color for button icon */
+        background: none; /* Remove default button background */
+        border: none; /* Remove default button border */
+        cursor: pointer; /* Indicate clickable */
+        padding: 0; /* Remove default button padding */
+        /* REMOVED font-size here, let fa-X classes control it */
     }
     .social-logo:hover {
         opacity: 0.5;
@@ -90,11 +97,14 @@
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.85); /* Darker overlay */
-        display: none; /* Hidden by default */
+        display: flex; /* Always display flex so content is centered */
         justify-content: center;
         align-items: center;
         z-index: 1000; /* Ensure it's on top */
-        animation: fadein 0.3s;
+
+        opacity: 0; /* Hidden by default */
+        visibility: hidden; /* Truly hidden, not just invisible */
+        transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out; /* Smooth transition */
     }
 
     /* Make the iframe fill the overlay */
@@ -102,7 +112,7 @@
         width: 100%;
         height: 100%;
         border: none;
-        background-color: white; /* Ensure a white background for the content area */
+        background-color: black;
     }
 
     .close-button {
@@ -112,7 +122,7 @@
         background: none;
         border: none;
         color: white;
-        font-size: 2.5em; /* Larger X */
+        font-size: 7em; /* Doubled from 3.5em for desktop */
         cursor: pointer;
         z-index: 1001; /* Ensure close button is above iframe */
         transition: transform 0.2s;
@@ -123,27 +133,61 @@
     }
 
 
-    /* Desktop */
-    @media only screen and (min-width: 1000px) {
-        h1 { font-size:  3.5em; }
-        h2 { font-size:  2.5em; }
-        .center { width: 50%; }
-        .pfp { width: 30%; }
-    }
-    /* Mobile */
+    /* Default desktop styles */
+    h1 { font-size:  3.5em; }
+    h2 { font-size:  2.5em; }
+    .center { width: 50%; }
+    .pfp { width: 30%; }
+
+    /* Mobile styles */
     @media only screen and (max-width: 1000px) {
         h1 { font-size: 5em; }
         h2 { font-size:  4em; }
         .center { width: 75%; }
         .pfp { width: 50%; }
-        .close-button { font-size: 2em; top: 5px; right: 10px; }
+        .close-button { font-size: 6em; top: 5px; right: 10px; } /* Doubled from 3em for mobile */
+        /* REMOVED font-size from .social-logo here too */
     }
+
+    /* --- NEW: Styles for Fullscreen Mode --- */
+    /* These styles apply when the document is in fullscreen, overriding mobile styles if needed */
+    :fullscreen,
+    :-webkit-full-screen,
+    :-moz-full-screen,
+    :-ms-fullscreen {
+        /* Revert to desktop-like layout */
+        h1 { font-size: 3.5em; }
+        h2 { font-size: 2.5em; }
+        .center { width: 50%; }
+        .pfp { width: 30%; }
+        .close-button { font-size: 7em; top: 10px; right: 15px; }
+        /* Social icons will automatically be desktop size from fa-5x */
+    }
+
+    /* Specific adjustments for elements that might still be affected by mobile styles in fullscreen */
+    :fullscreen body,
+    :-webkit-full-screen body,
+    :-moz-full-screen body,
+    :-ms-fullscreen body {
+        padding: 0; /* Reset mobile body padding if any was applied */
+    }
+
+    :fullscreen .center,
+    :-webkit-full-screen .center,
+    :-moz-full-screen .center,
+    :-ms-fullscreen .center {
+        /* Ensure content is centered on larger screens in fullscreen */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    /* --- END NEW --- */
 </style>
 
 <body>
     <div class="center">
         <img class="pfp" src="./photographer.jpg" alt="EagleScout">
-        <h1>📷 TheDoShoots by <a href="https://timothydo.me">Timothy Do</a> 📷</h1>
+        <h1>📷 <a href="https://timothydo.me">TheDoShoots</a> 📷</h1>
     </div>
     <div class="center box">
         <h2>🌌<a href="https://timothydo.me/astronomy/photography" class="gallery-link" data-gallery-id="astronomy">Astrophotography</a></h2>
@@ -158,6 +202,8 @@
     <div class="social-icons">
         <a class="social-logo" href="https://instagram.com/thedoshoots"><i class="fab fa-instagram fa-5x" style="color: white;"></i></a>
         <a class="social-logo" href="https://www.flickr.com/photos/169526448@N03/"><i class="fab fa-flickr fa-5x" style="color: white;"></i></a>
+        <button id="fullscreenToggle" class="social-logo" title="Toggle Fullscreen">
+            <i class="fas fa-expand fa-5x fa-fw"></i> </button>
     </div>
 
     <div class="iframe-overlay" id="galleryOverlay">
@@ -171,12 +217,22 @@
             const galleryOverlay = document.getElementById('galleryOverlay');
             const galleryIframe = document.getElementById('galleryIframe');
             const closeButton = document.getElementById('closeGallery');
+            const fullscreenToggle = document.getElementById('fullscreenToggle');
 
             // Function to close the iframe overlay
             const closeIframeOverlay = () => {
-                galleryOverlay.style.display = 'none'; // Hide the overlay
-                galleryIframe.src = ''; // Clear the iframe src to stop any media playing
-                document.body.style.overflow = ''; // Re-enable body scrolling
+                galleryOverlay.style.opacity = '0'; // Start fade out
+                // Wait for the transition to finish before setting visibility to hidden
+                galleryOverlay.addEventListener('transitionend', function handleTransitionEnd() {
+                    // Only hide visibility if it's currently fading out (opacity is 0)
+                    if (galleryOverlay.style.opacity === '0') {
+                        galleryOverlay.style.visibility = 'hidden';
+                        document.body.style.overflow = ''; // Re-enable body scrolling
+                        galleryIframe.src = ''; // Clear the iframe src to stop any media playing
+                    }
+                    // Remove the event listener to prevent it from firing on other transitions
+                    galleryOverlay.removeEventListener('transitionend', handleTransitionEnd);
+                });
             };
 
             galleryLinks.forEach(link => {
@@ -185,7 +241,10 @@
                     const contentUrl = event.currentTarget.href; // Get the URL from the clicked link
 
                     galleryIframe.src = contentUrl; // Set the iframe's source to the URL
-                    galleryOverlay.style.display = 'flex'; // Show the overlay (which contains the iframe)
+                    
+                    // Show the overlay with fade-in effect
+                    galleryOverlay.style.visibility = 'visible';
+                    galleryOverlay.style.opacity = '1';
 
                     // Optional: Add a class to body to disable scrolling while overlay is open
                     document.body.style.overflow = 'hidden';
@@ -205,10 +264,50 @@
             // Keyboard event listener for Escape key
             document.addEventListener('keydown', (event) => {
                 // Check if the overlay is currently visible and the pressed key is Escape
-                if (galleryOverlay.style.display === 'flex' && event.key === 'Escape') {
+                if (galleryOverlay.style.opacity === '1' && event.key === 'Escape') {
                     closeIframeOverlay();
                 }
+                // Handle Escape key to exit fullscreen even if overlay isn't open
+                if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+                    if (event.key === 'Escape') {
+                        toggleFullscreen(); // Use the new fullscreen toggle function
+                    }
+                }
             });
+
+
+            // --- Fullscreen Toggle Logic ---
+            function toggleFullscreen() {
+                if (!document.fullscreenElement &&
+                    !document.mozFullScreenElement &&
+                    !document.webkitFullscreenElement &&
+                    !document.msFullscreenElement) {
+                    // Request fullscreen
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen();
+                    } else if (document.documentElement.mozRequestFullScreen) { /* Firefox */
+                        document.documentElement.mozRequestFullScreen();
+                    } else if (document.documentElement.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                        document.documentElement.webkitRequestFullscreen();
+                    } else if (document.documentElement.msRequestFullscreen) { /* IE/Edge */
+                        document.documentElement.msRequestFullscreen();
+                    }
+                } else {
+                    // Exit fullscreen
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.mozCancelFullScreen) { /* Firefox */
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) { /* IE/Edge */
+                        document.msExitFullscreen();
+                    }
+                }
+            }
+
+            fullscreenToggle.addEventListener('click', toggleFullscreen);
+            // --- END NEW ---
         });
     </script>
 </body>

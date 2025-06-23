@@ -7,59 +7,100 @@
     <style>
         body {
             font-family: 'Product Sans', sans-serif;
-            background-color: black; /* Changed to black */
-            color: white; /* Changed to white */
+            background-color: black;
+            color: white;
             padding: 20px;
             line-height: 1.6;
             margin: 0;
-            font-size: 1.2em; /* Increased base font size */
+            font-size: 1.2em;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
         }
         h1 {
-            color: white; /* Changed to white */
+            color: white;
             text-align: center;
             margin-bottom: 20px;
-            font-size: 3.5em; /* Increased h1 size */
-        }
-        p {
-            max-width: 800px;
-            margin: 0 auto 15px auto;
-            text-align: justify;
-            font-size: 1.5em; /* Increased paragraph size slightly */
+            font-size: 3.5em;
+            width: 100%;
         }
         .profile-section {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 30px;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 40px;
+            max-width: 1300px; /* Increased to accommodate larger image + text */
+            margin: 0 auto;
+            padding: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         .profile-section img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
+            border-radius: 8px;
+            width: 600px; /* Doubled from 300px */
+            height: auto; /* Allow height to adjust based on min-height */
+            min-height: 700px; /* Doubled from 350px */
             object-fit: cover;
-            margin-bottom: 20px;
-            border: 3px solid yellow; /* Changed border color to match main page theme */
+            border: 3px solid yellow;
+            flex-shrink: 0;
         }
-        ul {
-            list-style: none;
-            padding: 0;
-            text-align: center;
+        .profile-text-content {
+            flex-grow: 1;
+            max-width: 600px; /* Retaining text max-width, now fits alongside larger image */
+            text-align: left;
+            min-height: 700px; /* Doubled from 350px to match new image min-height */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
-        li {
-            margin-bottom: 8px;
+        p {
+            margin: 0 0 15px 0;
+            font-size: 1.5em;
+            text-align: justify;
+        }
+        p:last-child {
+            margin-bottom: 0;
+        }
+        a {
+            color: blue;
+            text-decoration: none;
+        }
+        a:hover {
+            color: yellow;
+            transition: 0.25s;
         }
 
-        /* Basic responsive adjustments for the about page content itself */
-        @media only screen and (max-width: 600px) {
+        /* Responsive adjustments for the about page content itself */
+        @media only screen and (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                padding: 10px;
+                max-width: 95%; /* Adjust max-width for smaller screens */
+            }
+            .profile-section img {
+                border-radius: 8px;
+                width: 500px; /* Doubled from 250px for mobile */
+                height: auto;
+                min-height: 560px; /* Doubled from 280px for mobile */
+            }
+            .profile-text-content {
+                max-width: 95%; /* Adjusted text width for mobile */
+                text-align: center;
+                min-height: 560px; /* Doubled from 280px for mobile */
+            }
             body {
                 padding: 10px;
-                font-size: 1.1em; /* Adjust for mobile */
+                font-size: 1.1em;
             }
             h1 {
-                font-size: 2em; /* Adjust for mobile */
+                font-size: 2em;
             }
             p {
-                max-width: 95%;
+                font-size: 1.2em;
             }
         }
     </style>
@@ -67,18 +108,20 @@
 <body>
     <h1>About TheDoShoots</h1>
     <div class="profile-section">
-        <img src="../photographer.jpg" alt="TheDoShoots Profile Picture">
-        <p>
-            Hello! I'm Timothy, a passionate photographer running TheDoShoots. My journey into photography began several years ago, when my father used to capture memories of our family with his collections of cameras. Now, having earned my Eagle Scout rank and being especially fond of the Photography Merit Badge, I have embraced photography as a way to express my creativity and share the beauty I see in the world.</p> 
-        </p>
-        <p>
-            This website serves as a curated collection of my work, a glimpse into the worlds I explore through my lens. Thank you for visiting and sharing in my passion!
-        </p>
-        <p>
-            📷: Canon T5/SL1 <br> 
-            📱: Samsung S24 Ultra/Google Pixel 9 Pro
-        </p>
-        <p><a href="https://timothydo.me/contact">Contact</a></p>
+        <img src="../tim.jpg" alt="TheDoShoots Profile Picture">
+        <div class="profile-text-content">
+            <p>
+                Hello! I'm Timothy, a passionate photographer running TheDoShoots. My journey into photography began several years ago, when my dad used to capture memories of our family with his collections of cameras. Fastforward to now, graduating from UCLA with a M.S. in Electrical and Computer Engineering, and earning my Eagle Scout rank being especially fond of the Photography Merit Badge, I have embraced photography as a way to express my creativity and appreciation of Mother Nature.
+            </p>
+            <p>
+                This website serves as a curated collection of my work, a glimpse into the worlds I explore through my various lenses. Thank you for visiting and sharing in my passion!
+            </p>
+            <p>
+                📷: Canon T5/SL1 <br>
+                📱: Samsung S24 Ultra/Google Pixel 9 Pro
+            </p>
+            <p><a href="https://timothydo.me/contact">Contact</a></p>
+        </div>
     </div>
 </body>
 </html>
