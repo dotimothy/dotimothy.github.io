@@ -2,3 +2,4 @@
 *.gz
 *.gz
 .DS_Store
+tmp/
