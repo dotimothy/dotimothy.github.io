@@ -190,7 +190,7 @@
         <h1>📷 <a href="https://timothydo.me">TheDoShoots</a> 📷</h1>
     </div>
     <div class="center box">
-        <h2>🌌<a href="https://timothydo.me/astronomy/photography" class="gallery-link" data-gallery-id="astronomy">Astrophotography</a></h2>
+        <h2>🌌<a href="./astronomy/index.html" class="gallery-link" data-gallery-id="astronomy">Astrophotography</a></h2>
     </div>
     <div class="center box">
         <h2>🐿️<a href="./wildlife/index.html" class="gallery-link" data-gallery-id="wildlife">Wildlife</a></h2>
@@ -219,6 +219,10 @@
             const closeButton = document.getElementById('closeGallery');
             const fullscreenToggle = document.getElementById('fullscreenToggle');
 
+            // --- NEW: Detect mobile once at the start ---
+            const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            // --- END NEW ---
+
             // Function to close the iframe overlay
             const closeIframeOverlay = () => {
                 galleryOverlay.style.opacity = '0'; // Start fade out
@@ -238,9 +242,21 @@
             galleryLinks.forEach(link => {
                 link.addEventListener('click', (event) => {
                     event.preventDefault(); // Prevent default link behavior (navigating to the page)
-                    const contentUrl = event.currentTarget.href; // Get the URL from the clicked link
+                    let contentUrl = event.currentTarget.href; // Get the URL from the clicked link
 
-                    galleryIframe.src = contentUrl; // Set the iframe's source to the URL
+                    // --- NEW: Modify URL if mobile device is detected ---
+                    if (isMobileDevice) {
+                        try {
+                            const url = new URL(contentUrl);
+                            url.searchParams.append('datasaver', 'true'); // Add the datasaver parameter
+                            contentUrl = url.toString(); // Update contentUrl with the new parameter
+                        } catch (e) {
+                            console.error("Could not append datasaver to URL:", contentUrl, e);
+                        }
+                    }
+                    // --- END NEW ---
+                    
+                    galleryIframe.src = contentUrl; // Set the iframe's source to the (potentially modified) URL
                     
                     // Show the overlay with fade-in effect
                     galleryOverlay.style.visibility = 'visible';
@@ -253,9 +269,8 @@
 
             closeButton.addEventListener('click', closeIframeOverlay);
 
-            // Optional: Close overlay if user clicks outside the iframe (now the iframe-overlay itself)
+            // Optional: Close overlay if user clicks directly on the overlay (outside iframe/close button)
             galleryOverlay.addEventListener('click', (event) => {
-                // Check if the click was directly on the overlay, not on the iframe or close button
                 if (event.target === galleryOverlay) {
                     closeIframeOverlay();
                 }
@@ -299,15 +314,14 @@
                     } else if (document.mozCancelFullScreen) { /* Firefox */
                         document.mozCancelFullScreen();
                     } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-                        document.webkitExitFullscreen();
+                        document.documentElement.webkitExitFullscreen();
                     } else if (document.msExitFullscreen) { /* IE/Edge */
-                        document.msExitFullscreen();
+                        document.documentElement.msExitFullscreen();
                     }
                 }
             }
 
             fullscreenToggle.addEventListener('click', toggleFullscreen);
-            // --- END NEW ---
         });
     </script>
 </body>

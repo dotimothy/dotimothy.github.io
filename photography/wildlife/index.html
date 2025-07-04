@@ -2,258 +2,256 @@
 <html>
     <base target="_blank"/>
     <head>
-        <title>Timothy's Wildlife Gallery</title>
+        <title>Gallery Template</title>
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📷</text></svg>">
         <link href='https://fonts.googleapis.com/css?family=Product+Sans' rel='stylesheet' type='text/css'>
-        <script src="imgNames.js"></script>
     </head>
 
     <style>
-        /* Mobile Phone */
-        @media(max-width: 480px) {
-            .thumb,.thumbhidden {
-                width: calc(100%/2);
-            }
-            #fullViewThumbSelector {
-                height: 70px; /* Adjust for smaller screens */
-            }
-            #fullViewThumbSelector img {
-                height: 60px; /* Adjust for smaller screens */
-            }
-        }
-
-        /* Global CSS */
-        body {
-            background-color: black;
-            /* Prevent pull-to-refresh or other gestures if zoom/pan is active */
-            /* touch-action: none; /* Might be too restrictive, apply to imageViewer instead */
-        }
-        h1, h2, p {
-            color: white;
-            font-family: Product Sans;
-        }
-        h1 {
-            font-size: 3em;
-            font-weight: bolder;
-        }
-        h2 {
-            font-size: 2em;
-        }
-        p {
-            font-size: 1.5em;
-            font-weight: lighter;
-        }
-        a {
-            color: blue;
-            transition: 0.25s;
-        }
-        a:hover {
-            opacity: 50%;
-            transition: 0.25s;
-        }
-        #gallery {
-            display: inline-block;
-        }
-        .thumbhidden {
-            width: calc(100%/5);
-            opacity: 0%;
-        }
+        body { background-color: black; }
+        h1, h2, p { color: white; font-family: 'Product Sans', sans-serif; }
+        h1 { font-size: 3em; font-weight: bolder; }
+        h2 { font-size: 2em; }
+        p { font-size: 1.5em; font-weight: lighter; }
+        a { color: #007bff; transition: 0.1s; }
+        a:hover { opacity: 0.7; transition: 0.1s; }
+        #gallery { display: inline-block; width: 100%; text-align: center; }
+        .thumbhidden { width: calc(100%/5); opacity: 0%; }
         .thumb {
             width: calc(100%/5);
-            animation: fadein 0.5s;
+            animation: fadein 0.25s forwards;
             opacity: 100%;
+            cursor: pointer;
+            transition: opacity 0.1s, width 0.3s ease-in-out, filter 0.1s ease-in-out, box-shadow 0.1s ease-in-out, transform 0.1s ease-in-out;
+            border-radius: 5px;
+            box-sizing: border-box;
+            padding: 5px;
         }
         .thumb:hover {
-            opacity: 50%;
-            transition: 0.25s;
+            opacity: 1;
+            filter: brightness(1.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            transform: scale(1.02);
         }
         @keyframes fadein {
             0% {opacity: 0%;}
             100% {opacity: 100%;}
         }
         button {
-            font-size: 8em;
+            font-size: 6em;
             background-color: transparent;
             border: none;
-            opacity: 100%;
-            transition: 0.25s;
+            opacity: 0.5;
+            transition: 0.1s;
             user-select: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.1em 0.2em;
+            border-radius: 8px;
         }
-        button:active {
-            transform: translateY(10px);
-            transition: 0.125s;
-        }
+        button:hover { opacity: 1; transition: 0.1s; }
+        button:active { transform: translateY(3px); transition: 0.05s; }
         #imageViewer {
             position: fixed;
-            top: 0%;
-            left: 0%;
+            top: 0; left: 0;
             background-color: rgba(0,0,0,0.9);
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
+            width: 100%; height: 100%;
+            margin: 0; padding: 0;
             z-index: 1;
             user-select: none;
-            overflow: hidden; /* Changed to hidden by default for zoom */
-            touch-action: none; /* Prevent browser gestures like pinch-zoom if implementing custom touch zoom/pan */
+            overflow: hidden;
+            touch-action: none;
+        }
+        #imageViewer.visible { animation: grow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #imageViewer.shrinking { animation: shrink 0.3s forwards; }
+        @keyframes grow {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes shrink {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(0.5); opacity: 0; }
         }
         #full {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            max-height: calc(100% - 90px); /* Adjust if fullViewThumbSelector height changes */
+            position: absolute;
+            width: 100%; height: 100%;
+            max-height: calc(100% - 90px);
             object-fit: contain;
-            animation: grow 0.25s;
-            /* Transition will be managed by JS for zoom/pan */
-            /* transition: 0.25s; */
             user-select: none;
-            pointer-events: none; /* Initial state, JS will change for interaction */
-            cursor: default; /* Default cursor */
-            transform-origin: center center; /* Crucial for zoom */
+            pointer-events: none;
+            cursor: default;
+            transform-origin: center center;
+            transition: opacity 0.1s ease-in-out;
         }
-        @keyframes grow {
-            0% {
-                top: 50%; /* Centering for grow effect, not directly related to transform-origin */
-                left: 50%;
-                width: 0%;
-                height: 0%;
-                transform: translate(-50%, -50%) scale(0); /* Adjust grow animation to use transform */
-            }
-            100% {
-                top: 0%;
-                left: 0%;
-                width: 100%;
-                max-height: calc(100% - 90px);
-                transform: translate(0,0) scale(1); /* End state of grow */
-            }
-        }
+        #full.thumbs-hidden { max-height: 100%; }
+        @keyframes slideOutLeft { from { transform: translateX(0); opacity: 1; } to { transform: translateX(-100%); opacity: 0; } }
+        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 1; } }
+        @keyframes slideInLeft { from { transform: translateX(-100%); opacity: 1; } to { transform: translateX(0); opacity: 1; } }
+        .slide-out-left { animation: slideOutLeft 0.3s ease-out forwards; }
+        .slide-in-right { animation: slideInRight 0.3s ease-out forwards; }
+        .slide-out-right { animation: slideOutRight 0.3s ease-out forwards; }
+        .slide-in-left { animation: slideInLeft 0.3s ease-out forwards; }
         #metadataViewer {
             position: fixed;
-            background-color: black;
+            background-color: rgba(0,0,0,0.8);
             width: 100%;
-            height: 25%;
+            max-height: 35%; /* Adjusted from 28% */
             bottom: 90px;
-            opacity: 2%;
+            opacity: 0%;
             z-index: 2;
-            line-height: 1.25em;
-            animation: sneak 1s;
-            transition: 0.25s ease-in;
-            overflow-y: auto;
+            line-height: 1.4em;
             padding-bottom: 10px;
             box-sizing: border-box;
-        }
-        #metadataViewer:hover {
-            opacity: 90%;
-            transition: 0.25s ease-in-out;
-        }
-        #exitViewer {
-            position: fixed;
-            font-size: 7.5em;
+            transition: opacity 0.2s ease-in-out, bottom 0.3s ease-in-out;
+            overflow-y: auto;
             color: white;
-            top: 5%;
-            right: 5%;
-            opacity: 2%;
-            transition: ease-in 0.25s;
-            animation: sneak 1s;
-            z-index: 3;
+            padding: 15px 20px;
+            font-family: 'Product Sans', sans-serif;
+            text-align: center;
         }
-        #home {
-            position: fixed;
-            font-size: 6em;
-            bottom: 5%;
-            right: 4%;
-            opacity: 5%;
-            transition: ease-in 0.25s;
-            z-index: 3;
+        #metadataViewer.active { opacity: 0.9; }
+        #metadataViewer.thumbs-hidden { bottom: 0; }
+        #exitViewer { position: fixed; font-size: 2.5em; top: 15px; right: 15px; z-index: 3; }
+        #home { position: fixed; font-size: 2.5em; bottom: 15px; right: 15px; z-index: 3; }
+        #leftArrow { position: fixed; font-size: 4em; color: white; bottom: 45%; left: 5%; z-index: 3; }
+        #rightArrow { position: fixed; font-size: 4em; color: white; bottom: 45%; right: 5%; z-index: 3; }
+        #toggleMetadata { position: fixed; font-size: 2.5em; color: white; top: 15px; left: 15px; z-index: 3; line-height: 1; }
+        #fullscreenToggle { position: fixed; font-size: 2.5em; color: white; top: 15px; left: 70px; z-index: 3; line-height: 1; }
+        #toggleThumbSelector { position: fixed; font-size: 2.5em; color: white; top: 15px; left: 125px; z-index: 3; line-height: 1; }
+        #exitViewer, #toggleMetadata, #home, #leftArrow, #rightArrow, #fullscreenToggle, #toggleThumbSelector {
+          opacity: 0.6;
+          text-shadow: 0px 0px 10px rgba(0,0,0,0.7);
+          transition: opacity 0.2s ease;
         }
-        #leftArrow {
-            position: fixed;
-            font-size: 8em;
-            color: white;
-            bottom: 50%;
-            opacity: 2%;
-            left: 5%;
-            transition: ease-in 0.25s;
-            animation: sneak 1s;
-            z-index: 3;
-        }
-        #rightArrow {
-            position: fixed;
-            font-size: 8em;
-            color: white;
-            bottom: 50%;
-            opacity: 2%;
-            right: 5%;
-            transition: ease-in 0.25s;
-            animation: sneak 1s;
-            z-index: 3;
-        }
-        #exitViewer:hover, #home:hover, #leftArrow:hover, #rightArrow:hover {
-            opacity: 100%;
-            transition: 0.25s;
-        }
-
+        #exitViewer:hover, #toggleMetadata:hover, #home:hover, #leftArrow:hover, #rightArrow:hover, #fullscreenToggle:hover, #toggleThumbSelector:hover { opacity: 1; }
         #fullViewThumbSelector {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 90px;
+            bottom: 0; left: 0;
+            width: 100%; height: 90px;
             background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
             overflow-x: auto;
             overflow-y: hidden;
-            white-space: nowrap;
             z-index: 4;
-            padding: 5px 0;
+            padding: 5px 10px;
             box-sizing: border-box;
+            scroll-behavior: smooth;
+            transition: transform 0.3s ease-in-out;
         }
-
+        #fullViewThumbSelector.hidden-thumbs { transform: translateY(100%); }
         #fullViewThumbSelector img {
-            display: inline-block;
+            flex-shrink: 0;
             height: 80px;
             width: auto;
-            margin: 0 4px;
+            min-width: 80px;
+            object-fit: cover;
+            margin: 0 5px;
             cursor: pointer;
             border: 2px solid transparent;
             border-radius: 3px;
-            transition: border-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+            transition: border-color 0.1s ease-in-out, transform 0.1s ease-in-out;
         }
-
-        #fullViewThumbSelector img:hover {
-            border-color: #ccc;
-            transform: scale(1.05);
-        }
-
+        #fullViewThumbSelector img:hover { border-color: #ccc; transform: scale(1.05); }
         #fullViewThumbSelector img.activeFullViewThumb {
             border-color: #007bff;
             box-shadow: 0 0 8px #007bff;
             transform: scale(1.05);
         }
-
-
-        @media only screen and (max-width: 1000px) {
-            h1 { font-size: 4em;}
-            h2 {font-size: 2em;}
-            #metadataViewer h2, #metadataViewer p {font-size: 3em; }
-            .thumb, .thumbhidden { width: 100%;}
-            #metadataViewer {
-                bottom: 70px;
-                height: 30%;
-            }
-            #full {
-                 max-height: calc(100% - 70px);
-            }
-             @keyframes grow {
-                100% { max-height: calc(100% - 70px); transform: translate(0,0) scale(1); }
-            }
+        @media (max-width: 1280px) { .thumb, .thumbhidden { width: calc(100%/4); } }
+        @media (max-width: 1024px) {
+            .thumb, .thumbhidden { width: calc(100%/3); }
+            h1 { font-size: 2.5em; }
+            h2 { font-size: 1.8em; }
+            p { font-size: 1.2em; }
         }
-        @keyframes sneak {
-            0% {opacity: 0%;}
-            25% {opacity: 0%;}
-            50% {opacity: 80%;}
-            75% {opacity: 80%;}
-            100% {opacity: 2%;}
+        @media (max-width: 767px) {
+            h1 { font-size: 1.8em; text-align: center; }
+            .thumb, .thumbhidden { width: calc(100%/2); }
+            #fullViewThumbSelector { height: 70px; }
+            #fullViewThumbSelector img { height: 60px; min-width: 60px; }
+            #full { max-height: calc(100% - 70px); }
+            #full.thumbs-hidden { max-height: 100%; }
+            #metadataViewer { bottom: 70px; max-height: 45%; /* Adjusted from 38% */ text-align: left; padding: 10px 15px; }
+            #metadataViewer.thumbs-hidden { bottom: 0; }
+            #metadataViewer h2 { font-size: 1.2em; }
+            #metadataViewer p { font-size: 0.9em; line-height: 1.5; }
+            #exitViewer, #toggleMetadata, #home, #fullscreenToggle, #toggleThumbSelector { font-size: 2.2em; }
+            #leftArrow, #rightArrow { font-size: 3em; }
+        }
+
+        /* Styles for the new light pollution map iframe modal */
+        #lightPollutionMapOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        #lightPollutionMapOverlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #lightPollutionMapContainer {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            height: 80%;
+            max-height: 600px;
+            background-color: black;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            transform: scale(0.8);
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease-in-out;
+        }
+
+        #lightPollutionMapOverlay.visible #lightPollutionMapContainer {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        #lightPollutionMapIframe {
+            width: 100%;
+            height: calc(100% - 40px); /* Adjust height for close button */
+            border: none;
+        }
+
+        #lightPollutionMapCloseButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            transition: background-color 0.2s;
+        }
+
+        #lightPollutionMapCloseButton:hover {
+            background-color: rgba(255, 255, 255, 0.4);
         }
     </style>
 
@@ -261,39 +259,23 @@
         const urlParams = new URLSearchParams(window.location.search);
         let doFullscreen = (isMobileDevice() && urlParams.has('fullscreen')) || (!isMobileDevice() && (!urlParams.has('fullscreen')));
         let debug = urlParams.has('debug');
-        let fullRes = urlParams.has('full');
-        let fullDir = fullRes ? 'fulls' : 'thumbs';
+        let dataSaver = urlParams.has('datasaver');
+        let fullDir = dataSaver ? 'thumbs' : 'fulls'; 
         let preload = urlParams.has('preload');
         let galleryView = urlParams.has('gallery');
-        let gallery;
-        let imageViewer;
-        let metadata = {};
-        let revealInterval;
-        let revealCounter = 0;
-        let galleryCounter = 0;
-        let galleryDuration = 3000;
-        let galleryInterval;
-        let isMobile;
-        let keyAction;
-        let swipeThresh = 75;
-        let touchstartX = 0;
-        let touchendX = 0;
-        let touchStartAction;
-        let touchEndAction;
-        let madeFullscreen = false;
+        let gallery, imageViewer, metadata = {}, imgNames = [];
+        let revealInterval, revealCounter = 0, galleryCounter = 0, galleryDuration = 1500, galleryInterval;
+        let isMobile, keyAction, swipeThresh = 75, touchstartX = 0, touchendX = 0, madeFullscreen = false;
+        let titleElement, j = 0;
+        const completedTitle = `🐿️ Timothy's Wildlife Gallery!!! 🐿️`;
+        let homeButton; 
 
-        // Zoom and Pan Variables
-        let currentScale = 1.0;
-        let currentPanX = 0;
-        let currentPanY = 0;
-        let isPanningImage = false; // Renamed to avoid conflict with other 'isPanning'
-        let lastPanMouseX = 0;
-        let lastPanMouseY = 0;
-        let fullImageElement = null;
-        const MIN_SCALE = 1.0;
-        const MAX_SCALE = 8.0; // Max zoom level
-        const ZOOM_INTENSITY = 0.1;
+        let currentScale = 1.0, currentPanX = 0, currentPanY = 0, isPanningImage = false;
+        let lastPanMouseX = 0, lastPanMouseY = 0, fullImageElement = null;
+        const MIN_SCALE = 1.0, MAX_SCALE = 8.0, ZOOM_INTENSITY = 0.1;
 
+        let initialPinchDistance = 0, initialScale = 1.0, lastTouchX = 0, lastTouchY = 0, isTwoFingerPanning = false;
+        let thumbSelectorVisible = true;
 
         function isMobileDevice() {
             return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
@@ -301,21 +283,8 @@
 
         function preloadFulls() {
             for(let i = 0; i < imgNames.length; i++) {
-                preloadImage(`./${fullDir}/${imgNames[i]}.jpg`);
+                new Image().src = `./${fullDir}/${imgNames[i]}.jpg`;
             }
-        }
-
-        function preloadImage(url) {
-            let img = new Image();
-            img.src = url;
-            return img;
-        }
-
-        function loadThumbs() {
-            for (let i = 0; i < imgNames.length; i++) {
-                loadThumb(imgNames[i]);
-            }
-            document.querySelector('footer').hidden = false;
         }
 
         function getJSONData(url) {
@@ -323,12 +292,7 @@
             xhr.open('GET', url, false);
             try {
                 xhr.send();
-                if (xhr.status === 200) {
-                return JSON.parse(xhr.responseText);
-                } else {
-                console.error('Request failed with status:', xhr.status);
-                return null;
-                }
+                return xhr.status === 200 ? JSON.parse(xhr.responseText) : null;
             } catch (error) {
                 console.error('Error fetching JSON:', error);
                 return null;
@@ -336,20 +300,36 @@
         }
 
         function loadMetadata() {
-            for (let i = 0; i < imgNames.length; i++) {
-                let metadataPath = `./metadata/${imgNames[i]}.json`;
-                metadata[imgNames[i]] = getJSONData(metadataPath);
+            const allData = getJSONData('./metadata/metadata.json');
+            if (allData) {
+                metadata = allData;
+                imgNames = allData.image_order || [];
+            } else {
+                console.error("Failed to load metadata.json. Metadata and image list will be unavailable.");
+                metadata = {};
+                imgNames = [];
             }
         }
 
-        function loadThumb(imgName) {
-            gallery.innerHTML += `<img onclick='viewFull("${imgName}")' id='${imgName}' src='./thumbs/${imgName}.jpg' class='thumbhidden' alt='${imgName}'/>`;
+        function loadThumbs() {
+            for (let i = 0; i < imgNames.length; i++) {
+                const imgElement = document.createElement('img');
+                imgElement.onclick = () => viewFull(imgNames[i]);
+                imgElement.id = imgNames[i];
+                imgElement.src = `./thumbs/${imgNames[i]}.jpg`;
+                imgElement.classList.add('thumbhidden');
+                imgElement.alt = imgNames[i];
+                gallery.appendChild(imgElement);
+            }
+            document.querySelector('footer').hidden = false;
         }
 
         function revealThumb(imgName) {
             let img = document.getElementById(imgName);
-            img.classList.remove('thumbhidden');
-            img.classList.add('thumb');
+            if (img) {
+                img.classList.remove('thumbhidden');
+                img.classList.add('thumb');
+            }
         }
 
         function revealThumbs() {
@@ -361,331 +341,311 @@
             }
         }
 
-        function checkDirection() {
-            return touchendX < touchstartX;
-        }
+        function checkDirection() { return touchendX < touchstartX; }
+        function checkLength() { return Math.abs(touchstartX-touchendX) >= swipeThresh; }
 
-        function checkLength() {
-            return Math.abs(touchstartX-touchendX) >= swipeThresh;
-        }
-
-        // --- Zoom and Pan Functions ---
         function applyTransformations() {
-            if (fullImageElement) {
-                fullImageElement.style.transform = `translate(${currentPanX}px, ${currentPanY}px) scale(${currentScale})`;
-            }
+            if (fullImageElement) fullImageElement.style.transform = `translate(${currentPanX}px, ${currentPanY}px) scale(${currentScale})`;
         }
 
         function constrainPan() {
             if (!fullImageElement || !imageViewer) return;
-
-            const imgBoxWidth = fullImageElement.offsetWidth;
-            const imgBoxHeight = fullImageElement.offsetHeight;
-
-            const scaledContentWidth = imgBoxWidth * currentScale;
-            const scaledContentHeight = imgBoxHeight * currentScale;
-
-            const viewerWidth = imageViewer.clientWidth;
-            const viewerHeight = imageViewer.clientHeight;
-
-            // Max pan from center. If content is smaller than viewer, max pan is 0 (no pan).
+            const imgBoxWidth = fullImageElement.offsetWidth, imgBoxHeight = fullImageElement.offsetHeight;
+            const scaledContentWidth = imgBoxWidth * currentScale, scaledContentHeight = imgBoxHeight * currentScale;
+            const viewerWidth = imageViewer.clientWidth, viewerHeight = imageViewer.clientHeight;
             const maxX = Math.max(0, (scaledContentWidth - viewerWidth) / 2);
             const maxY = Math.max(0, (scaledContentHeight - viewerHeight) / 2);
-
             currentPanX = Math.max(-maxX, Math.min(maxX, currentPanX));
             currentPanY = Math.max(-maxY, Math.min(maxY, currentPanY));
         }
 
-
         function handleWheelZoom(event) {
             if (!fullImageElement) return;
-            event.preventDefault(); // Prevent page scroll
-
+            event.preventDefault();
             const oldScale = currentScale;
-
             const rect = imageViewer.getBoundingClientRect();
-            const mouseX = event.clientX - rect.left; // Mouse X relative to imageViewer
-            const mouseY = event.clientY - rect.top;  // Mouse Y relative to imageViewer
+            const mouseX = event.clientX - rect.left, mouseY = event.clientY - rect.top;
 
-            if (event.deltaY < 0) { // Zoom in
-                currentScale = Math.min(MAX_SCALE, currentScale * (1 + ZOOM_INTENSITY));
-            } else { // Zoom out
-                currentScale = Math.max(MIN_SCALE, currentScale * (1 - ZOOM_INTENSITY));
-            }
+            currentScale = event.deltaY < 0 ? Math.min(MAX_SCALE, currentScale * (1 + ZOOM_INTENSITY)) : Math.max(MIN_SCALE, currentScale * (1 - ZOOM_INTENSITY));
 
             if (currentScale <= MIN_SCALE) {
-                currentScale = MIN_SCALE; // Clamp to min scale
-                resetZoomAndPan(false); // Reset pan, don't re-apply transform yet
+                currentScale = MIN_SCALE;
+                resetZoomAndPan(false);
             } else {
-                 // Adjust pan to zoom towards the mouse cursor
-                // Mouse position relative to the center of the imageViewer
-                const imageViewerCenterX = rect.width / 2;
-                const imageViewerCenterY = rect.height / 2;
-
+                const imageViewerCenterX = rect.width / 2, imageViewerCenterY = rect.height / 2;
                 const mouseRelativeToCenter_X = mouseX - imageViewerCenterX;
                 const mouseRelativeToCenter_Y = mouseY - imageViewerCenterY;
-
                 currentPanX = mouseRelativeToCenter_X - (mouseRelativeToCenter_X - currentPanX) * (currentScale / oldScale);
                 currentPanY = mouseRelativeToCenter_Y - (mouseRelativeToCenter_Y - currentPanY) * (currentScale / oldScale);
             }
 
-            if (currentScale > MIN_SCALE) {
-                fullImageElement.style.cursor = 'grab';
-                fullImageElement.style.pointerEvents = 'auto'; // Allow mousedown for panning
-            } else {
-                fullImageElement.style.cursor = 'default';
-                fullImageElement.style.pointerEvents = 'none'; // Disable mousedown if not zoomed
-            }
-            
-            fullImageElement.style.transition = 'transform 0.1s ease-out'; // Smooth zoom transition
+            fullImageElement.style.cursor = currentScale > MIN_SCALE ? 'grab' : 'default';
+            fullImageElement.style.pointerEvents = currentScale > MIN_SCALE ? 'auto' : 'none';
+            fullImageElement.style.transition = 'transform 0.05s ease-out';
             constrainPan();
             applyTransformations();
         }
 
         function handleMouseDownPan(event) {
-            if (event.button !== 0 || currentScale <= MIN_SCALE || !fullImageElement) return; // Only left button, only if zoomed
+            if (event.button !== 0 || currentScale <= MIN_SCALE || !fullImageElement) return;
             event.preventDefault();
             isPanningImage = true;
             lastPanMouseX = event.clientX;
             lastPanMouseY = event.clientY;
             fullImageElement.style.cursor = 'grabbing';
-            fullImageElement.style.transition = 'none'; // No transition during active pan
+            fullImageElement.style.transition = 'none';
             imageViewer.style.userSelect = 'none';
         }
 
         function handleMouseMovePan(event) {
             if (!isPanningImage || !fullImageElement) return;
             event.preventDefault();
-            const dX = event.clientX - lastPanMouseX;
-            const dY = event.clientY - lastPanMouseY;
-
+            const dX = event.clientX - lastPanMouseX, dY = event.clientY - lastPanMouseY;
             currentPanX += dX;
             currentPanY += dY;
-
             lastPanMouseX = event.clientX;
             lastPanMouseY = event.clientY;
-            
-            constrainPan(); // Constrain immediately
-            applyTransformations(); // Apply immediately
+            constrainPan();
+            applyTransformations();
         }
 
         function handleMouseUpPan(event) {
             if (!isPanningImage) return;
             event.preventDefault();
             isPanningImage = false;
-            if (fullImageElement) {
-                fullImageElement.style.cursor = currentScale > MIN_SCALE ? 'grab' : 'default';
-                fullImageElement.style.transition = 'transform 0.1s ease-out'; // Restore transition
-            }
+            if (fullImageElement) fullImageElement.style.cursor = currentScale > MIN_SCALE ? 'grab' : 'default';
             if(imageViewer) imageViewer.style.userSelect = 'auto';
         }
 
-        function resetZoomAndPan(apply = true) { // 'apply' param to avoid double transform
+        function resetZoomAndPan(apply = true) {
             currentScale = MIN_SCALE;
             currentPanX = 0;
             currentPanY = 0;
             if (fullImageElement) {
                 fullImageElement.style.cursor = 'default';
-                fullImageElement.style.pointerEvents = 'none'; // Reset pointer events
-                 if(apply) {
-                    fullImageElement.style.transition = 'transform 0.2s ease-out'; // Smooth reset
-                    applyTransformations();
-                 }
+                fullImageElement.style.pointerEvents = 'none';
+                if(apply) fullImageElement.style.transition = 'transform 0.1s ease-out';
+                if(apply) applyTransformations();
             }
         }
-        // --- End Zoom and Pan Functions ---
 
+        function getDistance(touch1, touch2) {
+            return Math.sqrt(Math.pow(touch2.clientX - touch1.clientX, 2) + Math.pow(touch2.clientY - touch1.clientY, 2));
+        }
+
+        function getMidpoint(touch1, touch2) {
+            return { x: (touch1.clientX + touch2.clientX) / 2, y: (touch1.clientY + touch2.clientY) / 2 };
+        }
+
+        function handleTouchStart(event) {
+            if (!fullImageElement) return;
+            if (event.touches.length === 2) {
+                event.preventDefault();
+                initialPinchDistance = getDistance(event.touches[0], event.touches[1]);
+                initialScale = currentScale;
+                fullImageElement.style.transition = 'none';
+                isTwoFingerPanning = true;
+            } else if (event.touches.length === 1) {
+                lastTouchX = event.touches[0].clientX;
+                lastTouchY = event.touches[0].clientY;
+                fullImageElement.style.transition = 'none';
+                if (currentScale > MIN_SCALE) {
+                    event.preventDefault();
+                    isTwoFingerPanning = false;
+                    fullImageElement.style.cursor = 'grabbing';
+                } else {
+                    touchstartX = event.changedTouches[0].screenX;
+                    isTwoFingerPanning = false;
+                }
+            }
+        }
+
+        function handleTouchMove(event) {
+            if (!fullImageElement) return;
+            if (event.touches.length === 2) {
+                event.preventDefault();
+                const currentPinchDistance = getDistance(event.touches[0], event.touches[1]);
+                let newScale = initialScale * (currentPinchDistance / initialPinchDistance);
+                newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, newScale));
+
+                const oldScale = currentScale;
+                const oldMidpoint = getMidpoint(event.touches[0], event.touches[1]);
+                const viewerRect = imageViewer.getBoundingClientRect();
+                const imageViewerCenterX = viewerRect.width / 2, imageViewerCenterY = viewerRect.height / 2;
+
+                const mouseRelativeToCenter_X = oldMidpoint.x - viewerRect.left - imageViewerCenterX;
+                const mouseRelativeToCenter_Y = oldMidpoint.y - viewerRect.top - imageViewerCenterY;
+
+                currentPanX = mouseRelativeToCenter_X - (mouseRelativeToCenter_X - currentPanX) * (currentScale / oldScale);
+                currentPanY = mouseRelativeToCenter_Y - (mouseRelativeToCenter_Y - currentPanY) * (currentScale / oldScale);
+
+                currentScale = newScale;
+                constrainPan();
+                applyTransformations();
+
+                fullImageElement.style.cursor = currentScale > MIN_SCALE ? 'grab' : 'default';
+                fullImageElement.style.pointerEvents = currentScale > MIN_SCALE ? 'auto' : 'none';
+                if (currentScale <= MIN_SCALE) resetZoomAndPan(false);
+            } else if (event.touches.length === 1 && currentScale > MIN_SCALE) {
+                event.preventDefault();
+                const touch = event.touches[0];
+                const dX = touch.clientX - lastTouchX, dY = touch.clientY - lastTouchY;
+                currentPanX += dX;
+                currentPanY += dY;
+                lastTouchX = touch.clientX;
+                lastTouchY = touch.clientY;
+                constrainPan();
+                applyTransformations();
+                fullImageElement.style.cursor = 'grabbing';
+                isTwoFingerPanning = false;
+            }
+        }
+
+        function handleTouchEnd(event) {
+            if (!fullImageElement) return;
+            fullImageElement.style.transition = 'transform 0.05s ease-out';
+            fullImageElement.style.cursor = currentScale > MIN_SCALE ? 'grab' : 'default';
+            if (event.changedTouches.length === 1 && currentScale <= MIN_SCALE && !isTwoFingerPanning) {
+                touchendX = event.changedTouches[0].screenX;
+                if(checkLength()) {
+                    let dir = checkDirection() ? 1 : -1;
+                    const currentImgName = fullImageElement.alt.replace('Full view of ', '');
+                    const currentImgIndex = imgNames.indexOf(currentImgName);
+                    if ((dir === 1 && currentImgIndex < imgNames.length - 1) || (dir === -1 && currentImgIndex > 0)) {
+                        changeFull(imgNames[currentImgIndex + dir]);
+                    }
+                }
+            }
+            isTwoFingerPanning = false;
+        }
+
+        function updateFullViewThumbSelector(currentImgName) {
+            const selectorContainer = document.getElementById('fullViewThumbSelector');
+            if (!selectorContainer) return;
+            selectorContainer.querySelectorAll('img').forEach(img => { img.classList.remove('activeFullViewThumb'); });
+            const activeThumb = selectorContainer.querySelector(`img[alt="Thumbnail of ${currentImgName}"]`);
+            if (activeThumb) {
+                activeThumb.classList.add('activeFullViewThumb');
+                activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        }
 
         function createFullViewThumbSelector(currentImgName) {
-            let selectorContainer = document.createElement('div');
-            selectorContainer.id = 'fullViewThumbSelector';
-
+            let selectorContainer = document.getElementById('fullViewThumbSelector');
+            if (!selectorContainer) {
+                selectorContainer = document.createElement('div');
+                selectorContainer.id = 'fullViewThumbSelector';
+                imageViewer.appendChild(selectorContainer);
+            } else {
+                selectorContainer.innerHTML = '';
+            }
             imgNames.forEach(name => {
                 let thumb = document.createElement('img');
                 thumb.src = `./thumbs/${name}.jpg`;
                 thumb.alt = `Thumbnail of ${name}`;
                 thumb.onclick = function() { changeFull(name); };
-                if (name === currentImgName) {
-                    thumb.classList.add('activeFullViewThumb');
-                }
                 selectorContainer.appendChild(thumb);
             });
-            imageViewer.appendChild(selectorContainer);
-
-            const activeThumb = selectorContainer.querySelector('.activeFullViewThumb');
-            if (activeThumb) {
-                // MODIFICATION HERE: Changed 'smooth' to 'auto'
-                activeThumb.scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
-            }
+            updateFullViewThumbSelector(currentImgName);
         }
-
 
         function viewFull(imgName) {
             document.body.style.overflow = 'hidden';
-            if(title) title.hidden = false;
-            viewMetadata(imgName);
-            if(gallery) gallery.style.pointerEvents = 'none';
+            homeButton.hidden = true;
+            if(titleElement) titleElement.classList.add('hidden');
+            if(gallery) gallery.classList.add('pointer-events-none');
+            
             madeFullscreen = doFullscreen && !document.fullscreenElement;
-            let imgNameIndex = imgNames.indexOf(imgName);
-            let fullPath = `./${fullDir}/${imgName}.jpg`;
+            if(madeFullscreen) document.body.requestFullscreen();
 
-            if(madeFullscreen) {
-                document.body.requestFullscreen();
-            }
-            let img = preloadImage(fullPath);
-            img.id = 'full';
-            imageViewer.appendChild(img);
-            fullImageElement = img; // Store reference for zoom/pan
+            const existingFullImg = document.getElementById('full');
+            if (existingFullImg) existingFullImg.remove();
 
-            resetZoomAndPan(false); // Initialize zoom/pan state without applying transform yet
-            fullImageElement.style.transform = `translate(0px, 0px) scale(1)`; // Set initial transform explicitly for grow animation
-            fullImageElement.style.animation = 'grow 0.25s forwards'; // Use 'forwards' to keep end state
+            const fullImg = new Image();
+            fullImg.id = 'full';
+            fullImg.src = `./${fullDir}/${imgName}.jpg`;
+            fullImg.alt = `Full view of ${imgName}`;
+            imageViewer.appendChild(fullImg);
+            fullImageElement = fullImg;
 
-            // After grow animation, remove animation property so manual transforms work
-            setTimeout(() => {
-                if(fullImageElement) {
-                     fullImageElement.style.animation = ''; // Remove animation
-                     resetZoomAndPan(); // Apply final clean state
-                }
-            }, 250);
-
-
-            let exitButtonHTML = `<button id="exitViewer" onclick="exitView()">X</button>`;
-            imageViewer.insertAdjacentHTML('beforeend', exitButtonHTML);
-
-
-            if(!isMobile) {
-                if(imgNameIndex > 0) {
-                    let leftArrowHTML = `<button id="leftArrow" onclick="changeFull('${imgNames[imgNameIndex-1]}')">&lt;</button>`;
-                    imageViewer.insertAdjacentHTML('beforeend', leftArrowHTML);
-                }
-                if(imgNameIndex < imgNames.length - 1) {
-                     let rightArrowHTML = `<button id="rightArrow" onclick="changeFull('${imgNames[imgNameIndex+1]}')">&gt;</button>`;
-                    imageViewer.insertAdjacentHTML('beforeend', rightArrowHTML);
-                }
-            }
-
-            createFullViewThumbSelector(imgName);
-
-            // Add Zoom/Pan Event Listeners
-            imageViewer.addEventListener('wheel', handleWheelZoom, { passive: false }); // Passive false to allow preventDefault
-            imageViewer.addEventListener('dblclick', dblClickHandler); // Use named handler for removal
-            if(fullImageElement) fullImageElement.addEventListener('mousedown', handleMouseDownPan);
-            document.addEventListener('mousemove', handleMouseMovePan); // On document for robust dragging
-            document.addEventListener('mouseup', handleMouseUpPan);     // On document for robust dragging
-
-
-            document.addEventListener('keydown', keyAction = function(e) {
-                if(debug) console.log(`In ImageViewer User Pressed ${e.code}`);
-                if (isPanningImage) return; // Don't change image if panning current one
-                if(e.code == "ArrowLeft" && imgNameIndex > 0) {
-                    changeFull(imgNames[imgNameIndex-1]);
-                } else if(e.code == "ArrowRight" && imgNameIndex < imgNames.length - 1) {
-                    changeFull(imgNames[imgNameIndex+1]);
-                } else if(e.code == "Escape") {
-                    if (currentScale > MIN_SCALE) { // If zoomed, Esc resets zoom first
-                        resetZoomAndPan(true);
-                    } else {
-                        exitView();
-                    }
-                }
-            });
-            document.addEventListener('touchstart', touchStartAction = function(e) {
-                // Basic swipe, could be enhanced for pinch-zoom later
-                if (e.touches.length === 1 && currentScale <= MIN_SCALE) { // Only swipe if not zoomed
-                     touchstartX = e.changedTouches[0].screenX;
-                }
-            });
-            document.addEventListener('touchend', touchEndAction = function(e) {
-                if (e.touches.length === 0 && currentScale <= MIN_SCALE) { // Only swipe if not zoomed
-                    touchendX = e.changedTouches[0].screenX;
-                    if(checkLength()) {
-                        let dir = checkDirection() ? 1 : -1;
-                         if(debug) console.log(`In ImageViewer User Swiped ${dir == 1 ? 'Right' : 'Left'}`);
-                        if((imgNameIndex != 0 && dir == -1) || (imgNameIndex != imgNames.length-1 && dir == 1)) {
-                            if (imgNames[imgNameIndex+dir]) {
-                                changeFull(imgNames[imgNameIndex+dir]);
-                            }
-                        }
-                    }
-                }
-            });
+            resetZoomAndPan(false);
             imageViewer.hidden = false;
+            imageViewer.classList.add('visible');
+
+            const existingThumbSelector = document.getElementById('fullViewThumbSelector');
+            if (!existingThumbSelector || !existingThumbSelector.hasChildNodes()) {
+                createFullViewThumbSelector(imgName);
+            } else {
+                updateFullViewThumbSelector(imgName);
+            }
+
+            const thumbSelector = document.getElementById('fullViewThumbSelector');
+            const metadataViewer = document.getElementById('metadataViewer');
+            const toggleThumbSelectorButton = document.getElementById('toggleThumbSelector');
+
+            thumbSelector.classList.toggle('hidden-thumbs', !thumbSelectorVisible);
+            fullImageElement.classList.toggle('thumbs-hidden', !thumbSelectorVisible);
+            metadataViewer.classList.toggle('thumbs-hidden', !thumbSelectorVisible);
+            toggleThumbSelectorButton.innerHTML = thumbSelectorVisible ? '⬇️' : '⬆️';
+
+            const imgNameIndex = imgNames.indexOf(imgName);
+            const leftArrow = document.getElementById('leftArrow');
+            const rightArrow = document.getElementById('rightArrow');
+            if (leftArrow) leftArrow.hidden = (imgNameIndex === 0 || isMobile);
+            if (rightArrow) rightArrow.hidden = (imgNameIndex === imgNames.length - 1 || isMobile);
+
+            viewMetadata(imgName);
+            addViewerEventListeners();
         }
 
-        function changeFull(imgName) {
-            // Remove zoom/pan listeners before changing image
-            if(imageViewer) {
-                imageViewer.removeEventListener('wheel', handleWheelZoom);
-                imageViewer.removeEventListener('dblclick', dblClickHandler);
-            }
+        function changeFull(newImgName) {
             if(fullImageElement) fullImageElement.removeEventListener('mousedown', handleMouseDownPan);
-            document.removeEventListener('mousemove', handleMouseMovePan);
-            document.removeEventListener('mouseup', handleMouseUpPan);
-            
-            document.removeEventListener('keydown',keyAction);
-            document.removeEventListener('touchstart',touchStartAction);
-            document.removeEventListener('touchend',touchEndAction);
-
-            let leftArrow = document.getElementById('leftArrow');
-            let rightArrow = document.getElementById('rightArrow');
-            if(!isMobile) {
-                if(leftArrow){ leftArrow.remove(); }
-                if(rightArrow){ rightArrow.remove(); }
-            }
-
-            let currentFullImg = document.getElementById('full');
-            if (!currentFullImg) {
-                console.error("Current full image not found for transition.");
-                let metadataElem = document.getElementById('metadataViewer');
-                if(metadataElem) metadataElem.remove();
-                let exitElem = document.getElementById('exitViewer');
-                if(exitElem) exitElem.remove();
-                let thumbSelector = document.getElementById('fullViewThumbSelector');
-                if (thumbSelector) thumbSelector.remove();
-                viewFull(imgName);
+            const currentImg = fullImageElement;
+            if (!currentImg) {
+                console.error("Current full image element not found for transition. Calling viewFull instead.");
+                viewFull(newImgName);
                 return;
             }
-            fullImageElement = null;
 
-            let prevImgName = currentFullImg.src.split(`/${fullDir}/`)[1].split('.jpg')[0];
-            if(imgNames.indexOf(prevImgName) < imgNames.indexOf(imgName)) {
-                currentFullImg.style.transition = 'transform 0.125s ease-out, opacity 0.125s ease-out';
-                currentFullImg.style.transform = `translate(-100px, ${currentPanY}px) scale(${currentScale})`;
-                currentFullImg.style.opacity = '0';
-            }
-            else if(imgNames.indexOf(prevImgName) > imgNames.indexOf(imgName)) {
-                currentFullImg.style.transition = 'transform 0.125s ease-out, opacity 0.125s ease-out';
-                currentFullImg.style.transform = `translate(100px, ${currentPanY}px) scale(${currentScale})`;
-                currentFullImg.style.opacity = '0';
-            } else {
-                currentFullImg.style.opacity = '0';
-            }
+            const currentImgName = currentImg.alt.replace('Full view of ', '');
+            const currentImgIndex = imgNames.indexOf(currentImgName);
+            const newImgIndex = imgNames.indexOf(newImgName);
+            const direction = newImgIndex > currentImgIndex ? 1 : -1;
+            currentImg.classList.add(direction === 1 ? 'slide-out-left' : 'slide-out-right');
 
-            let prevFullscreen = madeFullscreen;
+            const newImage = new Image();
+            newImage.id = 'full';
+            newImage.src = `./${fullDir}/${newImgName}.jpg`;
+            newImage.alt = `Full view of ${newImgName}`;
+            newImage.classList.add(direction === 1 ? 'slide-in-right' : 'slide-in-left');
+            
+            imageViewer.appendChild(newImage);
+            fullImageElement = newImage;
+            resetZoomAndPan(false);
+            if(fullImageElement) fullImageElement.addEventListener('mousedown', handleMouseDownPan);
+            fullImageElement.classList.toggle('thumbs-hidden', !thumbSelectorVisible);
 
-            setTimeout(function() {
-                if(currentFullImg) currentFullImg.remove();
+            setTimeout(() => {
+                currentImg.remove();
+                setTimeout(() => { newImage.classList.remove('slide-in-right', 'slide-in-left'); }, 300);
+                updateFullViewThumbSelector(newImgName);
+                viewMetadata(newImgName);
 
-                let metadataElem = document.getElementById('metadataViewer');
-                if(metadataElem) metadataElem.remove();
-                let exitElem = document.getElementById('exitViewer');
-                if(exitElem) exitElem.remove();
-                let thumbSelector = document.getElementById('fullViewThumbSelector');
-                if (thumbSelector) thumbSelector.remove();
-                
-                viewFull(imgName);
-                madeFullscreen = prevFullscreen;
-            },125);
+                const newImgIndexAfterChange = imgNames.indexOf(newImgName);
+                const leftArrow = document.getElementById('leftArrow');
+                const rightArrow = document.getElementById('rightArrow');
+                if (leftArrow) leftArrow.hidden = (newImgIndexAfterChange === 0 || isMobile);
+                if (rightArrow) rightArrow.hidden = (newImgIndexAfterChange === imgNames.length - 1 || isMobile);
+            }, 300);
         }
 
         function exifToDate(exifTimestamp) {
             const [datePart, timePart] = exifTimestamp.split(' ');
             const [year, month, day] = datePart.split(':');
             const [hour, minute, second] = timePart.split(':');
-            const jsDate = new Date(year, month - 1, day, hour, minute, second);
-            return jsDate;
+            return new Date(year, month - 1, day, hour, minute, second);
         }
+
         function formatDate(date) {
             const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -693,180 +653,346 @@
             const month = months[date.getMonth()];
             const dayOfMonth = date.getDate();
             const year = date.getFullYear();
-            const hours = date.getHours() % 12   || 12;
+            const hours = date.getHours() % 12 || 12;
             const minutes = date.getMinutes().toString().padStart(2, '0');
             const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
             return `${dayOfWeek}, ${month} ${dayOfMonth}, ${year} @ ${hours}:${minutes} ${ampm}`;
         }
 
+        // Helper function to convert GPS values (degrees, minutes, seconds) to decimal degrees
+        function _convertDegrees(valueString) {
+            // Regex to find numbers, including fractions like '252/5'
+            const matches = valueString.match(/(\d+\s*\/\s*\d+|\d+(\.\d+)?)/g);
+
+            if (!matches || matches.length < 3) {
+                console.warn("Invalid GPS coordinate string format:", valueString);
+                return NaN;
+            }
+
+            const parts = matches.map(s => {
+                if (s.includes('/')) {
+                    const [num, den] = s.split('/').map(Number);
+                    return num / den;
+                }
+                return Number(s);
+            });
+
+            const d = parts[0];
+            const m = parts[1];
+            const s = parts[2];
+
+            if (isNaN(d) || isNaN(m) || isNaN(s)) {
+                console.warn("Parsed GPS components are NaN:", parts);
+                return NaN;
+            }
+
+            return d + (m / 60.0) + (s / 3600.0);
+        }
+
+        // Function to get raw GPS coordinates (latitude, longitude)
+        function getRawGpsCoordinates(imgData) {
+            const lat = imgData['GPS GPSLatitude'];
+            const lat_ref = imgData['GPS GPSLatitudeRef'];
+            const lon = imgData['GPS GPSLongitude'];
+            const lon_ref = imgData['GPS GPSLongitudeRef'];
+
+            if (lat && lat_ref && lon && lon_ref) {
+                let latitude = _convertDegrees(lat);
+                if (lat_ref === 'S') {
+                    latitude *= -1;
+                }
+
+                let longitude = _convertDegrees(lon);
+                if (lon_ref === 'W') {
+                    longitude *= -1;
+                }
+
+                if (!isNaN(latitude) && !isNaN(longitude)) {
+                    return { latitude: latitude.toFixed(4), longitude: longitude.toFixed(4) };
+                }
+            }
+            return null; // Return null if GPS data is not available or invalid
+        }
+
+        // Function to show the light pollution map in an iframe modal
+        function showLightPollutionMap(lat, lon) {
+            let overlay = document.getElementById('lightPollutionMapOverlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'lightPollutionMapOverlay';
+                document.body.appendChild(overlay);
+
+                let container = document.createElement('div');
+                container.id = 'lightPollutionMapContainer';
+                overlay.appendChild(container);
+
+                let iframe = document.createElement('iframe');
+                iframe.id = 'lightPollutionMapIframe';
+                iframe.setAttribute('frameborder', '0');
+                iframe.setAttribute('scrolling', 'no');
+                container.appendChild(iframe);
+
+                let closeButton = document.createElement('button');
+                closeButton.id = 'lightPollutionMapCloseButton';
+                closeButton.innerHTML = '✖️';
+                closeButton.onclick = hideLightPollutionMap;
+                container.appendChild(closeButton);
+            }
+
+            const iframeSrc = `https://timothydo.me/astronomy/lightpollution/?lat=${lat}&lon=${lon}`;
+            document.getElementById('lightPollutionMapIframe').src = iframeSrc;
+            overlay.classList.add('visible');
+        }
+
+        // Function to hide the light pollution map iframe modal
+        function hideLightPollutionMap() {
+            let overlay = document.getElementById('lightPollutionMapOverlay');
+            if (overlay) {
+                overlay.classList.remove('visible');
+                // Optionally clear iframe src to stop any ongoing processes
+                document.getElementById('lightPollutionMapIframe').src = 'about:blank';
+            }
+        }
+
         function viewMetadata(imgName) {
-            let metadataViewerEl = document.createElement('div');
-            metadataViewerEl.id = 'metadataViewer';
-            let imgData = metadata[imgName];
+            let metadataViewerEl = document.getElementById('metadataViewer');
+            if (!metadataViewerEl) return;
+            let imgData = metadata[imgName]; 
+            let htmlContent = '';
+
             if (!imgData) {
                 console.warn("No metadata found for image:", imgName);
-                metadataViewerEl.innerHTML = `<h2>${imgName}.jpg</h2><p>No metadata available.</p>`;
-                imageViewer.appendChild(metadataViewerEl);
-                return;
+                htmlContent = `<h2>${imgName}.jpg</h2><p>No metadata available.</p>`;
+            } else {
+                let cameraModel = imgData['Image Model'] || 'N/A';
+                let captureDate = imgData['Image DateTime'] ? exifToDate(imgData['Image DateTime']) : 'N/A';
+                let width = imgData['Image Width'] || 'N/A';
+                let height = imgData['Image Height'] || 'N/A';
+                let resolution = (width !== 'N/A' && height !== 'N/A') ? (parseFloat(width)*parseFloat(height)/(10**6)).toFixed(1) : 'N/A';
+                let fileSizeMB = imgData['File Size'] ? (parseFloat(imgData['File Size'])/(1000**2)).toFixed(2) : 'N/A';
+                let ISO = imgData['EXIF ISOSpeedRatings'] ? String(eval(imgData['EXIF ISOSpeedRatings'])) : 'N/A';
+                let exposureTimeRaw = imgData['EXIF ExposureTime'] ? eval(imgData['EXIF ExposureTime']) : 'N/A';
+                let exposureTime = exposureTimeRaw !== 'N/A' ? (exposureTimeRaw < 0.1 && exposureTimeRaw !== 0 ? `1/${Math.round(1/exposureTimeRaw)}` : exposureTimeRaw) : 'N/A';
+                let fNumber = imgData['EXIF FNumber'] ? String(eval(imgData['EXIF FNumber'])) : 'N/A';
+                let focalLength35 = imgData['EXIF FocalLengthIn35mmFilm'] ? String(eval(imgData['EXIF FocalLengthIn35mmFilm'])) : 'N/A';
+                let ev = imgData['EXIF ExposureBiasValue'] ? String(eval(imgData['EXIF ExposureBiasValue'])) : 'N/A';
+                
+                let gpsCoords = getRawGpsCoordinates(imgData);
+                let gpsCoordinatesDisplay;
+
+                if (gpsCoords) {
+                    gpsCoordinatesDisplay = `<span style="cursor: pointer; text-decoration: underline;" onclick="showLightPollutionMap(${gpsCoords.latitude}, ${gpsCoords.longitude})">${gpsCoords.latitude}, ${gpsCoords.longitude}</span>`;
+                } else {
+                    gpsCoordinatesDisplay = 'N/A';
+                }
+
+                htmlContent += `<h2>${imgName}.jpg</h2>`;
+                htmlContent += `<p>🗓️: ${captureDate !== 'N/A' ? formatDate(captureDate) : 'N/A'}</p>`; // Added colon
+                htmlContent += `<p>📍: ${gpsCoordinatesDisplay}</p>`; // Hardcoded pin emoji and reordered
+                htmlContent += `<p>📷: ${cameraModel}</p>`;
+                htmlContent += `<p>${fileSizeMB} MB | ${width}x${height} | ${resolution} MP</p>`;
+                htmlContent += `<p>ISO ${ISO} | ${focalLength35}mm | ${ev}ev | F${fNumber} | ${exposureTime}" s</p>`;
             }
-
-            let cameraModel = 'Image Model' in imgData ? imgData['Image Model'] : 'N/A';
-            let captureDate = 'Image DateTime' in imgData ? exifToDate(imgData['Image DateTime']) : 'N/A';
-            let width = 'EXIF ExifImageWidth' in imgData ? imgData['EXIF ExifImageWidth'] : 'EXIF ImageWidth' in imgData ? imgData['EXIF ImageWidth'] : 'N/A';
-            let height = 'EXIF ExifImageLength' in imgData ? imgData['EXIF ExifImageLength'] : 'EXIF ImageLength' in imgData ? imgData['EXIF ImageLength'] : 'N/A';
-            let resolution = (width !== 'N/A' && height !== 'N/A') ? (parseFloat(width)*parseFloat(height)/(10**6)).toFixed(1) : 'N/A';
-            let fileSizeMB = 'File Size' in imgData ? (parseFloat(imgData['File Size'])/(1000**2)).toFixed(2) : 'N/A';
-            let ISO = 'EXIF ISOSpeedRatings' in imgData ? String(eval(imgData['EXIF ISOSpeedRatings'])) : 'N/A';
-            let exposureTimeRaw = 'EXIF ExposureTime' in imgData ? eval(imgData['EXIF ExposureTime']) : 'N/A';
-            let exposureTime = exposureTimeRaw !== 'N/A' ? (exposureTimeRaw < 0.1 && exposureTimeRaw !== 0 ? `1/${Math.round(1/exposureTimeRaw)}` : exposureTimeRaw) : 'N/A';
-
-            let fNumber = 'EXIF FNumber' in imgData ? String(eval(imgData['EXIF FNumber'])) : 'N/A';
-            let focalLength35 = 'EXIF FocalLengthIn35mmFilm' in imgData ? String(eval(imgData['EXIF FocalLengthIn35mmFilm'])) : 'N/A';
-            let ev = 'EXIF ExposureBiasValue' in imgData ? String(eval(imgData['EXIF ExposureBiasValue'])) : 'N/A';
-
-            metadataViewerEl.innerHTML += `<h2>${imgName}.jpg</h2>`;
-            metadataViewerEl.innerHTML += `<p>🗓️ ${captureDate !== 'N/A' ? formatDate(captureDate) : 'N/A'}</p>`;
-            metadataViewerEl.innerHTML += `<p>📷: ${cameraModel}</p>`;
-            metadataViewerEl.innerHTML += `<p>${fileSizeMB} MB | ${width}x${height} | ${resolution} MP</p>`;
-            metadataViewerEl.innerHTML += `<p>ISO ${ISO} | ${focalLength35}mm | ${ev}ev | F${fNumber} | ${exposureTime}" s</p>`
-            if(debug) {
-                console.log(metadataViewerEl);
-            }
-            imageViewer.appendChild(metadataViewerEl);
+            metadataViewerEl.innerHTML = htmlContent;
         }
 
-        function goHome() {
-            window.location.href = "../index.html";
+        function toggleMetadata() {
+            let metadataViewerEl = document.getElementById('metadataViewer');
+            if (metadataViewerEl) metadataViewerEl.classList.toggle('active');
         }
 
-        const dblClickHandler = () => resetZoomAndPan(true); // Named handler for removal in exitView and changeFull
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                if (imageViewer.requestFullscreen) imageViewer.requestFullscreen();
+                else if (imageViewer.mozRequestFullScreen) imageViewer.mozRequestFullScreen();
+                else if (imageViewer.webkitRequestFullscreen) imageViewer.webkitRequestFullscreen();
+                else if (imageViewer.msRequestFullscreen) imageViewer.msRequestFullscreen();
+                madeFullscreen = true;
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                else if (document.msExitFullscreen) document.msExitFullscreen();
+                madeFullscreen = false;
+            }
+        }
+
+        function toggleThumbSelector() {
+            const thumbSelector = document.getElementById('fullViewThumbSelector');
+            const fullImage = document.getElementById('full');
+            const metadataViewer = document.getElementById('metadataViewer');
+            const toggleThumbSelectorButton = document.getElementById('toggleThumbSelector');
+
+            if (thumbSelector && fullImage && metadataViewer && toggleThumbSelectorButton) {
+                thumbSelectorVisible = !thumbSelectorVisible;
+                thumbSelector.classList.toggle('hidden-thumbs', !thumbSelectorVisible);
+                fullImage.classList.toggle('thumbs-hidden', !thumbSelectorVisible);
+                metadataViewer.classList.toggle('thumbs-hidden', !thumbSelectorVisible);
+                toggleThumbSelectorButton.innerHTML = thumbSelectorVisible ? '⬇️' : '⬆️';
+            }
+        }
+
+        function goHome() { window.location.href = "../index.html"; }
+        const dblClickHandler = () => resetZoomAndPan(true);
 
         function exitView() {
-            if(imageViewer) {
-                imageViewer.removeEventListener('wheel', handleWheelZoom);
-                imageViewer.removeEventListener('dblclick', dblClickHandler);
+            removeViewerEventListeners();
+            homeButton.hidden = false;
+
+            // Close the light pollution map iframe if it's open
+            hideLightPollutionMap();
+
+            if(document.fullscreenElement && madeFullscreen) {
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                else if (document.msExitFullscreen) document.msExitFullscreen();
             }
-            if(fullImageElement) fullImageElement.removeEventListener('mousedown', handleMouseDownPan);
-            document.removeEventListener('mousemove', handleMouseMovePan);
-            document.removeEventListener('mouseup', handleMouseUpPan);
-            fullImageElement = null;
+            madeFullscreen = false;
+            imageViewer.classList.add('shrinking');
 
-            document.removeEventListener('keydown',keyAction);
-            document.removeEventListener('touchstart',touchStartAction);
-            document.removeEventListener('touchend',touchEndAction);
-            document.body.style.overflow = 'auto';
-            if(gallery) gallery.style.pointerEvents = 'auto';
-            if(title) title.hidden = false;
+            setTimeout(() => {
+                document.body.style.overflow = 'auto';
+                if(gallery) gallery.classList.remove('pointer-events-none');
+                if(titleElement) titleElement.classList.remove('hidden');
+                imageViewer.hidden = true;
+                imageViewer.classList.remove('visible', 'shrinking');
+                const full = document.getElementById('full');
+                if(full) full.remove();
+                fullImageElement = null;
 
-            let full = document.getElementById('full');
-            let metadataViewerEl = document.getElementById('metadataViewer');
-            let exitViewerEl = document.getElementById('exitViewer');
-            let leftArrow = document.getElementById('leftArrow');
-            let rightArrow = document.getElementById('rightArrow');
-            let thumbSelector = document.getElementById('fullViewThumbSelector');
-
-            if(exitViewerEl) exitViewerEl.hidden = true;
-            if(metadataViewerEl) metadataViewerEl.hidden = true;
-            if(thumbSelector) thumbSelector.hidden = true;
-
-            if(full) {
-                full.style.transition = 'width 0.2s ease-out, height 0.2s ease-out, opacity 0.2s ease-out, transform 0.2s ease-out';
-                full.style.transform = `translate(${currentPanX}px, ${currentPanY}px) scale(0)`;
-                full.style.opacity = '0';
-
-                if(madeFullscreen) {
-                    madeFullscreen = false;
-                    if (document.fullscreenElement) {
-                        document.exitFullscreen();
-                    }
-                    if(debug) console.log('Exiting Full Screen');
-                }
-                setTimeout(function() {
-                    if(full) full.remove();
-                    if(metadataViewerEl) metadataViewerEl.remove();
-                    if(exitViewerEl) exitViewerEl.remove();
-                    if(leftArrow) leftArrow.remove();
-                    if(rightArrow) rightArrow.remove();
-                    if(thumbSelector) thumbSelector.remove();
-                    if(imageViewer) imageViewer.hidden = true;
-                },200);
-            } else {
-                if(metadataViewerEl) metadataViewerEl.remove();
-                if(exitViewerEl) exitViewerEl.remove();
-                if(leftArrow) leftArrow.remove();
-                if(rightArrow) rightArrow.remove();
-                if(thumbSelector) thumbSelector.remove();
-                if(imageViewer) imageViewer.hidden = true;
-            }
+                thumbSelectorVisible = true;
+                if (document.getElementById('fullViewThumbSelector')) document.getElementById('fullViewThumbSelector').classList.remove('hidden-thumbs');
+                if (document.getElementById('metadataViewer')) document.getElementById('metadataViewer').classList.remove('thumbs-hidden');
+                if (document.getElementById('full')) document.getElementById('full').classList.remove('thumbs-hidden');
+                if (document.getElementById('toggleThumbSelector')) document.getElementById('toggleThumbSelector').innerHTML = '⬇️';
+            }, 300);
         }
 
-        let title;
-        let thumbInterval;
-        let titleInterval;
-        let j = 0;
-        let completedTitle = `🐿️ Timothy's Wildlife Gallery!!! 🐿️`;
         function fillTitle() {
-            if (!title) return;
+            if (!titleElement) return;
             if(j < completedTitle.length) {
-                 if(j == 0 || j == completedTitle.length - 3 ) {
-                    title.innerHTML += '🐿️';
-                    j++;
-                 } else {
-                    title.innerHTML += completedTitle[j];
-                 }
+                titleElement.innerHTML += completedTitle[j];
                 j++;
             } else {
                  clearInterval(titleInterval);
             }
         }
 
-
         function viewGallery() {
-            if(galleryCounter == 0) {
-                viewFull(imgNames[galleryCounter]);
-            } else if(galleryCounter < imgNames.length) {
-                changeFull(imgNames[galleryCounter]);
-            } else {
-                galleryCounter = 0;
-                changeFull(imgNames[galleryCounter]);
-            }
+            if(galleryCounter === 0) viewFull(imgNames[galleryCounter]);
+            else if(galleryCounter < imgNames.length) changeFull(imgNames[galleryCounter]);
+            else { galleryCounter = 0; changeFull(imgNames[galleryCounter]); }
             galleryCounter++;
+        }
+        
+        function addViewerEventListeners() {
+            if(fullImageElement) fullImageElement.addEventListener('mousedown', handleMouseDownPan);
+            imageViewer.addEventListener('wheel', handleWheelZoom, { passive: false });
+            imageViewer.addEventListener('dblclick', dblClickHandler);
+            document.addEventListener('mousemove', handleMouseMovePan);
+            document.addEventListener('mouseup', handleMouseUpPan);
+            document.addEventListener('keydown', keyAction);
+            imageViewer.addEventListener('touchstart', handleTouchStart, { passive: false });
+            imageViewer.addEventListener('touchmove', handleTouchMove, { passive: false });
+            imageViewer.addEventListener('touchend', handleTouchEnd);
+            document.getElementById('fullscreenToggle').addEventListener('click', toggleFullscreen);
+            document.getElementById('toggleThumbSelector').addEventListener('click', toggleThumbSelector);
+        }
+
+        function removeViewerEventListeners() {
+            if(fullImageElement) fullImageElement.removeEventListener('mousedown', handleMouseDownPan);
+            imageViewer.removeEventListener('wheel', handleWheelZoom);
+            imageViewer.removeEventListener('dblclick', dblClickHandler);
+            document.removeEventListener('mousemove', handleMouseMovePan);
+            document.removeEventListener('mouseup', handleMouseUpPan);
+            document.removeEventListener('keydown', keyAction);
+            imageViewer.removeEventListener('touchstart', handleTouchStart);
+            imageViewer.removeEventListener('touchmove', handleTouchMove);
+            imageViewer.removeEventListener('touchend', handleTouchEnd);
+            document.getElementById('fullscreenToggle').removeEventListener('click', toggleFullscreen);
+            document.getElementById('toggleThumbSelector').removeEventListener('click', toggleThumbSelector);
         }
 
         window.onload = function() {
-            if(preload) {
-                if(debug) console.log('Preloading Full Res Images!');
-                preloadFulls();
-            }
+            if(preload) preloadFulls();
             gallery = document.getElementById('gallery');
             imageViewer = document.getElementById('imageViewer');
-            title = document.getElementById('title');
+            titleElement = document.getElementById('title'); 
+            homeButton = document.getElementById('home');
             isMobile = isMobileDevice();
             loadMetadata();
 
+            const cleanedTitle = completedTitle.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
+            document.title = cleanedTitle;
+
+            imageViewer.innerHTML = `
+                <button id="exitViewer" onclick="exitView()">✖️</button>
+                <button id="toggleMetadata" onclick="toggleMetadata()">ℹ️</button>
+                <button id="fullscreenToggle"> ⛶</button>
+                <button id="toggleThumbSelector"> ⬇️</button>
+                <div id="metadataViewer"></div>
+                <button id="leftArrow">❮</button>
+                <button id="rightArrow">❯</button>
+                <div id="fullViewThumbSelector"></div>
+            `;
+            
+            document.getElementById('leftArrow').onclick = () => {
+                const currentImgName = fullImageElement.alt.replace('Full view of ', '');
+                const currentImgIndex = imgNames.indexOf(currentImgName);
+                if (currentImgIndex > 0) changeFull(imgNames[currentImgIndex - 1]);
+            };
+            document.getElementById('rightArrow').onclick = () => {
+                const currentImgName = fullImageElement.alt.replace('Full view of ', '');
+                const currentImgIndex = imgNames.indexOf(currentImgName);
+                if (currentImgIndex < imgNames.length - 1) changeFull(imgNames[currentImgIndex + 1]);
+            };
+
             if(galleryView) {
-                completedTitle = '🐿️ Gallery Mode! 🐿️';
                 doFullscreen = false;
                 galleryInterval = setInterval(viewGallery,galleryDuration);
             }
             else {
                 loadThumbs();
-                revealInterval = setInterval(revealThumbs,75);
+                revealInterval = setInterval(revealThumbs,25);
             }
-            if (title) {
-               titleInterval = setInterval(fillTitle,75);
+            if (titleElement) {
+               titleInterval = setInterval(fillTitle,25);
             } else {
-                if(debug) console.warn("Title element 'title' not found.");
+                console.warn("Title element 'title' not found.");
             }
-        }
+
+            keyAction = function(e) {
+                if (!imageViewer.hidden) {
+                    if (!fullImageElement) return;
+                    const currentImgName = fullImageElement.alt.replace('Full view of ', '');
+                    const currentImgIndex = imgNames.indexOf(currentImgName);
+
+                    if (e.code === "ArrowLeft") {
+                        if (currentImgIndex > 0) changeFull(imgNames[currentImgIndex - 1]);
+                    } else if (e.code === "ArrowRight") {
+                        if (currentImgIndex < imgNames.length - 1) changeFull(imgNames[currentImgIndex + 1]);
+                    } else if (e.code === "Escape") {
+                        if (currentScale > MIN_SCALE) resetZoomAndPan(true);
+                        else exitView();
+                    } else if (e.code === "KeyI") {
+                        toggleMetadata();
+                    } else if (e.code === "KeyF") {
+                        toggleFullscreen();
+                    } else if (e.code === "KeyT") {
+                        toggleThumbSelector();
+                    }
+                }
+            };
+
+            if (window.self !== window.top) homeButton.hidden = true;
+        };
 
         document.addEventListener('fullscreenchange', function(e) {
-            if(!document.fullscreenElement && madeFullscreen) {
-                exitView();
-            }
+            if(!document.fullscreenElement && madeFullscreen) exitView();
+            if(document.fullscreenElement && !madeFullscreen) madeFullscreen = true;
         });
     </script>
-
     <body>
         <h1 id="title"></h1>
         <div id="gallery"></div>
