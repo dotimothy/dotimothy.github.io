@@ -5,7 +5,7 @@
         <title>Gallery Template</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📷</text></svg>">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌌</text></svg>">
         <link href='https://fonts.googleapis.com/css?family=Product+Sans' rel='stylesheet' type='text/css'>
     </head>
 
@@ -267,7 +267,7 @@
         let revealInterval, revealCounter = 0, galleryCounter = 0, galleryDuration = 1500, galleryInterval;
         let isMobile, keyAction, swipeThresh = 75, touchstartX = 0, touchendX = 0, madeFullscreen = false;
         let titleElement, j = 0;
-        const completedTitle = `🌌Timothy's Astrophotography Gallery!!! 🌌`;
+        const completedTitle = `🌌 Astronomy Gallery!!! 🌌`;
         let homeButton; 
 
         let currentScale = 1.0, currentPanX = 0, currentPanY = 0, isPanningImage = false;
@@ -789,7 +789,7 @@
                 htmlContent += `<h2>${imgName}.jpg</h2>`;
                 htmlContent += `<p>🗓️: ${captureDate !== 'N/A' ? formatDate(captureDate) : 'N/A'}</p>`; // Added colon
                 htmlContent += `<p>📍: ${gpsCoordinatesDisplay}</p>`; // Hardcoded pin emoji and reordered
-                htmlContent += `<p>📷: ${cameraModel}</p>`;
+                htmlContent += `<p>🌌: ${cameraModel}</p>`;
                 htmlContent += `<p>${fileSizeMB} MB | ${width}x${height} | ${resolution} MP</p>`;
                 htmlContent += `<p>ISO ${ISO} | ${focalLength35}mm | ${ev}ev | F${fNumber} | ${exposureTime}" s</p>`;
             }
