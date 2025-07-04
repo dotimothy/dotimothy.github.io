@@ -116,9 +116,10 @@
     }
 
     .close-button {
-        position: absolute;
-        top: 10px;
-        right: 15px;
+        position: absolute; /* Keep absolute for precise positioning relative to overlay */
+        bottom: 20px; /* Position at the bottom */
+        left: 50%; /* Start at 50% from the left */
+        transform: translateX(-50%); /* Center horizontally */
         background: none;
         border: none;
         color: white;
@@ -129,7 +130,7 @@
     }
 
     .close-button:hover {
-        transform: scale(1.2);
+        transform: scale(1.2) translateX(-50%); /* Apply transform for centering after scale */
     }
 
 
@@ -145,7 +146,12 @@
         h2 { font-size:  4em; }
         .center { width: 75%; }
         .pfp { width: 50%; }
-        .close-button { font-size: 6em; top: 5px; right: 10px; } /* Doubled from 3em for mobile */
+        .close-button { 
+            font-size: 6em; 
+            bottom: 10px; /* Adjust for mobile */
+            left: 50%;
+            transform: translateX(-50%);
+        } 
         /* REMOVED font-size from .social-logo here too */
     }
 
@@ -155,13 +161,24 @@
     :-webkit-full-screen,
     :-moz-full-screen,
     :-ms-fullscreen {
-        /* Revert to desktop-like layout */
-        h1 { font-size: 3.5em; }
-        h2 { font-size: 2.5em; }
-        .center { width: 50%; }
-        .pfp { width: 30%; }
-        .close-button { font-size: 7em; top: 10px; right: 15px; }
-        /* Social icons will automatically be desktop size from fa-5x */
+        /* Adjustments for a better fullscreen experience */
+        h1 { font-size: 4.5em; } /* Slightly larger for fullscreen impact */
+        h2 { font-size: 3.5em; } /* Slightly larger for fullscreen impact */
+        .center { width: 70%; max-width: 1200px; padding-top: 2em; } /* More generous width, max-width for very large screens */
+        .pfp { width: 25%; max-width: 250px; } /* Adjust pfp size for fullscreen */
+        .close-button { 
+            font-size: 8em; 
+            bottom: 40px; /* Larger close button for easier target */
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Ensure content is centered on larger screens in fullscreen */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; /* Center content vertically */
+        padding-top: 2em; /* Add some padding from the top */
     }
 
     /* Specific adjustments for elements that might still be affected by mobile styles in fullscreen */
@@ -170,16 +187,6 @@
     :-moz-full-screen body,
     :-ms-fullscreen body {
         padding: 0; /* Reset mobile body padding if any was applied */
-    }
-
-    :fullscreen .center,
-    :-webkit-full-screen .center,
-    :-moz-full-screen .center,
-    :-ms-fullscreen .center {
-        /* Ensure content is centered on larger screens in fullscreen */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
     }
     /* --- END NEW --- */
 </style>
@@ -207,7 +214,7 @@
     </div>
 
     <div class="iframe-overlay" id="galleryOverlay">
-        <button class="close-button" id="closeGallery">&times;</button>
+        <button class="close-button" id="closeGallery">🏠</button>
         <iframe id="galleryIframe" src="" frameborder="0"></iframe>
     </div>
 
