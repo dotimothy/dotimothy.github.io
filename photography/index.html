@@ -1,160 +1,216 @@
 <!doctype html>
-
 <html>
 
 <head>
-    <title>TheDoShoots</title>
+    <title>TheDoShoots by Timothy Do</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📷</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Product+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <base target="_blank">
 
 <style>
     * {
-        font-family: Product Sans;
-        box-sizing: border-box; /* Add this for consistent box model */
+        font-family: Roboto, sans-serif;
+        box-sizing: border-box;
     }
+
+    /* Apply the full-page background to the html element */
+    html {
+        background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('./photographer.jpg') no-repeat center center/cover fixed;
+        min-height: 100%;
+    }
+
     body {
-        background-color: black;
-        margin: 0; /* Remove default body margin */
+        background-color: transparent;
+        margin: 0;
         padding: 0;
-        min-height: 100vh; /* Ensure body takes full viewport height */
+        min-height: 100vh;
         display: flex;
-        flex-direction: column; /* Allow content to stack vertically */
+        flex-direction: column;
     }
-    h1,h2 {
+
+    h1,
+    h2,
+    .secondary-text {
         color: white;
     }
+
     a {
-        color:  blue;
+        color: #00BFFF; /* Deep sky blue */
+        text-decoration: none;
     }
+
     a:hover {
         color: yellow;
         transition: 0.25s;
     }
+
     .pfp {
-        /* Changed from clip-path: circle(); to border-radius: 50%; for better compatibility and control */
         border-radius: 50%;
-        margin-left:  auto;
-        margin-right:  auto;
-        display: block;
+        z-index: 10000;
         transition: 0.25s;
-        animation: fadein 1s;
-        border: 5px solid yellow; /* Added border for definition */
+        animation: fadein 0.5s forwards;
+        animation-delay: 0s;
+        border: 5px solid yellow;
     }
-    .pfp:hover {
-        transform: scale(1.1); /* Subtle scale for hover */
-        transition: 0.25s;
-    }
+
     .center {
-        margin: auto;
+        margin-bottom: 0.5em;
         border-radius: 50px;
         padding: 0.5em;
         text-align: center;
     }
+
     .box {
-        /* Blending into backdrop */
-        border: 0.25em solid rgba(255, 255, 0, 0.7); /* Semi-transparent yellow border */
-        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+        border: 0.25em solid rgba(255, 255, 0, 0.7);
+        background-color: rgba(0, 0, 0, 0.5);
         padding: 0.5em;
-        margin-bottom: 1em;
-        animation: fadein 1s;
-        max-width: 600px; /* Limit box width for better readability */
-        width: 90%; /* Responsive width */
-        /* border-top is now part of the main border property */
+        margin-bottom: 0.5em; /* Reduced vertical space between boxes */
+        margin-left: auto; /* Center the box */
+        margin-right: auto; /* Center the box */
+        max-width: 600px;
+        width: 90%;
+        opacity: 0;
+        animation: fadein 0.5s ease-out forwards;
     }
+
+    .box:nth-of-type(3) { animation-delay: 0.1s; }
+    .box:nth-of-type(4) { animation-delay: 0.2s; }
+    .box:nth-of-type(5) { animation-delay: 0.3s; }
+
     .box:hover {
-        background-color: rgba(255, 255, 255, 0.2); /* Lighter semi-transparent on hover */
-        border: 0.25em solid white; /* Solid white border on hover */
+        background-color: rgba(255, 255, 255, 0.2);
+        border: 0.25em solid white;
         transition: 0.25s;
     }
+
     .social-icons {
         display: flex;
         justify-content: center;
-        gap: 20px;
+        gap: 10px; /* Reduced gap for more compaction */
         margin-top: 20px;
-        animation: fadein 1s;
-        margin-bottom: 20px; /* Add some space below social icons */
+        animation: fadein 0.5s forwards;
+        animation-delay: 0s;
+        margin-bottom: 20px;
     }
-    /* This class is now used for both social links and the fullscreen button */
+
     .social-logo {
         opacity: 1;
         transition: opacity 0.25s;
-        color: white; /* Explicitly set color for button icon */
-        background: none; /* Remove default button background */
-        border: none; /* Remove default button border */
-        cursor: pointer; /* Indicate clickable */
-        padding: 0; /* Remove default button padding */
+        color: white;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
     }
+
     .social-logo:hover {
         opacity: 0.5;
         transition: opacity 0.25s;
     }
+
     @keyframes fadein {
-        0% {opacity: 0%;}
-        100% {opacity: 100%;}
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     /* --- HERO SECTION STYLES --- */
     .hero-section {
         width: 100%;
-        min-height: 100vh; /* Make it take up the full viewport height */
-        /* Re-added linear-gradient for transparency */
-        background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('./photographer.jpg') no-repeat center 60%/cover;
+        min-height: 100vh;
+        background: none;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         text-align: center;
-        padding: 2em 1em; /* Add padding */
-        box-shadow: 0 5px 15px rgba(0,0,0,0.5); /* Subtle shadow */
-        /* No margin-bottom here, as content is now inside */
+        padding: 2em 1em;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        position: relative;
+        z-index: 1;
+    }
+
+    /* NEW CONTAINER FOR PFP TO MAINTAIN SPACE */
+    .pfp-container {
+        width: 250px;
+        height: 250px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 1em;
+        position: relative;
     }
 
     .hero-section .pfp {
-        width: 150px; /* Fixed size for hero PFP */
-        height: 150px;
-        object-fit: cover; /* Ensures the image covers the entire circular area */
-        margin-bottom: 1em;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 5px solid yellow;
+        transition: all 0.5s ease-in-out;
+        z-index: 1000;
+        cursor: pointer;
+    }
+
+    /* CORRECTED HOVER EFFECT SELECTOR */
+    .pfp-container:hover .pfp {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1) rotate(720deg);
+        z-index: 10000;
+        border-color: white;
+        border-radius: 100%;
+        box-shadow: 0 0 40px rgba(255, 255, 0, 0.9);
+        cursor: default;
     }
 
     .hero-section h1 {
-        font-size: 4em; /* Larger title in hero */
+        font-size: 4em;
         margin-top: 0.5em;
-        margin-bottom: 1em; /* Add margin below title to separate from boxes */
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.7); /* Text shadow for readability */
+        margin-bottom: 0.1em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        opacity: 0;
+        animation: fadein 0.5s ease-out forwards;
+        animation-delay: 0s;
     }
 
-    /* Adjust social icons within hero for spacing */
+    .hero-section .secondary-text {
+        font-size: 1.5em;
+        margin-top: 0;
+        margin-bottom: 1.5em;
+        color: rgba(255, 255, 255, 0.8);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        animation: fadein 0.5s ease-out forwards;
+        animation-delay: 0.5s;
+    }
+
     .hero-section .social-icons {
-        margin-top: 2em; /* More space above social icons in hero */
-        margin-bottom: 0; /* No margin below if it's the last element in hero */
+        margin-top: 2em;
+        margin-bottom: 0;
     }
-    /* --- END HERO SECTION STYLES --- */
 
-
-    /* Styles for the iframe modal/overlay */
+    /* --- Iframe Modal Styles --- */
     .iframe-overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.85); /* Darker overlay */
-        display: flex; /* Always display flex so content is centered */
+        background-color: rgba(0, 0, 0, 0.85);
+        display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 1000; /* Ensure it's on top */
-
-        opacity: 0; /* Hidden by default */
-        visibility: hidden; /* Truly hidden, not just invisible */
-        transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out; /* Smooth transition */
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
     }
 
-    /* Make the iframe fill the overlay */
     .iframe-overlay iframe {
         width: 100%;
         height: 100%;
@@ -163,231 +219,440 @@
     }
 
     .close-button {
-        position: absolute; /* Keep absolute for precise positioning relative to overlay */
-        bottom: 20px; /* Position at the bottom */
-        right: 20px; /* Position at the right */
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
         background: none;
         border: none;
         color: white;
-        font-size: 7em; /* Doubled from 3.5em for desktop */
+        font-size: 7em;
         cursor: pointer;
-        z-index: 1001; /* Ensure close button is above iframe */
+        z-index: 1001;
         transition: transform 0.2s;
     }
 
     .close-button:hover {
-        transform: scale(1.2); /* Apply transform for scaling */
+        transform: scale(1.2);
     }
 
-
-    /* Default desktop styles */
-    h1 { font-size:  3.5em; }
-    h2 { font-size:  2.5em; }
-    .center { width: 50%; }
-    /* .pfp is now handled by .hero-section .pfp for the main one */
-
-    /* Mobile styles */
-    @media only screen and (max-width: 1000px) {
-        .hero-section {
-            min-height: 100vh; /* Ensure full height on mobile too */
-        }
-        .hero-section h1 {
-            font-size: 3em; /* Adjust hero title for mobile */
-        }
-        h1 { font-size: 5em; }
-        h2 { font-size:  4em; }
-        .center { width: 75%; }
-        /* .pfp is now handled by .hero-section .pfp for the main one */
-        .close-button { 
-            font-size: 6em; 
-            bottom: 10px; /* Adjust for mobile */
-            right: 10px; /* Adjust for mobile */
-        } 
-    }
-
-    /* --- Fullscreen Mode Styles --- */
-    :fullscreen,
-    :-webkit-full-screen,
-    :-moz-full-screen,
-    :-ms-fullscreen {
-        /* Adjustments for a better fullscreen experience */
-        .hero-section {
-            min-height: 100vh; /* Ensure full height in fullscreen */
-        }
-        .hero-section h1 {
-            font-size: 5em; /* Even larger in fullscreen */
-        }
-        .hero-section .pfp {
-            width: 200px; /* Larger PFP in fullscreen */
-            height: 200px;
-        }
-
-        h1 { font-size: 4.5em; } /* Slightly larger for fullscreen impact */
-        h2 { font-size: 3.5em; } /* Slightly larger for fullscreen impact */
-        .center { width: 70%; max-width: 1200px; padding-top: 2em; } /* More generous width, max-width for very large screens */
-        /* .pfp is handled by .hero-section .pfp */
-        .close-button { 
-            font-size: 8em; 
-            bottom: 40px; /* Larger close button for easier target */
-            right: 40px; /* Position at the bottom right in fullscreen */
-        }
-        
-        /* Ensure content is centered on larger screens in fullscreen */
+    /* --- Settings Panel Styles --- */
+    .settings-panel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
         display: flex;
-        flex-direction: column;
+        justify-content: center;
         align-items: center;
-        justify-content: center; /* Center content vertically */
-        padding-top: 2em; /* Add some padding from the top */
+        z-index: 1100;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
     }
 
-    /* Specific adjustments for elements that might still be affected by mobile styles in fullscreen */
-    :fullscreen body,
-    :-webkit-full-screen body,
-    :-moz-full-screen body,
-    :-ms-fullscreen body {
-        padding: 0; /* Reset mobile body padding if any was applied */
+    .settings-content {
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 2px solid yellow;
+        border-radius: 15px;
+        padding: 2em;
+        color: white;
+        text-align: left;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
+        position: relative;
+    }
+
+    .settings-content h2 {
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 1.5em;
+        color: yellow;
+    }
+
+    .setting-item {
+        margin-bottom: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .setting-item label {
+        font-size: 1.5em;
+        cursor: pointer;
+        flex-grow: 1;
+    }
+
+    .setting-item input[type="checkbox"] {
+        appearance: none;
+        width: 30px;
+        height: 30px;
+        border: 2px solid yellow;
+        border-radius: 5px;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+        transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .setting-item input[type="checkbox"]:checked {
+        background-color: yellow;
+        border-color: yellow;
+    }
+
+    .setting-item input[type="checkbox"]:checked::after {
+        content: '\2713';
+        font-size: 20px;
+        color: black;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .settings-close-button {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2.5em;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .settings-close-button:hover {
+        transform: scale(1.2);
+        color: yellow;
+    }
+
+    /* --- Footer Styles --- */
+    footer {
+        background-color: rgba(0, 0, 0, 0.6);
+        color: rgba(255, 255, 255, 0.7);
+        text-align: center;
+        padding: 1.5em 1em;
+        margin-top: auto;
+        width: 100%;
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5);
+        font-size: 0.9em;
+        z-index: 2;
+    }
+
+    footer a {
+        color: yellow;
+        transition: color 0.25s;
+    }
+
+    footer a:hover {
+        color: white;
+    }
+
+    /* --- Responsive Styles --- */
+    @media only screen and (max-width: 1000px) {
+        .hero-section h1 { font-size: 1.75em; }
+        .hero-section .secondary-text { font-size: 1.2em; }
+        h1 { font-size: 1.75em; }
+        h2 { font-size: 1.5em; }
+        p { font-size: 1.2em; }
+        .close-button { font-size: 6em; bottom: 10px; right: 10px; }
+        .settings-content { padding: 1.5em; }
+        .setting-item label { font-size: 1.2em; }
+        .settings-close-button { font-size: 2em; top: 5px; right: 10px; }
+        footer { padding: 1em 0.5em; font-size: 0.8em; }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .hero-section h1 { font-size: 2em; }
+        .hero-section .secondary-text { font-size: 1em; }
+        h1 { font-size: 1.75em; }
+        h2 { font-size: 1.5em; }
+        p { font-size: 1em; }
+        .social-logo .fa-5x { font-size: 4em; } /* Reduce icon size */
+        .close-button { font-size: 5em; bottom: 5px; right: 5px; } /* Adjust close button for smaller screens */
+        .settings-close-button { font-size: 1.8em; top: 5px; right: 8px; } /* Adjust settings close button */
     }
 </style>
 
 <body>
     <div class="hero-section">
-        <img class="pfp" src="./tim.jpg" alt="EagleScout">
-        <h1>📷 <a href="https://timothydo.me">TheDoShoots</a> 📷</h1>
-        <!-- Moved gallery buttons into the hero section -->
+        <div class="pfp-container">
+            <!-- Replaced local image with a placeholder -->
+            <img class="pfp" src="./photographer.jpg" alt="Profile Picture"/>
+        </div>
+        <h1>📷 TheDoShoots 📷</h1>
+        <div class="secondary-text">By <a href="https://timothydo.me">Timothy Do</a></div>
         <div class="center box">
-            <h2>🌌<a href="./astronomy/index.html" class="gallery-link" data-gallery-id="astronomy">Astrophotography</a></h2>
+            <h2>👋 <a href="./about.html" class="gallery-link">About Me</a></h2>
         </div>
         <div class="center box">
-            <h2>🐿️<a href="./wildlife/index.html" class="gallery-link" data-gallery-id="wildlife">Wildlife</a></h2>
+            <h2>🌌 <a href="./astronomy/index.html" class="gallery-link">Astrophotography</a></h2>
         </div>
         <div class="center box">
-            <h2>👋<a href="./about.html" class="gallery-link" data-gallery-id="about">About Me</a></h2>
+            <h2>🐿️ <a href="./wildlife/index.html" class="gallery-link">Wildlife</a></h2>
         </div>
-        <!-- Social icons moved into the hero section -->
         <div class="social-icons">
             <a class="social-logo" href="https://instagram.com/thedoshoots"><i class="fab fa-instagram fa-5x" style="color: white;"></i></a>
-            <a class="social-logo" href="https://www.flickr.com/photos/169526448@N03/"><i class="fab fa-flickr fa-5x" style="color: white;"></i></a>
+            <a class="social-logo" href="https://www.flickr.com/people/169526448@N03/"><i class="fab fa-flickr fa-5x" style="color: white;"></i></a>
+            <a class="social-logo gallery-link" href="#">
+                <i class="fas fa-envelope fa-5x" style="color: white;"></i>
+            </a>
             <button id="fullscreenToggle" class="social-logo" title="Toggle Fullscreen">
                 <i class="fas fa-expand fa-5x fa-fw"></i> </button>
+            <button id="settingsToggle" class="social-logo" title="Settings">
+                <i class="fas fa-cog fa-5x fa-fw"></i>
+            </button>
         </div>
     </div>
+
+    <footer>
+        <p>&copy; 2025 <a href="https://timothydo.me/">Timothy Do</a>. All Rights Reserved.</p>
+    </footer>
 
     <div class="iframe-overlay" id="galleryOverlay">
         <button class="close-button" id="closeGallery">🏠</button>
         <iframe id="galleryIframe" src="" frameborder="0"></iframe>
     </div>
 
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-content">
+            <button class="settings-close-button" id="closeSettings">✕</button>
+            <h2>Settings</h2>
+            <div class="setting-item">
+                <label for="galleryToggle">Gallery Mode</label>
+                <input type="checkbox" id="galleryToggle">
+            </div>
+            <div class="setting-item">
+                <label for="datasaverToggle">Data Saver Mode</label>
+                <input type="checkbox" id="datasaverToggle">
+            </div>
+            <div class="setting-item">
+                <label for="fullscreenToggleSetting">Auto Fullscreen</label>
+                <input type="checkbox" id="fullscreenToggleSetting">
+            </div>
+            <div class="setting-item">
+                <label for="directLinksToggle">Direct Links</label>
+                <input type="checkbox" id="directLinksToggle">
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const galleryLinks = document.querySelectorAll('.gallery-link');
             const galleryOverlay = document.getElementById('galleryOverlay');
-            const galleryIframe = document.getElementById('galleryIframe');
             const closeButton = document.getElementById('closeGallery');
             const fullscreenToggle = document.getElementById('fullscreenToggle');
+            const settingsToggle = document.getElementById('settingsToggle');
+            const settingsPanel = document.getElementById('settingsPanel');
+            const closeSettingsButton = document.getElementById('closeSettings');
 
-            // --- NEW: Detect mobile once at the start ---
-            const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            // --- END NEW ---
+            // Settings elements
+            const galleryToggle = document.getElementById('galleryToggle');
+            const datasaverToggle = document.getElementById('datasaverToggle');
+            const fullscreenToggleSetting = document.getElementById('fullscreenToggleSetting');
+            const directLinksToggle = document.getElementById('directLinksToggle');
 
-            // Function to close the iframe overlay
-            const closeIframeOverlay = () => {
-                galleryOverlay.style.opacity = '0'; // Start fade out
-                // Wait for the transition to finish before setting visibility to hidden
-                galleryOverlay.addEventListener('transitionend', function handleTransitionEnd() {
-                    // Only hide visibility if it's currently fading out (opacity is 0)
-                    if (galleryOverlay.style.opacity === '0') {
-                        galleryOverlay.style.visibility = 'hidden';
-                        document.body.style.overflow = ''; // Re-enable body scrolling
-                        galleryIframe.src = ''; // Clear the iframe src to stop any media playing
+            // Debug mode variable
+            let debugMode = false;
+
+            // Function to save a single setting to localStorage
+            function saveSetting(id, value) {
+                localStorage.setItem(id, value);
+            }
+
+            // Function to load all settings from localStorage and apply them, then override with URL parameters
+            function loadSettings() {
+                // Load from localStorage
+                galleryToggle.checked = localStorage.getItem('galleryToggle') === 'true';
+                datasaverToggle.checked = localStorage.getItem('datasaverToggle') === 'true';
+                fullscreenToggleSetting.checked = localStorage.getItem('fullscreenToggleSetting') === 'true';
+                directLinksToggle.checked = localStorage.getItem('directLinksToggle') === 'true';
+
+                // Apply URL parameters, overriding localStorage
+                const urlParams = new URLSearchParams(window.location.search);
+
+                // Check for debug parameter
+                if (urlParams.has('debug')) {
+                    debugMode = urlParams.get('debug') === 'true' || urlParams.get('debug') === ''; // Handles ?debug or ?debug=true
+                    if (debugMode) {
+                        console.log('Debug mode enabled.');
                     }
-                    // Remove the event listener to prevent it from firing on other transitions
-                    galleryOverlay.removeEventListener('transitionend', handleTransitionEnd);
+                }
+
+                if (urlParams.has('gallery')) {
+                    galleryToggle.checked = urlParams.get('gallery') === 'true';
+                    saveSetting('galleryToggle', galleryToggle.checked); // Also save to localStorage if from URL
+                }
+                if (urlParams.has('datasaver')) {
+                    datasaverToggle.checked = urlParams.get('datasaver') === 'true';
+                    saveSetting('datasaverToggle', datasaverToggle.checked);
+                }
+                if (urlParams.has('fullscreen')) {
+                    fullscreenToggleSetting.checked = urlParams.get('fullscreen') === 'true';
+                    saveSetting('fullscreenToggleSetting', fullscreenToggleSetting.checked);
+                }
+                if (urlParams.has('directlinks')) {
+                    directLinksToggle.checked = urlParams.get('directlinks') === 'true';
+                    saveSetting('directLinksToggle', directLinksToggle.checked);
+                }
+            }
+
+            // Function to build a URL with current settings as parameters
+            function buildUrlWithSettings(baseUrl) {
+                const url = new URL(baseUrl, window.location.origin); // Use window.location.origin for relative URLs
+
+                // Append current settings as parameters (only if true)
+                if (galleryToggle.checked) {
+                    url.searchParams.set('gallery', 'true');
+                } else {
+                    url.searchParams.delete('gallery');
+                }
+
+                if (datasaverToggle.checked) {
+                    url.searchParams.set('datasaver', 'true');
+                } else {
+                    url.searchParams.delete('datasaver');
+                }
+
+                if (fullscreenToggleSetting.checked) {
+                    url.searchParams.set('fullscreen', 'true');
+                } else {
+                    url.searchParams.delete('fullscreen');
+                }
+
+                if (directLinksToggle.checked) {
+                    url.searchParams.set('directlinks', 'true');
+                } else {
+                    url.searchParams.delete('directlinks');
+                }
+
+                return url.toString();
+            }
+
+            // Function to update the hrefs of gallery links based on current settings
+            function updateGalleryLinkHrefs() {
+                galleryLinks.forEach(link => {
+                    const originalHref = link.getAttribute('data-original-href');
+                    const urlWithSettings = buildUrlWithSettings(originalHref);
+                    link.setAttribute('href', urlWithSettings);
                 });
-            };
+            }
+
+            // Store original hrefs for gallery links and then update them
+            galleryLinks.forEach(link => {
+                link.setAttribute('data-original-href', link.getAttribute('href'));
+            });
+
+            // Call loadSettings on DOMContentLoaded to initialize checkbox states and debug mode
+            loadSettings();
+            // Initialize link hrefs after settings are loaded
+            updateGalleryLinkHrefs();
+
+            // Attach event listeners for saving settings AND updating link hrefs
+            galleryToggle.addEventListener('change', () => {
+                saveSetting('galleryToggle', galleryToggle.checked);
+                updateGalleryLinkHrefs();
+            });
+            datasaverToggle.addEventListener('change', () => {
+                saveSetting('datasaverToggle', datasaverToggle.checked);
+                updateGalleryLinkHrefs();
+            });
+            fullscreenToggleSetting.addEventListener('change', () => {
+                saveSetting('fullscreenToggleSetting', fullscreenToggleSetting.checked);
+                updateGalleryLinkHrefs();
+            });
+            directLinksToggle.addEventListener('change', () => {
+                saveSetting('directLinksToggle', directLinksToggle.checked);
+                updateGalleryLinkHrefs();
+            });
 
             galleryLinks.forEach(link => {
                 link.addEventListener('click', (event) => {
-                    event.preventDefault(); // Prevent default link behavior (navigating to the page)
-                    let contentUrl = event.currentTarget.href; // Get the URL from the clicked link
+                    // Always use the data-original-href as the base for building the URL
+                    const originalHref = link.getAttribute('data-original-href');
+                    const urlWithSettings = buildUrlWithSettings(originalHref);
 
-                    // --- NEW: Modify URL if mobile device is detected ---
-                    if (isMobileDevice) {
-                        try {
-                            const url = new URL(contentUrl);
-                            url.searchParams.append('datasaver', 'true'); // Add the datasaver parameter
-                            contentUrl = url.toString(); // Update contentUrl with the new parameter
-                        } catch (e) {
-                            console.error("Could not append datasaver to URL:", contentUrl, e);
+                    // If direct links are enabled, open in new tab with updated URL
+                    if (directLinksToggle.checked) {
+                        if (debugMode) {
+                            console.log('Opening direct link with URL:', urlWithSettings);
                         }
+                        window.open(urlWithSettings, '_blank'); // Open in new tab (due to <base target="_blank">)
+                        event.preventDefault(); // Prevent original link click
+                        return;
                     }
-                    // --- END NEW ---
-                    
-                    galleryIframe.src = contentUrl; // Set the iframe's source to the (potentially modified) URL
-                    
-                    // Show the overlay with fade-in effect
+
+                    event.preventDefault(); // Prevent default if opening in iframe
+
+                    const galleryIframe = document.getElementById('galleryIframe');
+                    galleryIframe.src = urlWithSettings; // Set iframe src with params
+
+                    if (debugMode) { // Log the iframe URL when loading
+                        console.log('Loading iframe with URL:', urlWithSettings);
+                    }
+
                     galleryOverlay.style.visibility = 'visible';
                     galleryOverlay.style.opacity = '1';
-
-                    // Optional: Add a class to body to disable scrolling while overlay is open
                     document.body.style.overflow = 'hidden';
                 });
             });
 
+            const closeIframeOverlay = () => {
+                galleryOverlay.style.opacity = '0';
+                galleryOverlay.addEventListener('transitionend', function handleTransitionEnd() {
+                    if (galleryOverlay.style.opacity === '0') {
+                        galleryOverlay.style.visibility = 'hidden';
+                        document.body.style.overflow = '';
+                        // Optionally clear iframe src when closed to prevent background playback
+                        document.getElementById('galleryIframe').src = '';
+                    }
+                    galleryOverlay.removeEventListener('transitionend', handleTransitionEnd);
+                }, { once: true });
+            };
+
             closeButton.addEventListener('click', closeIframeOverlay);
-
-            // Optional: Close overlay if user clicks directly on the overlay (outside iframe/close button)
             galleryOverlay.addEventListener('click', (event) => {
-                if (event.target === galleryOverlay) {
-                    closeIframeOverlay();
-                }
+                if (event.target === galleryOverlay) closeIframeOverlay();
             });
 
-            // Keyboard event listener for Escape key
-            document.addEventListener('keydown', (event) => {
-                // Check if the overlay is currently visible and the pressed key is Escape
-                if (galleryOverlay.style.opacity === '1' && event.key === 'Escape') {
-                    closeIframeOverlay();
-                }
-                // Handle Escape key to exit fullscreen even if overlay isn't open
-                if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
-                    if (event.key === 'Escape') {
-                        toggleFullscreen(); // Use the new fullscreen toggle function
-                    }
-                }
-            });
-
-
-            // --- Fullscreen Toggle Logic ---
-            function toggleFullscreen() {
-                if (!document.fullscreenElement &&
-                    !document.mozFullScreenElement &&
-                    !document.webkitFullscreenElement &&
-                    !document.msFullscreenElement) {
-                    // Request fullscreen
-                    if (document.documentElement.requestFullscreen) {
-                        document.documentElement.requestFullscreen();
-                    } else if (document.documentElement.mozRequestFullScreen) { /* Firefox */
-                        document.documentElement.mozRequestFullScreen();
-                    } else if (document.documentElement.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-                        document.documentElement.webkitRequestFullscreen();
-                    } else if (document.documentElement.msRequestFullscreen) { /* IE/Edge */
-                        document.documentElement.msRequestFullscreen();
-                    }
-                } else {
-                    // Exit fullscreen
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    } else if (document.mozCancelFullScreen) { /* Firefox */
-                        document.mozCancelFullScreen();
-                    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-                        document.documentElement.webkitExitFullscreen();
-                    } else if (document.msExitFullscreen) { /* IE/Edge */
-                        document.documentElement.msExitFullscreen();
-                    }
-                }
+            const toggleFullscreen = () => {
+                document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
             }
 
-            fullscreenToggle.addEventListener('click', toggleFullscreen);
+            const openSettingsPanel = () => {
+                settingsPanel.style.visibility = 'visible';
+                settingsPanel.style.opacity = '1';
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeSettingsPanel = () => {
+                settingsPanel.style.opacity = '0';
+                settingsPanel.addEventListener('transitionend', function handleTransitionEnd() {
+                    if (settingsPanel.style.opacity === '0') {
+                        settingsPanel.style.visibility = 'hidden';
+                        document.body.style.overflow = '';
+                    }
+                    settingsPanel.removeEventListener('transitionend', handleTransitionEnd);
+                }, { once: true });
+            };
+
+            fullscreenToggle.addEventListener('click',toggleFullscreen);
+            settingsToggle.addEventListener('click', openSettingsPanel);
+            closeSettingsButton.addEventListener('click', closeSettingsPanel);
+            settingsPanel.addEventListener('click', (event) => {
+                if (event.target === settingsPanel) closeSettingsPanel();
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    if (galleryOverlay.style.opacity === '1') closeIframeOverlay();
+                    if (settingsPanel.style.opacity === '1') closeSettingsPanel();
+                }
+            });
         });
     </script>
 </body>
