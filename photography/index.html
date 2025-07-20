@@ -503,7 +503,10 @@
 
             // Function to build a URL with current settings as parameters
             function buildUrlWithSettings(baseUrl) {
-                const url = new URL(baseUrl, window.location.origin); // Use window.location.origin for relative URLs
+                // Use window.location as the base for resolving the URL.
+                // This handles both web server (http/https) and local file (file://) paths correctly
+                // by resolving baseUrl relative to the current document's location.
+                const url = new URL(baseUrl, window.location);
 
                 // Append current settings as parameters (only if true)
                 if (galleryToggle.checked) {
@@ -533,15 +536,6 @@
                 return url.toString();
             }
 
-            // Function to update the hrefs of gallery links based on current settings
-            function updateGalleryLinkHrefs() {
-                galleryLinks.forEach(link => {
-                    const originalHref = link.getAttribute('data-original-href');
-                    const urlWithSettings = buildUrlWithSettings(originalHref);
-                    link.setAttribute('href', urlWithSettings);
-                });
-            }
-
             // Store original hrefs for gallery links and then update them
             galleryLinks.forEach(link => {
                 link.setAttribute('data-original-href', link.getAttribute('href'));
@@ -569,6 +563,14 @@
                 saveSetting('directLinksToggle', directLinksToggle.checked);
                 updateGalleryLinkHrefs();
             });
+
+            function updateGalleryLinkHrefs() {
+                galleryLinks.forEach(link => {
+                    const originalHref = link.getAttribute('data-original-href');
+                    const urlWithSettings = buildUrlWithSettings(originalHref);
+                    link.setAttribute('href', urlWithSettings);
+                });
+            }
 
             galleryLinks.forEach(link => {
                 link.addEventListener('click', (event) => {
