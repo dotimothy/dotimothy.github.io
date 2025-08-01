@@ -312,6 +312,49 @@
         transform: translate(-50%, -50%);
     }
 
+    /* Style for range input */
+    .setting-item input[type="range"] {
+        -webkit-appearance: none;
+        width: 60%; /* Adjust width as needed */
+        height: 8px;
+        background: #ddd;
+        border-radius: 5px;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+        margin-left: 10px; /* Space between label and slider */
+    }
+
+    .setting-item input[type="range"]:hover {
+        opacity: 1;
+    }
+
+    .setting-item input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: yellow;
+        cursor: pointer;
+    }
+
+    .setting-item input[type="range"]::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: yellow;
+        cursor: pointer;
+    }
+
+    .setting-item .range-value {
+        font-size: 1.2em;
+        min-width: 70px; /* Ensure space for value display */
+        text-align: right;
+    }
+
+
     .settings-close-button {
         position: absolute;
         top: 10px;
@@ -397,7 +440,7 @@
         <div class="social-icons">
             <a class="social-logo" href="https://instagram.com/thedoshoots"><i class="fab fa-instagram fa-5x" style="color: white;"></i></a>
             <a class="social-logo" href="https://www.flickr.com/people/169526448@N03/"><i class="fab fa-flickr fa-5x" style="color: white;"></i></a>
-            <a class="social-logo gallery-link" href="https://forms.gle/pEX4JFdKKYPjsSEh6">
+            <a class="social-logo gallery-link" href="#">
                 <i class="fas fa-envelope fa-5x" style="color: white;"></i>
             </a>
             <button id="fullscreenToggle" class="social-logo" title="Toggle Fullscreen">
@@ -437,6 +480,12 @@
                 <label for="directLinksToggle">Direct Links</label>
                 <input type="checkbox" id="directLinksToggle">
             </div>
+            <!-- NEW SETTING: Gallery Duration -->
+            <div class="setting-item">
+                <label for="galleryDuration">Gallery Duration</label>
+                <input type="range" id="galleryDuration" min="250" max="15000" step="250">
+                <span class="range-value" id="galleryDurationValue"></span>
+            </div>
         </div>
     </div>
 
@@ -455,6 +504,10 @@
             const datasaverToggle = document.getElementById('datasaverToggle');
             const fullscreenToggleSetting = document.getElementById('fullscreenToggleSetting');
             const directLinksToggle = document.getElementById('directLinksToggle');
+            // NEW: Gallery Duration elements
+            const galleryDurationRange = document.getElementById('galleryDuration');
+            const galleryDurationValueSpan = document.getElementById('galleryDurationValue');
+
 
             // Debug mode variable
             let debugMode = false;
@@ -471,6 +524,16 @@
                 datasaverToggle.checked = localStorage.getItem('datasaverToggle') === 'true';
                 fullscreenToggleSetting.checked = localStorage.getItem('fullscreenToggleSetting') === 'true';
                 directLinksToggle.checked = localStorage.getItem('directLinksToggle') === 'true';
+
+                // NEW: Load galleryDuration from localStorage
+                let storedDuration = parseInt(localStorage.getItem('galleryDuration'), 10);
+                // Ensure it's a valid number and within range, otherwise use a default (5000ms)
+                if (isNaN(storedDuration) || storedDuration < 250 || storedDuration > 15000) {
+                    storedDuration = 5000; // Default value: 5 seconds
+                }
+                galleryDurationRange.value = storedDuration;
+                // Display in seconds in the UI
+                galleryDurationValueSpan.textContent = `${(storedDuration / 1000).toFixed(1)}s`;
 
                 // Apply URL parameters, overriding localStorage
                 const urlParams = new URLSearchParams(window.location.search);
@@ -498,6 +561,16 @@
                 if (urlParams.has('directlinks')) {
                     directLinksToggle.checked = urlParams.get('directlinks') === 'true';
                     saveSetting('directLinksToggle', directLinksToggle.checked);
+                }
+                // NEW: Load galleryDuration from URL
+                if (urlParams.has('galleryDuration')) {
+                    let urlDuration = parseInt(urlParams.get('galleryDuration'), 10);
+                    if (!isNaN(urlDuration) && urlDuration >= 250 && urlDuration <= 15000) {
+                        galleryDurationRange.value = urlDuration;
+                        saveSetting('galleryDuration', urlDuration);
+                        // Display in seconds in the UI
+                        galleryDurationValueSpan.textContent = `${(urlDuration / 1000).toFixed(1)}s`;
+                    }
                 }
             }
 
@@ -533,6 +606,15 @@
                     url.searchParams.delete('directlinks');
                 }
 
+                // NEW: Add galleryDuration to URL parameters if it's not the default
+                const currentGalleryDuration = parseInt(galleryDurationRange.value, 10);
+                const defaultGalleryDuration = 5000; // Must match default in loadSettings
+                if (currentGalleryDuration !== defaultGalleryDuration) {
+                    url.searchParams.set('galleryDuration', currentGalleryDuration);
+                } else {
+                    url.searchParams.delete('galleryDuration');
+                }
+
                 return url.toString();
             }
 
@@ -563,6 +645,15 @@
                 saveSetting('directLinksToggle', directLinksToggle.checked);
                 updateGalleryLinkHrefs();
             });
+            // NEW: Event listener for galleryDuration range input
+            galleryDurationRange.addEventListener('input', () => {
+                const value = parseInt(galleryDurationRange.value, 10); // Ensure value is an integer
+                // Display in seconds in the UI
+                galleryDurationValueSpan.textContent = `${(value / 1000).toFixed(1)}s`;
+                saveSetting('galleryDuration', value);
+                updateGalleryLinkHrefs(); // Update URL params on link if this changes
+            });
+
 
             function updateGalleryLinkHrefs() {
                 galleryLinks.forEach(link => {

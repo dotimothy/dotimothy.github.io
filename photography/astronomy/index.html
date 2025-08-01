@@ -264,7 +264,7 @@
         let preload = urlParams.has('preload');
         let galleryView = urlParams.has('gallery');
         let gallery, imageViewer, metadata = {}, imgNames = [];
-        let revealInterval, revealCounter = 0, galleryCounter = 0, galleryDuration = 1500, galleryInterval;
+        let revealInterval, revealCounter = 0, galleryCounter = 0, galleryDuration = urlParams.has('galleryDuration') ? urlParams.get('galleryDuration') : 3000, galleryInterval;
         let isMobile, keyAction, swipeThresh = 75, touchstartX = 0, touchendX = 0, madeFullscreen = false;
         let titleElement, j = 0;
         const completedTitle = `🌌 Astronomy Gallery!!! 🌌`;
@@ -898,7 +898,7 @@
                 toggleThumbSelectorButton.innerHTML = '⬆️'; // Indicate it's hidden and can be shown
             }
 
-            if(galleryCounter === 0) viewFull(imgNames[galleryCounter]);
+            if(galleryCounter === 0) { viewFull(imgNames[galleryCounter]); setInterval(viewGallery,galleryDuration); }
             else if(galleryCounter < imgNames.length) changeFull(imgNames[galleryCounter]);
             else { galleryCounter = 0; changeFull(imgNames[galleryCounter]); }
             galleryCounter++;
@@ -983,7 +983,7 @@
                     toggleThumbSelectorButton.innerHTML = '⬆️';
                 }
 
-                galleryInterval = setInterval(viewGallery,galleryDuration);
+                setTimeout(viewGallery,1000);
             }
             else {
                 loadThumbs();
