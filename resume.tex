@@ -47,7 +47,7 @@
 
 % Sections formatting
 \titleformat{\section}{
-  \vspace{-5pt}\scshape\raggedright\large
+ \vspace{-5pt}\scshape\raggedright\large
 }{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
 
 % Ensure that generate pdf is machine readable/ATS parsable
@@ -56,13 +56,13 @@
 %-------------------------
 % Custom commands
 \newcommand{\resumeItem}[1]{
-  \item\small{
+ \item\small{
     {#1 \vspace{-2pt}}
-  }
+ }
 }
 
 \newcommand{\resumeSubheading}[4]{
-  \vspace{-2pt}\item
+ \vspace{-2pt}\item
     \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & #2 \\
       \textit{\small#3} & \textit{\small #4} \\
@@ -116,38 +116,53 @@
 
 %-----------EDUCATION-----------
 \section{Education}
-  \resumeSubHeadingListStart
-      \resumeSubheading
-      {\href{https://ucla.edu}{University of California, Los Angeles}}{Sep. 2023 --  Jun. 2024 \textit{(Expected)}}
+ \resumeSubHeadingListStart
+    \resumeSubheading
+      {\href{https://ucla.edu}{University of California, Los Angeles}}{Sep. 2023 --  Jun. 2024}
       {M.S. Electrical and Computer Engineering, Signal Processing Specialization}{Los Angeles, CA}
       \resumeItemListStart
-      \resumeItem{\textbf{Cumulative GPA:} 3.9/4.0}
-      \resumeItem{\textbf{Relevant Coursework:} Computational Imaging, Digital Speech Processing, Advanced Deep Learning \& Neural Networks, Modern Wireless Communication Systems, Large-Scale Social Complex Networks}
-      \resumeItem{\textbf{Clubs and Societies:} ECEGAPS (Electrical and Computer Engineering Graduate and PostDoc Society) }
+        \resumeItem{\textbf{Cumulative GPA:} 3.933/4.0}
+        \resumeItem{\textbf{Relevant Coursework:} Computational Imaging, Digital Speech Processing, Advanced Deep Learning \& Neural Networks, Modern Wireless Communication Systems, Large-Scale Social Complex Networks}
+        \resumeItem{\textbf{Clubs and Societies:} ECEGAPS (Electrical and Computer Engineering Graduate and PostDoc Society) }
       \resumeItemListEnd
     \resumeSubheading
       {\href{https://uci.edu}{University of California, Irvine}}{Sep. 2019 -- Jun. 2023}
-      {B.S. Electrical Engineering, Digital Signal Processing 
+      {B.S. Electrical Engineering, Digital Signal Processing  
       \& Communications Specialization}{Irvine, CA}
       \resumeItemListStart
-      \resumeItem{\textbf{Cumulative GPA:} 3.924/4.0, \textbf{Major GPA:} 3.944/4.0, \textbf{Magna Cum Laude}, \textbf{\href{https://engineering.uci.edu/admissions/graduate/accelerated-status-program}{Accelerated Status}}}
-      \resumeItem{\textbf{Relevant Coursework:} Computer Architecture, Control Systems, Digital Image/Signal Processing, Electronics}
-      \resumeItem{\textbf{Clubs and Societies:} Irvine Computer Vision Laboratory, IEEE, IPC, Eta Kappa Nu, Tau Beta Pi}
+        \resumeItem{\textbf{Cumulative GPA:} 3.924/4.0, \textbf{Major GPA:} 3.944/4.0, \textbf{Magna Cum Laude}, \textbf{\href{https://engineering.uci.edu/admissions/graduate/accelerated-status-program}{Accelerated Status}}}
+        \resumeItem{\textbf{Relevant Coursework:} Computer Architecture, Control Systems, Digital Image/Signal Processing, Electronics}
+        \resumeItem{\textbf{Clubs and Societies:} Irvine Computer Vision Laboratory, IEEE, IPC, Eta Kappa Nu, Tau Beta Pi}
       \resumeItemListEnd
-  \resumeSubHeadingListEnd
+ \resumeSubHeadingListEnd
 
 
 %-----------EXPERIENCE-----------
 \section{Experience}
-  \resumeSubHeadingListStart
+ \resumeSubHeadingListStart
+    \resumeSubheading
+      {Computer Vision Software Engineer}{Nov. 2024 - Present}
+      {\href{https://sima.ai}{SiMa.ai}}{San Jose, CA}
+      \resumeItemListStart
+        \resumeItem{Auto-generated documentation for SiMa.ai's product family and created technical videos on how to build applications on the Palette SDK.}
+        \resumeItem{Led GStreamer-based projects for OCR, Change Detection, and Visual Language Models, managing the full pipeline from data collection and model finetuning to quantization and deployment.}
+        \resumeItem{Supported customers end to end, from the optical selection, imaging process, to perform factory acceptance testing and validation through 50+ product lines running on SiMa.ai accelerator.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {Computer Vision Intern}{Aug. 2024 - Nov. 2024}
+      {\href{https://sima.ai}{SiMa.ai}}{San Jose, CA}
+      \resumeItemListStart
+        \resumeItem{Deployed and presented a production-level Anomaly Detection demo on SiMa.ai's MLSoC at the 2024 AI Hardware \& Edge AI Summit within two weeks of joining.}
+        \resumeItem{Led project tasks including data collection, model finetuning, and deployment for Anomaly and Change Detection, while pitching technical solutions to industry leaders.}
+      \resumeItemListEnd
     \resumeSubheading
       {Embedded Software Engineering Co-Op}{Jun. 2023 -- Apr. 2024}
       {\href{https://maxeon.com}{Maxeon Solar Technologies}}{San Jose, CA}
       \resumeItemListStart
         \resumeItem{Implemented Robust OpenCV pipelines to quantitatively detect module features for defect binning}
         \resumeItem{Developed Tkinter GUI interfaces for operator ease of use when testing images under custom data pipelines}
-        \resumeItem{Implemented Data Augmentation methods for training robust YOLOv5/YOLOv8 Defect Classification Models}
-    \resumeItemListEnd
+        \resumeItem{Trained robust YOLOv5/YOLOv8 Module Defect Classification Models deployed in manufacturing fab}
+      \resumeItemListEnd
     \resumeSubheading
       {Lead Undergraduate Student Researcher}{Jan. 2022 -- Jun. 2023}
       {\href{https://newport.eecs.uci.edu/~timothd4/ICVL}{Irvine Computer Vision Laboratory at UC Irvine}}{Irvine, CA}
@@ -155,46 +170,46 @@
         \resumeItem{Researched Spectral Image Filtering and Baseball Simulations under Professor Glenn Healey}
         \resumeItem{Digitized Hyperspectral Optical Imaging Filters into CSVs and compared them against certain chemical emissions}
         \resumeItem{Managed 15+ Graduate/Undergraduate Researchers in Google Spaces and developed shared MATLAB/Python Scripts hosted on Google Drive/Github for analyzing SWIR/NVIR vegetation spectras}
-    \resumeItemListEnd
+      \resumeItemListEnd
     \resumeSubheading
       {Industrial Internet of Things Intern}{Jun. 2022 -- Sep. 2022}
       {\href{https://westerndigital.com}{Western Digital}}{San Jose, CA}
       \resumeItemListStart
         \resumeItem{Applied Industrial Toolsets to develop a Realtime Raspberry Pi Sensor Data Analytics Platform}
-        \resumeItem{Earned the Six Sigma Yellow Belt for learning foundations of Lean Six Sigma through Linkedin Learning }
+        \resumeItem{Earned Six Sigma Yellow Belt award for learning foundations of Lean Six Sigma through Linkedin Learning }
         \resumeItem{Saved the company an annual projected cost of \$312,000 from hazard mitigations in the manufacturing fab}
-    \resumeItemListEnd
-  \resumeSubHeadingListEnd
+      \resumeItemListEnd
+ \resumeSubHeadingListEnd
 
 
 %-----------PROJECTS-----------
 \section{Projects}
     \resumeSubHeadingListStart
         \resumeProjectHeading
-        {\href{https://github.com/dotimothy/ECE239AS-MWC-AMR}{\textbf{\underline{End-to-End Automatic Modulation Recognition}}} $|$ \emph{Python, MATLAB, PyTorch}}{Jan. 2024 -- Mar. 2024}
+          {\href{https://github.com/dotimothy/ECE239AS-MWC-AMR}{\textbf{\underline{End-to-End Automatic Modulation Recognition}}} $|$ \emph{Python, MATLAB, Pytorch}}{Jan. 2024 -- Mar. 2024}
           \resumeItemListStart
             \resumeItem{Designed a CNN-based AMR System on I/Q samples (93.2\% test accuracy at high SNR)}
-            \resumeItem{Preprocess multiple modulation datasets by one-hot encoding integer labels for minimizing cross-entropy loss}
+            \resumeItem{Preprocessed multiple modulation datasets by one-hot encoding integer labels for minimizing cross-entropy loss}
             \resumeItem{Applied data augmentation by index reversal on each of the data samples for a 3\% performance improvement}
-        \resumeItemListEnd
+          \resumeItemListEnd
         \resumeProjectHeading
-          {\href{https://timothydo.me/RuHuman}{\textbf{\underline{RuHuman Audio Verification System}}} $|$ \emph{Python, MATLAB, Javascript, Librosa, Flask}}{Sep. 2023 -- Dec. 2023}
+          {\href{https://timothydo.me/M214A-Project}{\textbf{\underline{African-American Dialect Classification}}} $|$ \emph{Python, Librosa, Spafe, Opensmile}}{Feb. 2024 -- Mar. 2024}
           \resumeItemListStart
-            \resumeItem{Developed a resilient audio verification system to classify between real and fake speech}
-            \resumeItem{Investigated the effects of AWGN on the ASVSpoof2021 set based on t-DCF \& EER metrics}
-            \resumeItem{Implemented a Flask Server s record/upload audio samples for verification from any web device with a microphone }
+            \resumeItem{Classified different dialects of African Americans across the east coast with the COORAL dataset}
+            \resumeItem{Developed a XGBoost Classifier using Opensmile and GFCC features for 95\% test accuracy}
+            \resumeItem{Applied chatter noise augmentation to the samples resulting in improving accuracy by 2\%}
+            \resumeItem{Implemented multiprocessing pipeline to extract multiple samples simultaneously (3-4X speedup)}
           \resumeItemListEnd  
-       \resumeProjectHeading
-        {\href{https://timothydo.me/TheDoPro}{\textbf{\underline{The Do-Pro Senior Design Project}}} $|$ \emph{Raspberry Pi, Python, MATLAB, OpenCV }}{Sep. 2022 - Mar. 2023}
+        \resumeProjectHeading
+          {\href{https://github.com/dotimothy/C247-Project}{\textbf{\underline{EEG Action Classification}}} $|$ \emph{Python, Tensorflow, Pytorch}}{Feb. 2024 -- Mar. 2024}
           \resumeItemListStart
-            \resumeItem{Led a team of four in creating an embedded stereo-vision camera for ADAS detection and 3D-Reconstruction}
-            \resumeItem{Calibrated the stereo-camera in MATLAB and implemented block matching algorithms with OpenCV}
-            \resumeItem{Designed the button/touch-screen user interface using RPi.GPIO and Tkinter for navigating the camera}
-            \resumeItem{Developed a Power Regression Model for the Do-Pro to percieve depth with 6\% error from 1-3 feet}
-          \resumeItemListEnd 
+            \resumeItem{Explored various model architectures on EEGs to classify a subject's actions, the best yielding 75.4\% test accuracy}
+            \resumeItem{Performed Data Cleaning on the BCI dataset by trimming and maxpooling to improve classification accuracy}       
+            \resumeItem{Optimized model hyperparameters by automating exhaustive grid search on learning rate, batch size, and epochs}
+          \resumeItemListEnd  
     \resumeSubHeadingListEnd
         
-%
+% 
 %-----------PROGRAMMING SKILLS-----------
 \section{Skills}
  \begin{itemize}[leftmargin=0.15in, label={}]
