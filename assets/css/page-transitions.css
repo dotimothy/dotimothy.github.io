@@ -1,0 +1,31 @@
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: site-page-out 180ms ease-in both;
+}
+
+::view-transition-new(root) {
+  animation: site-page-in 360ms ease-out both;
+}
+
+@keyframes site-page-out {
+  to { opacity: 0; }
+}
+
+@keyframes site-page-in {
+  from { opacity: 0; transform: translateY(8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
+  ::view-transition-group(root),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}

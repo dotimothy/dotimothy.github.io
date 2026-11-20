@@ -1,0 +1,139 @@
+.portfolio-world {
+  color: #f7efd7;
+  background: #070a1a;
+  margin: 0;
+  font: 1rem/1.5 system-ui, sans-serif;
+}
+.world { min-height: 100svh; display: flex; flex-direction: column; }
+.world-toolbar {
+  padding: 10px clamp(12px, 3vw, 42px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: linear-gradient(110deg, #293350, #10152e 55%, #0a0d20);
+  border-bottom: 1px solid #b39a62;
+}
+.world-player { display: flex; align-items: center; gap: 12px; }
+.world-player img { width: clamp(28px, 5vw, 44px); height: auto; border: 1px solid #dfb969; border-radius: 50%; background: #343858; }
+.world-toolbar h1 { margin: 0; font: 600 clamp(1.1rem, 3vw, 1.7rem)/1.1 Georgia, serif; }
+.world-toolbar h1 span { display: block; margin-top: 4px; font: .75rem system-ui, sans-serif; color: #dbccad; }
+.world-toolbar nav, #world-exhibit nav { display: flex; flex-wrap: wrap; gap: 8px; }
+.portfolio-world a, .portfolio-world button { color: inherit; }
+.world-toolbar a, .world-alternative a, .world-alternative button {
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 6px 10px;
+  background: #1c274b;
+  border: 1px solid #b39a62;
+  border-radius: 3px;
+  font: 600 .875rem system-ui, sans-serif;
+  text-decoration: none;
+}
+.portfolio-world [hidden] { display: none; }
+.portfolio-world :focus-visible { outline: 3px solid #ffe39c; outline-offset: 2px; }
+#world-stage { position: relative; flex: 1; min-height: 380px; overflow: hidden; }
+.portfolio-3d-canvas { position: absolute; width: 100%; height: 100%; inset: 0; display: block; }
+.portfolio-3d-portal-link {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  min-width: 72px;
+  min-height: 44px;
+  padding-inline: 8px;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+.portfolio-3d-portal-link:focus-visible { opacity: 1; text-decoration: none; background: #182b45; border-radius: 5px; }
+#world-status, .world-alternative { margin: 12px auto; width: min(90%, 42rem); }
+#world-status:empty { display: none; }
+.world-enhanced .world-alternative:not(:has(nav :focus-visible)) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.world-enhanced .world-alternative:has(nav :focus-visible) {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10px;
+  padding: 12px;
+  background: #11182f;
+  border: 1px solid #b39a62;
+  border-radius: 8px;
+}
+.world-enhanced #world-destinations { display: none; }
+.world-unavailable #world-stage { display: none; }
+
+.world-toolbar a {
+  background: linear-gradient(120deg, #263457, #151b35);
+  border-color: #b39660;
+  color: #ffe2a3;
+}
+.world-toolbar a:hover, .world-toolbar a:focus-visible {
+  background: #374366;
+  color: #fff5dd;
+}
+@media (max-width: 420px) {
+  .world-player { gap: 6px; }
+  .world-toolbar nav { gap: 4px; }
+  .world-toolbar a { padding-inline: 7px; }
+}
+#world-walk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 6px 12px max(6px, env(safe-area-inset-bottom));
+  background: #11182f;
+  color: #ffe2a3;
+  font-size: .86rem;
+}
+#world-walk[hidden] { display: none; }
+.walk-pad { display: none; gap: 4px; }
+#world-walk button {
+  min-height: 44px;
+  min-width: 44px;
+  color: #ffe2a3;
+  border: 1px solid #ad925d;
+  background: #1c274b;
+  border-radius: 4px;
+  touch-action: none;
+  user-select: none;
+}
+@media (pointer: coarse), (max-width: 700px) {
+  .walk-pad { display: flex; }
+  .walk-hint { display: none; }
+}
+#world-zoom {
+  position: absolute;
+  z-index: 3;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  padding: 2px;
+  background: rgba(13, 19, 40, .94);
+  border: 1px solid #a78a56;
+  border-radius: 5px;
+}
+#world-zoom[hidden] { display: none; }
+#world-zoom button {
+  min-width: 44px;
+  min-height: 44px;
+  background: transparent;
+  border: 0;
+  color: #ffe2a3;
+  font: 600 1rem system-ui;
+  cursor: pointer;
+}
+#world-zoom button:disabled { opacity: .4; cursor: default; }
+#world-thumbnail { max-width: 200px; height: 100px; object-fit: contain; }

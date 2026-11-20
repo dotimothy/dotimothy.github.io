@@ -1,23 +1,718 @@
 <!DOCTYPE html>
-<html>
-   <style>
-      body {
-         background-color:  black;
-      }
-      h1 {
-         font-family: Courier;
-         color:  white;
-      }
-   </style>
-   <head>
-      <title>The Do is Rerouting...</title>
-      <link rel="shortcut icon" type="image/png" href="images/roycecase.png" />
-      <!-- <p style="font-size:32px"><a href="https://dotimothy.github.io/real.html">Click here for my personal site in 5 seconds!</a></p> -->
-      <!-- <meta http-equiv = "refresh" content = "5; url = https://www.youtube.com/channel/UCQtEriNSrB27GqR76112bvA?sub_confirmation=1"/> -->
-      <meta http-equiv = "refresh" content = "0.25; url = ./landing.html"/>
-   </head>
-   <body>
-       <h1>Going to My Website!!</h1>
-       <a href="check.html"><img src="images/roycecase.png" width="25%"></a>
-   </body>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="assets/css/page-transitions.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<title>Timothy Do</title>
+	<meta name="description" content="Timothy Do is a Senior Developer Evangelist at SiMa.ai working on Physical AI and computer vision. Explore his experience, projects, interests and ways to get in touch.">
+	<meta name="theme-color" content="#070a1a">
+	<meta property="og:title" content="Timothy Do">
+	<meta property="og:description" content="Engineer, euphonist, entrepreneur. Experience, projects and interests.">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://timothydo.me/">
+	<meta property="og:image" content="https://timothydo.me/assets/game/img/share.jpg">
+	<link rel="icon" type="image/png" href="assets/game/img/favicon.png?v=royce">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Marcellus&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="assets/game/game.css">
+	<link rel="stylesheet" href="assets/game/entry.css">
+	<link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
+	<script>document.documentElement.className += ' js';</script>
+</head>
+<body data-screen="title">
+	<dialog class="site-splash" id="site-splash" aria-labelledby="splash-title">
+		<div class="splash-flight" aria-hidden="true">
+			<canvas></canvas>
+		</div>
+		<div class="splash-arrival">
+			<div class="splash-doors" aria-hidden="true">
+				<div class="splash-door splash-door--left"></div>
+				<div class="splash-door splash-door--right"></div>
+			</div>
+			<div class="splash-stardust" aria-hidden="true"></div>
+			<form method="dialog" class="splash-content">
+				<img src="assets/game/img/logo.png" alt="" width="320" height="320">
+				<h2 id="splash-title">Timothy Do</h2>
+				<p>Engineer, Euphonist, Entrepreneur</p>
+				<button class="btn btn--primary" type="submit" autofocus>Enter Site</button>
+			</form>
+		</div>
+	</dialog>
+
+	<!--
+		Scene: my own night-sky photographs, one behind each screen.
+		Only the first loads with the page; the script fetches the rest.
+	-->
+	<div class="scene" aria-hidden="true">
+		<picture class="scene-shot is-active" data-scene="title">
+			<source type="image/avif" srcset="assets/game/img/scene/title-1100.avif 1100w, assets/game/img/scene/title-2200.avif 2200w" sizes="100vw">
+			<img src="assets/game/img/scene/title-1600.jpg" alt="">
+		</picture>
+		<picture class="scene-shot" data-scene="about">
+			<source type="image/avif" data-srcset="assets/game/img/scene/about-1100.avif 1100w, assets/game/img/scene/about-2200.avif 2200w" sizes="100vw">
+			<img data-src="assets/game/img/scene/about-1600.jpg" alt="">
+		</picture>
+		<picture class="scene-shot" data-scene="experience">
+			<source type="image/avif" data-srcset="assets/game/img/scene/experience-1100.avif 1100w, assets/game/img/scene/experience-2200.avif 2200w" sizes="100vw">
+			<img data-src="assets/game/img/scene/experience-1600.jpg" alt="">
+		</picture>
+		<picture class="scene-shot" data-scene="projects">
+			<source type="image/avif" data-srcset="assets/game/img/scene/projects-1100.avif 1100w, assets/game/img/scene/projects-2200.avif 2200w" sizes="100vw">
+			<img data-src="assets/game/img/scene/projects-1600.jpg" alt="">
+		</picture>
+		<picture class="scene-shot" data-scene="interests">
+			<source type="image/avif" data-srcset="assets/game/img/scene/interests-1100.avif 1100w, assets/game/img/scene/interests-2200.avif 2200w" sizes="100vw">
+			<img data-src="assets/game/img/scene/interests-1600.jpg" alt="">
+		</picture>
+		<div class="scene-shade"></div>
+		<div class="scene-shade scene-shade--title"></div>
+		<div class="scene-grain"></div>
+	</div>
+
+	<a class="skip" href="#main">Skip to content</a>
+
+	<!-- Header: name card and the screen tabs (a bottom bar on phones) -->
+	<header class="hud">
+		<a class="hud-player" href="#title" aria-label="Timothy Do, back to the title screen">
+			<span class="hud-portrait"><img src="assets/game/img/logo.png" alt="" width="320" height="320"></span>
+			<span class="hud-id"><strong>Timothy Do</strong><span>Senior Developer Evangelist at SiMa.ai</span></span>
+		</a>
+		<nav class="tabs" aria-label="Screens">
+			<a href="#about" data-tab="about" data-icon="person">About</a>
+			<a href="#experience" data-tab="experience" data-icon="flag">Experience</a>
+			<a href="#projects" data-tab="projects" data-icon="list">Projects</a>
+			<a href="#interests" data-tab="interests" data-icon="compass">Interests</a>
+			<a href="#contact" data-tab="contact" data-icon="mail">Contact</a>
+		</nav>
+	</header>
+
+	<main id="main">
+
+		<!-- Title screen -->
+		<section class="screen screen--title is-active" id="title" data-screen="title">
+			<div class="title-copy">
+				<h1 class="wordmark">Timothy Do</h1>
+				<p class="title-tag">Engineer, Euphonist, Entrepreneur</p>
+				<p class="title-intro">Welcome to my tab on the web. Explore the milestones that shaped my passion for engineering, musicianship and business.</p>
+				<nav class="title-menu" aria-label="Main menu">
+					<a href="#about" class="is-cursor"><strong>About</strong><span>Who I Am</span></a>
+					<a href="#experience"><strong>Experience</strong><span>Work and Education</span></a>
+					<a href="#projects"><strong>Projects</strong><span>What I’ve Built</span></a>
+					<a href="#interests"><strong>Interests</strong><span>Hobbies and Community</span></a>
+					<a href="#contact"><strong>Contact</strong><span>Say Hello</span></a>
+				</nav>
+				<p class="title-foot"><kbd>↑</kbd><kbd>↓</kbd> to choose, <kbd>Enter</kbd> to open</p>
+				<div class="title-actions">
+					<a class="btn portfolio-3d__launch" href="3d/">Explore in 3D</a>
+					<button class="splash-replay" type="button" data-splash-replay aria-haspopup="dialog" hidden>Replay Splash</button>
+				</div>
+			</div>
+
+			<div class="title-art">
+				<picture>
+					<source type="image/avif" srcset="assets/game/img/figure.avif">
+					<img class="title-figure" src="assets/game/img/figure.jpg" width="1128" height="1500" alt="Timothy Do, smiling, in a navy suit and gold tie">
+				</picture>
+			</div>
+		</section>
+
+		<!-- About -->
+		<section class="screen" id="about" data-screen="about" data-title="About">
+			<div class="wrap profile">
+				<div class="profile-stage">
+					<div class="profile-figure">
+						<picture>
+							<source type="image/avif" srcset="assets/game/img/bust-cutout.avif">
+							<img class="profile-bust" src="assets/game/img/bust-cutout.webp" width="1025" height="1535" alt="Timothy Do in a dark suit and white shirt">
+						</picture>
+					</div>
+					<div class="speech">
+						<span class="speech-name">Timothy</span>
+						<span class="sr-only" aria-live="polite" data-dialogue-live>Welcome to my tab on the web! I’m Timothy.</span>
+						<p class="speech-text" aria-hidden="true" data-dialogue>Welcome to my tab on the web! I’m Timothy.</p>
+						<button class="speech-next" type="button" data-dialogue-next>Keep Talking</button>
+					</div>
+				</div>
+
+				<div class="profile-sheet">
+					<header class="screen-head">
+						<h2 data-screen-heading tabindex="-1">About</h2>
+						<div class="rule" aria-hidden="true"></div>
+					</header>
+
+					<div class="panel">
+						<h3 class="profile-name">Timothy Do</h3>
+						<dl class="facts">
+							<dt>Role</dt><dd>Senior Developer Evangelist</dd>
+							<dt>Company</dt><dd><a href="https://sima.ai" target="_blank" rel="noopener">SiMa.ai</a></dd>
+							<dt>Location</dt><dd>San Jose, California</dd>
+							<dt>Education</dt><dd>M.S. Electrical and Computer Engineering, UCLA, 2024<br>B.S. Electrical Engineering, UC Irvine, 2023</dd>
+						</dl>
+					</div>
+
+					<div class="panel">
+						<h3>About Me</h3>
+						<p>I’m a Senior Developer Evangelist at <a href="https://sima.ai" target="_blank" rel="noopener">SiMa.ai</a>, where I bring Physical AI and generative AI to the Modalix platform and help developers build on it. I earned an M.S. in Electrical and Computer Engineering from UCLA, specializing in signal processing, and a B.S. in Electrical Engineering from UC Irvine, where I graduated Magna Cum Laude. During undergrad I took graduate courses in digital image processing and in languages and compilers for hardware accelerators through the <a href="https://engineering.uci.edu/admissions/graduate/accelerated-status-program" target="_blank" rel="noopener">Accelerated Status</a> program.</p>
+						<p>At UC Irvine I led undergraduate research at the Irvine Computer Vision Laboratory under Professor Glenn Healey, studying spectral image analysis of wildfire scenes. My other research interests include hyperspectral image processing, embedded IoT systems and parallel GPU optimization for neural networks.</p>
+						<div class="btn-row">
+							<a class="btn btn--primary" href="resume.html">View Resume</a>
+							<a class="btn" href="awards/index.html">View Awards</a>
+							<a class="btn" href="academic/index.html">View Research</a>
+						</div>
+					</div>
+
+					<div class="panel">
+						<h3>Skills</h3>
+						<dl class="skills">
+							<div>
+								<dt>Languages</dt>
+								<dd><ul class="tags"><li>Python</li><li>C</li><li>Java</li><li>CUDA</li><li>MATLAB</li><li>Bash</li><li>MySQL</li><li>HTML, CSS and JavaScript</li><li>VHDL</li></ul></dd>
+							</div>
+							<div>
+								<dt>Libraries</dt>
+								<dd><ul class="tags"><li>PyTorch</li><li>TensorFlow</li><li>OpenCV</li><li>NumPy</li><li>Pandas</li><li>Matplotlib</li><li>PIL</li><li>Librosa</li><li>Flask</li><li>Tkinter</li><li>Socket</li></ul></dd>
+							</div>
+							<div>
+								<dt>Tools</dt>
+								<dd><ul class="tags"><li>Git</li><li>Linux</li><li>SSH</li><li>Makefile</li><li>Azure</li><li>VS Code</li><li>Visual Studio</li><li>PyCharm</li><li>Eclipse</li><li>Vivado HLS</li></ul></dd>
+							</div>
+							<div>
+								<dt>Electronics</dt>
+								<dd><ul class="tags"><li>Raspberry Pi</li><li>Oscilloscopes and Multimeters</li><li>Network Analysis</li><li>Soldering</li><li>Cadence</li><li>LTspice</li></ul></dd>
+							</div>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Experience -->
+		<section class="screen" id="experience" data-screen="experience" data-title="Experience">
+			<div class="wrap">
+				<header class="screen-head">
+					<h2 data-screen-heading tabindex="-1">Experience</h2>
+					<div class="rule" aria-hidden="true"></div>
+					<p>Work and education, most recent first.</p>
+				</header>
+
+				<ol class="timeline" reversed>
+					<li class="entry is-current">
+						<div class="panel">
+							<div class="entry-main">
+								<p class="entry-when">January 2026 to present <span class="badge">Current</span></p>
+								<h3>SiMa.ai</h3>
+								<p class="entry-role">Senior Developer Evangelist <span>in San Jose, California</span></p>
+								<ul>
+									<li>Led interns deploying Physical AI applications, and brought up vision-language-action models (ACT, SmolVLA and GR00T N1.6) on the Modalix platform with LeRobot.</li>
+									<li>Developed Palette Neat GenAI Studio, which runs more than 30 language and vision-language models from Hugging Face alongside Whisper transcription and text to speech on Modalix.</li>
+									<li>Facilitated customer workshops across the United States, Japan, South Korea, Taiwan and Singapore, and created a video series of more than ten modules for the Palette Neat platform.</li>
+								</ul>
+								<div class="earlier">
+									<h4>Earlier Roles at SiMa.ai</h4>
+									<dl>
+										<div>
+											<dt>Developer Evangelist <span>October 2025 to January 2026</span></dt>
+											<dd>Created SiMa.ai’s first developer community, which grew to more than 500 users, and maintained the developer documentation.</dd>
+										</div>
+										<div>
+											<dt>Computer Vision Software Engineer <span>November 2024 to January 2026</span></dt>
+											<dd>Built demos such as car scratch detection and OCR label verification for DeveloperWeek, Embedded Vision and the TSMC Symposium, and led GStreamer projects for OCR, change detection and vision-language models.</dd>
+										</div>
+										<div>
+											<dt>Computer Vision Intern <span>August to November 2024</span></dt>
+											<dd>Deployed and presented an anomaly detection demo on the MLSoC at the 2024 AI Hardware and Edge AI Summit within two weeks of joining.</dd>
+										</div>
+									</dl>
+								</div>
+							</div>
+							<button class="snap" type="button" data-full="images/simaaihwteam.jpeg" data-caption="2024 AI Hardware and Edge AI Summit with SiMa.ai">
+								<img src="assets/game/img/album/simaaihwteam.jpg" alt="" width="720" height="480" loading="lazy">
+								<span><span class="sr-only">View photo: </span>2024 AI Hardware and Edge AI Summit with SiMa.ai</span>
+							</button>
+						</div>
+					</li>
+
+					<li class="entry">
+						<div class="panel">
+							<div class="entry-main">
+								<p class="entry-when">September 2023 to June 2024</p>
+								<h3>UCLA</h3>
+								<p class="entry-role">M.S. Electrical and Computer Engineering, Signal Processing <span>in Los Angeles, California</span></p>
+								<ul>
+									<li>Coursework in computational imaging, digital speech processing, advanced deep learning and neural networks, modern wireless communication systems, and large-scale social complex networks.</li>
+									<li>Course projects: <a href="portfolio/index.html#project-ruhuman">RuHuman</a>, <a href="portfolio/index.html#project-amr">automatic modulation recognition</a>, <a href="portfolio/index.html#project-dialect">dialect region classification</a> and <a href="portfolio/index.html#project-eeg">EEG action classification</a>.</li>
+								</ul>
+							</div>
+							<button class="snap" type="button" data-full="assets/game/img/album/full/uclagrad.jpg" data-caption="Graduating from UCLA with an M.S. in ECE">
+								<img src="assets/game/img/album/uclagrad.jpg" alt="" width="720" height="480" loading="lazy">
+								<span><span class="sr-only">View photo: </span>Graduating from UCLA with an M.S. in ECE</span>
+							</button>
+						</div>
+					</li>
+
+					<li class="entry">
+						<div class="panel">
+							<div class="entry-main">
+								<p class="entry-when">June 2023 to April 2024</p>
+								<h3>Maxeon Solar Technologies</h3>
+								<p class="entry-role">Embedded Software Engineering Co-Op <span>in San Jose, California</span></p>
+								<ul>
+									<li>Implemented OpenCV pipelines that measure solar module features for defect binning.</li>
+									<li>Developed Tkinter interfaces so operators could test images under custom data pipelines.</li>
+									<li>Trained YOLOv5 and YOLOv8 module defect classification models deployed in the manufacturing fab.</li>
+								</ul>
+							</div>
+							<button class="snap" type="button" data-full="images/maxeoninterns.jpeg" data-caption="Summer 2023 Internship at Maxeon Solar">
+								<img src="assets/game/img/album/maxeoninterns.jpg" alt="" width="720" height="480" loading="lazy">
+								<span><span class="sr-only">View photo: </span>Summer 2023 Internship at Maxeon Solar</span>
+							</button>
+						</div>
+					</li>
+
+					<li class="entry">
+						<div class="panel">
+							<div class="entry-main">
+								<p class="entry-when">June to September 2022</p>
+								<h3>Western Digital</h3>
+								<p class="entry-role">Industrial Internet of Things Intern <span>in San Jose, California</span></p>
+								<ul>
+									<li>Built a real-time Raspberry Pi sensor data analytics platform with industrial toolsets.</li>
+									<li>Earned a Six Sigma Yellow Belt.</li>
+									<li>Hazard mitigations in the manufacturing fab were projected to save $312,000 a year.</li>
+								</ul>
+							</div>
+							<button class="snap" type="button" data-full="images/wdglobalops.jpg" data-caption="Summer 2022 Internship at Western Digital">
+								<img src="assets/game/img/album/wdglobalops.jpg" alt="" width="720" height="480" loading="lazy">
+								<span><span class="sr-only">View photo: </span>Summer 2022 Internship at Western Digital</span>
+							</button>
+						</div>
+					</li>
+
+					<li class="entry">
+						<div class="panel">
+							<div class="entry-main">
+								<p class="entry-when">January 2022 to June 2023</p>
+								<h3>Irvine Computer Vision Laboratory</h3>
+								<p class="entry-role">Lead Undergraduate Student Researcher <span>in Irvine, California</span></p>
+								<ul>
+									<li>Researched spectral image filtering and baseball simulations under Professor Glenn Healey.</li>
+									<li>Digitized hyperspectral optical imaging filters and compared them against chemical emissions.</li>
+									<li>Managed more than 15 graduate and undergraduate researchers and developed shared MATLAB and Python scripts for analyzing vegetation spectra.</li>
+								</ul>
+							</div>
+							<button class="snap" type="button" data-full="assets/game/img/album/full/icvl.jpg" data-caption="Hyperspectral Imagery from the ICVL Website">
+								<img src="assets/game/img/album/icvl.jpg" alt="" width="720" height="480" loading="lazy">
+								<span><span class="sr-only">View photo: </span>Hyperspectral Imagery from the ICVL Website</span>
+							</button>
+						</div>
+					</li>
+
+					<li class="entry">
+						<div class="panel">
+							<div class="entry-main">
+								<p class="entry-when">July 2021 to June 2022</p>
+								<h3>UC Irvine Division of Continuing Education</h3>
+								<p class="entry-role">IT General Assistant <span>in Irvine, California</span></p>
+								<ul>
+									<li>Set up desktops, docks, printers, webcams and computers for more than 300 employees in UCI’s Division of Continuing Education.</li>
+									<li>Worked with network administrators to manage the division’s IP addresses, subnet masks and DNS servers for access to local networking services.</li>
+									<li>Monitored and updated the DCE-OLLI web server, rebuilding its frontend and backend with React.</li>
+								</ul>
+							</div>
+							<button class="snap" type="button" data-full="images/IT.jpg" data-caption="IT General Assistant at UCI DCE">
+								<img src="assets/game/img/album/ucidce.jpg" alt="" width="720" height="480" loading="lazy">
+								<span><span class="sr-only">View photo: </span>IT General Assistant at UCI DCE</span>
+							</button>
+						</div>
+					</li>
+
+					<li class="entry">
+						<div class="panel">
+							<div class="entry-main">
+								<p class="entry-when">September 2019 to June 2023</p>
+								<h3>UC Irvine</h3>
+								<p class="entry-role">B.S. Electrical Engineering, Digital Signal Processing and Communications <span>in Irvine, California</span></p>
+								<ul>
+									<li>Graduated Magna Cum Laude with Accelerated Status.</li>
+									<li>Member of IEEE, IPC, Eta Kappa Nu and Tau Beta Pi.</li>
+									<li>Led a team of four on the senior design project <a href="portfolio/index.html#project-thedopro">The Do-Pro</a>, a simplistic stereo-vision camera.</li>
+								</ul>
+							</div>
+							<button class="snap" type="button" data-full="images/TheDoProGuys.jpg" data-caption="The Do-Pro Senior Design Team, Advised by Professor Glenn Healey">
+								<img src="assets/game/img/album/TheDoProGuys.jpg" alt="" width="720" height="480" loading="lazy">
+								<span><span class="sr-only">View photo: </span>The Do-Pro Senior Design Team, Advised by Professor Glenn Healey</span>
+							</button>
+						</div>
+					</li>
+				</ol>
+
+				<div class="btn-row">
+					<a class="btn btn--primary" href="resume.html">View Resume</a>
+					<a class="btn" href="awards/index.html">View Awards</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Projects -->
+		<section class="screen" id="projects" data-screen="projects" data-title="Projects">
+			<div class="wrap">
+				<header class="screen-head">
+					<h2 data-screen-heading tabindex="-1">Projects</h2>
+					<div class="rule" aria-hidden="true"></div>
+					<p>A few featured projects. Choose one to see what it is and where to find it.</p>
+				</header>
+
+				<div data-projectlog="featured" data-img-base="portfolio/images/projects/">
+					<noscript><p>The project list needs JavaScript. You can also browse my projects on <a href="https://github.com/dotimothy?tab=repositories">GitHub</a>.</p></noscript>
+				</div>
+
+				<div class="pl-more">
+					<a class="btn btn--primary" href="portfolio/index.html">See All Projects</a>
+					<p>More than 50 in all, from on-device AI to my first Raspberry Pi experiments.</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Interests -->
+		<section class="screen" id="interests" data-screen="interests" data-title="Interests">
+			<div class="wrap">
+				<header class="screen-head">
+					<h2 data-screen-heading tabindex="-1">Interests</h2>
+					<div class="rule" aria-hidden="true"></div>
+					<p>What I do off the clock, and how I give back.</p>
+				</header>
+
+				<div class="cards">
+					<article class="panel card card--photo">
+						<div>
+							<h3>TheDoLab</h3>
+							<p>My homelab for tinkering with new technology. It runs a self-hosted website, a WireGuard VPN, a machine learning rig for fine-tuning large language and vision models, and a Bedrock and Java Minecraft server for TheDoCraft. It also has an electronics station for designing circuits and IoT projects.</p>
+							<p><a class="card-link" href="thedolab.html">Visit TheDoLab</a></p>
+						</div>
+						<button class="snap" type="button" data-full="assets/game/img/album/full/thedolab.jpg" data-caption="TheDoLab After Dark">
+							<img src="assets/game/img/album/thedolab.jpg" alt="" width="720" height="480" loading="lazy">
+							<span><span class="sr-only">View photo: </span>TheDoLab After Dark</span>
+						</button>
+					</article>
+
+					<article class="panel card card--photo">
+						<div>
+							<h3>Scouting</h3>
+							<p>I earned Eagle Scout with a Bronze Palm in July 2019 with Troop 610. Since 2021 I’ve volunteered as a merit badge counselor, teaching Scouts photography, electronics, digital technology, programming, astronomy, bugling and music.</p>
+							<p><a class="card-link" href="https://timothydo.me/meritbadge/">Open the Merit Badge Site</a></p>
+						</div>
+						<button class="snap" type="button" data-full="images/bsa.jpg" data-caption="Earned Eagle Scout with Bronze Palm">
+							<img src="assets/game/img/album/bsa.jpg" alt="" width="720" height="480" loading="lazy">
+							<span><span class="sr-only">View photo: </span>Earned Eagle Scout with Bronze Palm</span>
+						</button>
+					</article>
+
+					<article class="panel card card--photo">
+						<div>
+							<h3>IPC at UC Irvine</h3>
+							<p>As vice president of the Institute of Printed Circuits club, I created and led its AM radio and amplifier workshop.</p>
+							<p><a class="card-link" href="https://ipcuci.github.io" target="_blank" rel="noopener">Visit IPC at UCI</a></p>
+						</div>
+						<button class="snap" type="button" data-full="images/ipc.jpg" data-caption="Leading the AM Radio and Amplifier Workshop for IPC at UCI">
+							<img src="assets/game/img/album/ipc.jpg" alt="" width="720" height="480" loading="lazy">
+							<span><span class="sr-only">View photo: </span>Leading the AM Radio and Amplifier Workshop for IPC at UCI</span>
+						</button>
+					</article>
+
+					<article class="panel card card--photo">
+						<div>
+							<h3>Evergreen Music Mentors</h3>
+							<p>In my senior year of high school I started Evergreen Music Mentors, where I use my musicianship and experience on the euphonium to motivate students to become better musicians.</p>
+						</div>
+						<button class="snap" type="button" data-full="euphonium/images/mentor.jpg" data-caption="Mentoring with the Euphonium">
+							<img src="assets/game/img/album/mentor.jpg" alt="" width="720" height="480" loading="lazy">
+							<span><span class="sr-only">View photo: </span>Mentoring with the Euphonium</span>
+						</button>
+					</article>
+
+					<article class="panel card card--photo">
+						<div>
+							<h3>Euphonium</h3>
+							<p>I play the euphonium and other brass instruments. Let’s meet up and play some gigs.</p>
+							<p><a class="card-link" href="euphonium/">Hear the Euphonium</a></p>
+						</div>
+						<button class="snap" type="button" data-full="euphonium/images/banner.jpg" data-caption="Playing the Euphonium at Sunset">
+							<img src="assets/game/img/album/euphonium.jpg" alt="" width="720" height="480" loading="lazy">
+							<span><span class="sr-only">View photo: </span>Playing the Euphonium at Sunset</span>
+						</button>
+					</article>
+
+					<article class="panel card card--photo">
+						<div>
+							<h3>Night Skies</h3>
+							<p>Stargazing meets data and programming: a light pollution visualization, an astrophotography gallery and an image stacking notebook. The night skies behind this site are my own photographs.</p>
+							<p><a class="card-link" href="https://timothydo.me/astronomy/">Explore the Astronomy Site</a></p>
+						</div>
+						<button class="snap" type="button" data-full="assets/game/img/album/full/nightsky.jpg" data-caption="Under the Milky Way at Pinnacles">
+							<img src="assets/game/img/album/nightsky.jpg" alt="" width="720" height="480" loading="lazy">
+							<span><span class="sr-only">View photo: </span>Under the Milky Way at Pinnacles</span>
+						</button>
+					</article>
+
+					<article class="panel card card--photo">
+						<div>
+							<h3>Photography</h3>
+							<p>TheDoShoots is my photography portfolio, with galleries such as astronomy and wildlife.</p>
+							<p><a class="card-link" href="https://thedoshoots.me/" target="_blank" rel="noopener">Visit TheDoShoots</a></p>
+						</div>
+						<button class="snap" type="button" data-full="assets/game/img/album/full/photography.jpg" data-caption="Out Shooting with My Camera">
+							<img src="assets/game/img/album/photography.jpg" alt="" width="720" height="480" loading="lazy">
+							<span><span class="sr-only">View photo: </span>Out Shooting with My Camera</span>
+						</button>
+					</article>
+
+					<article class="panel card card--photo">
+						<div>
+							<h3>National Parks</h3>
+							<p>I blog while exploring the nation’s national parks.</p>
+							<p><a class="card-link" href="NPS/">Read the National Parks Blog</a></p>
+						</div>
+						<button class="snap" type="button" data-full="NPS/pictures/favorite.jpg" data-caption="Smiling at Bryce Canyon">
+							<img src="assets/game/img/album/nps.jpg" alt="" width="720" height="480" loading="lazy">
+							<span><span class="sr-only">View photo: </span>Smiling at Bryce Canyon</span>
+						</button>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<!-- Contact -->
+		<section class="screen" id="contact" data-screen="contact" data-title="Contact">
+			<div class="wrap">
+				<header class="screen-head">
+					<h2 data-screen-heading tabindex="-1">Contact</h2>
+					<div class="rule" aria-hidden="true"></div>
+				</header>
+
+				<div class="contact">
+					<div>
+						<p class="contact-lead">Let’s Make the World a Better Place.</p>
+						<p class="contact-note">Reach out about edge AI, computer vision, a project you’d like to build together, or a brass gig.</p>
+						<div class="btn-row">
+							<a class="btn btn--primary" href="resume.html">View Resume</a>
+							<a class="btn" href="CV.html">View CV</a>
+						</div>
+					</div>
+
+					<ul class="links">
+						<li>
+							<a href="mailto:timothydobsa@gmail.com">
+								<strong>
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+										<rect x="3" y="5" width="18" height="14" rx="2" />
+										<path d="m3 7 9 6 9-6" />
+									</svg>
+									Email
+								</strong>
+								<span>timothydobsa@gmail.com</span>
+							</a>
+						</li>
+						<li>
+							<a href="sms:408-644-5538">
+								<strong>
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+										<path d="M6 4h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-8l-6 3v-5a3 3 0 0 1-1-2V7a3 3 0 0 1 3-3Z" />
+										<path d="M8 9h8m-8 4h5" />
+									</svg>
+									Text
+								</strong>
+								<span>408-644-5538</span>
+							</a>
+						</li>
+						<li><a href="https://www.linkedin.com/in/do-timothy/" target="_blank" rel="noopener"><strong><img src="contact/assets/css/images/social/linkedin.png" width="20" height="20" alt="">LinkedIn</strong><span>do-timothy</span></a></li>
+						<li><a href="https://github.com/dotimothy" target="_blank" rel="noopener"><strong><img src="contact/assets/css/images/social/github.png" width="20" height="20" alt="">GitHub</strong><span>dotimothy</span></a></li>
+						<li><a href="https://huggingface.co/dotimothy" target="_blank" rel="noopener"><strong><img src="contact/assets/css/images/social/hugging-face.png" width="20" height="20" alt="">Hugging Face</strong><span>dotimothy</span></a></li>
+						<li><a href="https://www.youtube.com/channel/UCCKkvo3icf2oxmLlfHbDfxw?sub_confirmation=1" target="_blank" rel="noopener"><strong><img src="contact/assets/css/images/social/youtube.png" width="20" height="20" alt="">YouTube</strong><span>Timothy Do</span></a></li>
+						<li><a href="https://www.instagram.com/dotimothy" target="_blank" rel="noopener"><strong><img src="contact/assets/css/images/social/instagram.png" width="20" height="20" alt="">Instagram</strong><span>dotimothy</span></a></li>
+						<li><a href="https://www.facebook.com/tdo2001" target="_blank" rel="noopener"><strong><img src="contact/assets/css/images/social/facebook.png" width="20" height="20" alt="">Facebook</strong><span>tdo2001</span></a></li>
+						<li><a href="https://www.twitter.com/tdo410" target="_blank" rel="noopener"><strong><img src="contact/assets/css/images/social/x.png" width="20" height="20" alt="">X (Twitter)</strong><span>tdo410</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+	</main>
+
+	<footer class="foot">
+		<p>
+			<span>© 2026 Timothy Do. All rights reserved.</span>
+			<a href="linktree.html">Linktree</a>
+			<a href="check.html">System Check</a>
+			<button class="splash-replay" type="button" data-splash-replay aria-haspopup="dialog" hidden>Replay Splash</button>
+		</p>
+	</footer>
+
+	<div class="keyhints" aria-hidden="true"></div>
+
+	<dialog class="lightbox" aria-label="Photo">
+		<img alt="">
+		<div class="lightbox-bar">
+			<p data-lightbox-caption></p>
+			<button class="btn" type="button" data-lightbox-close>Close</button>
+		</div>
+	</dialog>
+
+	<script src="assets/game/projects.js"></script>
+	<script src="assets/game/game.js"></script>
+
+	<button class="btn chat-launch" id="chat-launch" type="button" aria-label="Open AI chat" aria-haspopup="dialog" hidden>
+		<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+			<path d="M5 4.5h14a2 2 0 0 1 2 2V15a2 2 0 0 1-2 2h-8l-5.5 4V17H5a2 2 0 0 1-2-2V6.5a2 2 0 0 1 2-2Z"/>
+			<path d="M7.5 10.75h.5m3.75 0h.5m3.75 0h.5"/>
+		</svg>
+	</button>
+	<dialog class="site-chat" id="site-chat" aria-labelledby="chat-title" aria-describedby="chat-description">
+		<button class="chat-collapse" id="chat-collapse" type="button" aria-label="Collapse AI Chat" title="Collapse AI Chat">
+			<svg width="12" height="18" viewBox="0 0 12 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+				<path d="m4 4 5 5-5 5"/>
+			</svg>
+		</button>
+		<header class="chat-header">
+			<div class="chat-identity">
+				<img src="assets/game/img/logo.png" width="44" height="44" alt="">
+				<div>
+					<h2 id="chat-title">Ask Timothy <span class="chat-persona-label">AI Persona</span></h2>
+					<div class="chat-header-details">
+						<p class="chat-header-status" id="chat-header-status"><span aria-hidden="true"></span><strong>Model Idle</strong></p>
+						<span class="chat-active-model" id="chat-model-in-use" hidden></span>
+						<dl class="chat-metrics" aria-label="Reply performance" hidden>
+							<div><dt><abbr title="Time to first token">TTFT</abbr></dt><dd id="chat-ttft">—</dd></div>
+							<div><dt><abbr title="Tokens per second after the first token">TPS</abbr></dt><dd id="chat-tps">—</dd></div>
+							<div><dt>Tokens</dt><dd id="chat-token-count">0</dd></div>
+						</dl>
+					</div>
+				</div>
+			</div>
+			<div class="chat-actions">
+				<button class="chat-control" id="chat-settings-open" type="button" aria-haspopup="dialog">Settings</button>
+				<button class="chat-control" id="chat-clear" type="button" disabled>Clear Conversation</button>
+				<button class="chat-control chat-fullscreen" id="chat-fullscreen" type="button" aria-label="Enter Full Screen" title="Enter Full Screen" aria-pressed="false">
+					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<path class="chat-expand-icon" d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4"/>
+						<path class="chat-shrink-icon" d="M4 8h4V4m12 4h-4V4m-8 16v-4H4m12 4v-4h4"/>
+					</svg>
+				</button>
+				<button class="chat-control" id="chat-exit" type="button" aria-label="Close chat">Exit</button>
+			</div>
+		</header>
+		<div class="chat-scroll" tabindex="0" aria-label="Conversation">
+			<div class="chat-welcome">
+				<h3>What Would You Like to Explore?</h3>
+				<p id="chat-description">Hey, I’m Timothy’s AI persona. Ask me about my work, projects, or what I do off the clock.</p>
+				<div class="chat-suggestions" aria-label="Suggested questions">
+					<button class="chat-control" type="button">Where Do You Work?</button>
+					<button class="chat-control" type="button">What Did You Study?</button>
+					<button class="chat-control" type="button">What Do You Like to Do Outside Work?</button>
+				</div>
+			</div>
+			<div class="chat-log"></div>
+		</div>
+		<div class="chat-dock">
+			<div class="chat-operation" hidden>
+				<p></p><div class="chat-progress" role="progressbar" aria-label="Model Operation Progress" aria-valuemin="0" aria-valuemax="100"></div>
+			</div>
+			<form class="chat-form" novalidate>
+				<input type="text" name="question" aria-label="Ask a Question" placeholder="Ask a Question…" maxlength="600" required>
+				<button class="chat-control chat-mic" id="chat-mic" type="button" aria-label="Record Voice Input" title="Record Voice Input" aria-pressed="false" hidden>
+					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<rect x="9" y="3" width="6" height="12" rx="3"/>
+						<path d="M6 11v1a6 6 0 0 0 12 0v-1M12 18v3m-3 0h6"/>
+					</svg>
+				</button>
+				<button class="btn btn--primary" type="submit">Send</button>
+				<button class="chat-control" id="chat-stop" type="button" hidden>Stop</button>
+			</form>
+			<p class="chat-voice-status" id="chat-voice-status" role="status"></p>
+			<div class="chat-dock-status">
+				<p class="chat-status" role="status"></p>
+				<button class="chat-control" id="chat-cancel-load" type="button" hidden>Cancel Load</button>
+			</div>
+		</div>
+		<dialog class="chat-settings" id="chat-settings" aria-labelledby="chat-settings-title">
+			<header>
+				<h3 id="chat-settings-title">Chat Settings</h3>
+				<form method="dialog"><button class="chat-control" type="submit">Done</button></form>
+			</header>
+			<section class="chat-backend-settings" aria-labelledby="chat-backend-title">
+				<h4 id="chat-backend-title">Chat Backend</h4>
+				<form id="chat-backend-form" novalidate>
+					<label for="chat-backend">Backend</label>
+					<select id="chat-backend">
+						<option value="webgpu">WebGPU (In Browser)</option>
+						<option value="ollama">Ollama API</option>
+						<option value="openai">OpenAI-Compatible API</option>
+					</select>
+					<div id="chat-api-fields" hidden>
+						<div class="chat-api-inputs">
+							<div><label for="chat-api-url">API Base URL</label><input id="chat-api-url" type="url" spellcheck="false" autocomplete="off"></div>
+							<div><label for="chat-api-model">API Model</label><input id="chat-api-model" type="text" list="chat-api-models" spellcheck="false" autocomplete="off"><datalist id="chat-api-models"></datalist></div>
+							<div><label for="chat-api-key">API Key (Optional)</label><input id="chat-api-key" type="password" autocomplete="off"></div>
+						</div>
+						<p id="chat-api-hint"></p>
+						<p>API backends send prompts and enabled conversation context to the configured server. Keys are kept in this tab only.</p>
+					</div>
+					<div class="chat-settings-actions chat-backend-actions">
+						<button class="chat-control" type="submit" id="chat-apply-backend">Use Backend</button>
+						<button class="chat-control" type="button" id="chat-list-models" hidden>List Models</button>
+					</div>
+					<p id="chat-backend-status" role="status"></p>
+				</form>
+			</section>
+			<section class="chat-model-library" aria-labelledby="chat-library-title">
+				<h4 id="chat-library-title">Local Models</h4>
+				<div class="chat-model-search">
+					<input type="search" id="chat-model-search" aria-label="Search Local Models" placeholder="Search by model, size, or backend…" autocomplete="off" spellcheck="false">
+					<button type="button" class="chat-control" id="chat-clear-search" hidden>Clear Search</button>
+				</div>
+				<div class="chat-model-table-wrap">
+					<table class="chat-model-table" aria-label="Local Models">
+						<thead><tr><th scope="col">Model</th><th scope="col">Download</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead>
+						<tbody></tbody>
+					</table>
+				</div>
+				<p id="chat-model-empty" hidden>No models match your search.</p>
+				<p class="chat-storage-status" role="status"></p>
+				<div class="chat-operation" hidden>
+					<p></p><div class="chat-progress" role="progressbar" aria-label="Model Operation Progress" aria-valuemin="0" aria-valuemax="100"></div>
+					<button type="button" class="chat-control" id="chat-cancel-download" hidden>Cancel Download</button>
+				</div>
+			</section>
+			<section class="chat-cache-settings" aria-labelledby="chat-cache-title">
+				<h4 id="chat-cache-title">Model Cache</h4>
+				<div class="chat-cache-row">
+					<div>
+						<p id="chat-cache-summary">Checking Browser Storage…</p>
+						<p id="chat-cache-quota"></p>
+					</div>
+					<button class="chat-control" id="chat-delete-all-models" type="button" disabled>Delete All Models</button>
+				</div>
+			</section>
+			<section class="chat-generation-settings" aria-labelledby="chat-generation-title">
+				<h4 id="chat-generation-title">Generation</h4>
+				<label for="chat-temperature">Temperature <output id="chat-temperature-value" for="chat-temperature"></output></label>
+				<input id="chat-temperature" type="range" min="0" max="1" step="0.1">
+				<p>Lower values make replies more consistent.</p>
+				<label for="chat-tokens">Max Reply Tokens</label>
+				<select id="chat-tokens">
+					<option value="64">64</option><option value="128">128</option>
+					<option value="192">192</option><option value="256">256</option>
+					<option value="512">512</option><option value="1024">1,024</option>
+				</select>
+				<label class="chat-checkbox"><input id="chat-context" type="checkbox"> Include recent turns in follow-up questions</label>
+				<div class="chat-settings-actions">
+					<button class="chat-control" id="chat-reset" type="button">Restore Defaults</button>
+				</div>
+			</section>
+		</dialog>
+	</dialog>
+	<script type="module" src="assets/game/entry.js"></script>
+	<script type="module" src="assets/game/portfolio-3d-redirect.js"></script>
+</body>
 </html>

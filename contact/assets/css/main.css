@@ -693,6 +693,20 @@ input, select, textarea {
 						color: #fff;
 					}
 
+				#header nav a.social-icon:before {
+					content: '';
+				}
+
+				#header nav a.social-icon img {
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					width: 1.75em;
+					height: 1.75em;
+					object-fit: contain;
+					transform: translate(-50%, -50%);
+				}
+
 				#header nav a span {
 					display: none;
 				}
