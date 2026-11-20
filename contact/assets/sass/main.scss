@@ -348,6 +348,22 @@
 					}
 				}
 
+				&.social-icon {
+					&:before {
+						content: '';
+					}
+
+					img {
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						width: 1.75em;
+						height: 1.75em;
+						object-fit: contain;
+						transform: translate(-50%, -50%);
+					}
+				}
+
 				span {
 					display: none;
 				}

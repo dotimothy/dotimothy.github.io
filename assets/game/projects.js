@@ -50,7 +50,7 @@ window.PROJECTS = [
     repo: 'https://github.com/dotimothy/neat-dino-studio'
   },
   {
-    id: 'neat-change-studio', title: 'Neat Change Studio', cat: 'edge', year: 2026,
+    id: 'neat-change-studio', title: 'Neat Change Studio', cat: 'edge', year: 2026, featured: true,
     blurb: 'Before-and-after change detection on the Modalix MLA, with a web demo. Choose CYWS, trained for change detection; DINOv2, zero-shot; or C-3PO, trained change segmentation.',
     tags: ['Python', 'CYWS', 'DINOv2', 'Flask'],
     img: 'neat-change-studio.jpg',
@@ -91,7 +91,7 @@ window.PROJECTS = [
     id: 'dispatchiq', title: 'DispatchIQ', cat: 'hack', year: 2026, featured: true,
     blurb: 'Multilingual call documentation support for emergency dispatchers, built for SpeedHacks 2026. Local models transcribe and translate the call, then suggest each form field with a confidence score and the quote it came from. A human approves everything.',
     tags: ['Python', 'Whisper', 'Laya', 'Piper TTS'],
-    img: null,
+    img: 'dispatchiq.jpg',
     repo: 'https://github.com/dotimothy/speedrun-hacks-26'
   },
   {
