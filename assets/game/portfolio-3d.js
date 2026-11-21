@@ -3,6 +3,9 @@ import { createPlaque } from './portfolio-3d-plaque.js';
 
 import { addSanctuary, compassRose, makeRelic } from './portfolio-3d-sanctuary.js';
 
+import { createPassage, dressAirgate, placeAirgate } from './portfolio-3d-airgate.js';
+import { createController, readStick, constrainToPlaza, floor, plazaCenterZ } from './portfolio-3d-controller.js';
+import { createFlight } from './portfolio-3d-flight.js';
 import { createTraveler } from './portfolio-3d-traveler.js';
 
 const sections = [
@@ -49,18 +52,6 @@ function makeStars() {
   return new THREE.Points(geometry, new THREE.PointsMaterial({
     size: 0.10, vertexColors: true, opacity: 0.85, transparent: true, fog: false, depthWrite: false,
   }));
-}
-
-function addSky(scene, refresh) {
-  const map = new THREE.TextureLoader().load(new URL('./img/scene/title-1600.jpg', import.meta.url).href, refresh);
-  map.colorSpace = THREE.SRGBColorSpace;
-  const sky = new THREE.Mesh(new THREE.PlaneGeometry(145, 108), new THREE.MeshBasicMaterial({
-    map, color: 0x9da9d0, fog: false, depthWrite: false,
-  }));
-  sky.position.set(0, 12, -67);
-  sky.renderOrder = -1;
-  scene.add(sky, makeStars());
-  return map;
 }
 
 function boardLabel(text, textScale) {
@@ -114,7 +105,7 @@ function slateTexture() {
   ctx.putImageData(pixels, 0, 0);
   const map = new THREE.CanvasTexture(canvas);
   map.wrapS = map.wrapT = THREE.RepeatWrapping;
-  map.repeat.set(6, 6);
+  map.repeat.set(13, 13);
   map.colorSpace = THREE.SRGBColorSpace;
   return map;
 }
@@ -123,7 +114,7 @@ function addPlaza(scene) {
   const map = slateTexture();
   const stone = new THREE.MeshStandardMaterial({ color: 0x67667c, map, bumpMap: map, bumpScale: .055, roughness: .71, metalness: .13 });
   const plaza = new THREE.Mesh(new THREE.CylinderGeometry(14, 14.4, 0.34, 80), stone);
-  plaza.position.set(0, -0.56, -1);
+  plaza.position.set(0, floor - plaza.geometry.parameters.height / 2, -1);
   plaza.receiveShadow = true;
   scene.add(plaza);
 
@@ -148,6 +139,7 @@ function portalWindow(geometry, tint, thumbnail) {
       photoAspect: { value: 1.5 },
       time: { value: 0 },
       highlight: { value: 0 },
+      opening: { value: 0 },
     },
     vertexShader: `
       varying vec2 panel;
@@ -162,6 +154,7 @@ function portalWindow(geometry, tint, thumbnail) {
       uniform float photoAspect;
       uniform float time;
       uniform float highlight;
+      uniform float opening;
       varying vec2 panel;
       void main() {
         vec2 p = panel - vec2(0.0, 1.59);
@@ -178,6 +171,12 @@ function portalWindow(geometry, tint, thumbnail) {
           vec3 photo = texture2D(thumbnail, vec2(.5) + card * crop).rgb;
           color = mix(photo, vec3(.62, .42, .15), smoothstep(.49, .51, edge));
         }
+        if (opening > 0.0) {
+          float radius = length(p * vec2(1.0, .68));
+          float lip = opening * 1.7;
+          if (radius < lip) discard;
+          color += tint * (1.0 - smoothstep(0.0, .23, radius - lip)) * 3.0;
+        }
         gl_FragColor = vec4(color, 1.0);
         #include <colorspace_fragment>
       }
@@ -185,11 +184,12 @@ function portalWindow(geometry, tint, thumbnail) {
   }));
 }
 
-export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
+export function mountPortfolio3D(container, { onNavigate, onError, cardFor } = {}) {
   const renderer = new THREE.WebGLRenderer({ alpha: false, antialias: true, powerPreference: 'low-power' });
   const canvas = renderer.domElement;
   canvas.className = 'portfolio-3d-canvas';
-  canvas.setAttribute('aria-hidden', 'true');
+  canvas.tabIndex = -1;
+  canvas.setAttribute('aria-label', 'Portfolio camera view');
   const textScale = Math.min(3, Math.max(2, Math.ceil(window.devicePixelRatio || 1)),
     Math.floor(renderer.capabilities.maxTextureSize / 780));
 
@@ -199,23 +199,29 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
   const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 150);
   scene.add(new THREE.HemisphereLight(0xc8dafe, 0x3b2539, 1.55));
   const key = new THREE.DirectionalLight(0xffdcaf, 2.2);
-  key.position.set(-4, 9, 7);
+  key.position.set(-14, 29, 17);
   scene.add(key);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;
   key.castShadow = true;
   key.shadow.mapSize.set(1024, 1024);
-  Object.assign(key.shadow.camera, { left: -14, right: 14, top: 14, bottom: -14, near: .1, far: 42 });
+  Object.assign(key.shadow.camera, { left: -41, right: 41, top: 41, bottom: -41, near: .1, far: 95 });
   key.shadow.camera.updateProjectionMatrix();
   key.shadow.normalBias = .035;
   const rim = new THREE.DirectionalLight(0xa0bcff, .85);
   rim.position.set(7, 6, -9);
   scene.add(rim);
-  const skyTexture = addSky(scene, refresh);
-  addSanctuary(scene);
-  const groundTexture = addPlaza(scene);
-  const plaque = createPlaque(textScale, refresh);
-  scene.add(plaque.object);
+  scene.add(makeStars());
+  const ruins = new THREE.Group();
+  ruins.position.z = -31;
+  scene.add(ruins);
+  addSanctuary(ruins);
+  const plaza = new THREE.Group();
+  plaza.scale.set(3, 1, 3);
+  plaza.position.z = plazaCenterZ + 3;
+  scene.add(plaza);
+  const groundTexture = addPlaza(plaza);
+  let readingPortal, initialized = false, mapOpen = false, transfer, viewBlend;
   let exhibitOpen = false;
 
   const archGeometry = frame(1.02, 0.9, 0.16, 0.24);
@@ -229,17 +235,12 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
   const traveler = createTraveler(refresh);
   const pawn = traveler.body;
   pawn.traverse(part => { if (part.isMesh) part.castShadow = true; });
-  scene.add(pawn);
+  const flight = createFlight();
+  const controller = createController(pawn);
+  scene.add(pawn, flight.stars);
   let move;
-  const tileGeometry = new THREE.BoxGeometry(.74, .19, .74);
-  const tileMaterials = [0x9895aa, 0x868aa5, 0xb6a18a, 0x777997].map(color =>
-    new THREE.MeshStandardMaterial({ color, roughness: .71 }));
-  const tiles = Array.from({ length: 20 }, (_, i) => {
-    const tile = new THREE.Mesh(tileGeometry, tileMaterials[i % tileMaterials.length]);
-    tile.rotation.y = Math.PI / 4;
-    scene.add(tile);
-    return tile;
-  });
+  const pathGeometry = new THREE.PlaneGeometry(.45, .88);
+  const pathMaterial = new THREE.MeshBasicMaterial({ color: 0xd5b879, transparent: true, opacity: .6 });
   const hitMaterial = new THREE.MeshBasicMaterial({ visible: false });
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const aim = new THREE.Vector2();
@@ -263,8 +264,9 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
     interests: 'album/photography.jpg', contact: 'album/uclagrad.jpg',
   };
   const loader = new THREE.TextureLoader();
-  const portals = sections.map(({ id, label, color }) => {
+  const portals = sections.map(({ id, label, color }, index) => {
     const stand = new THREE.Group();
+    placeAirgate(stand, index);
     const stone = new THREE.Mesh(baseGeometry, darkMetal);
     stone.position.y = -0.11;
     stone.rotation.y = Math.PI / 8;
@@ -296,22 +298,46 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
     keystone.scale.set(.84, 1.9, .9);
     keystone.position.set(0, 3.15, .32);
     const nameplate = boardLabel(label, textScale);
-    stand.add(stone, edge, doorway, inlay, panel, orb, halo, keystone, hit, nameplate);
+    const { island, tunnel } = dressAirgate(color);
+    stand.add(stone, edge, doorway, inlay, panel, orb, halo, keystone, hit, nameplate, island, tunnel);
     for (const mesh of [stone, edge, doorway, inlay, keystone]) mesh.castShadow = true;
     scene.add(stand);
+
+    island.visible = true;
+    nameplate.position.y = 3.84;
+    nameplate.scale.set(3.05, 1.02, 1);
+    const plaque = createPlaque(Math.min(2, textScale), refresh);
+    plaque.object.position.set(0, 1.42, -8);
+    plaque.object.scale.setScalar(.34);
+    plaque.face.userData.id = id;
+    stand.add(plaque.object);
+    plaque.paint(cardFor(id));
+    // The same inlaid path leads through the arch to its reading station.
+    for (let step = 1; step <= 16; step++) {
+      const marker = new THREE.Mesh(pathGeometry, pathMaterial);
+      marker.rotation.x = -Math.PI / 2;
+      marker.position.set(0, -.175, 11 - step * 1.1);
+      stand.add(marker);
+    }
 
     const link = document.createElement('a');
     link.className = 'portfolio-3d-portal-link';
     link.href = '#' + id;
     link.dataset.section = id;
     link.textContent = label;
-    return { id, stand, inlay, panel, orb, hit, link, nameplate };
+    return { id, stand, inlay, panel, orb, hit, link, nameplate, halo, island, tunnel, color, plaque };
   });
   const hits = portals.map(({ hit }) => hit);
+  const selectable = [...hits, ...portals.map(portal => portal.plaque.face)];
   const events = new AbortController();
   const { signal } = events;
   const zoomBar = document.querySelector('#world-zoom');
   const [zoomOut, zoomReset, zoomIn] = zoomBar.querySelectorAll('button');
+  const pan = new THREE.Vector3();
+
+  let drag = null;
+  let suppressClick = false;
+  let flying = false;
   let mapZoom = 1;
   function setZoom(value) {
     mapZoom = THREE.MathUtils.clamp(Math.round(value * 100) / 100, .6, 2);
@@ -324,9 +350,9 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
   }
   zoomOut.addEventListener('click', () => setZoom(mapZoom / 1.2), { signal });
   zoomIn.addEventListener('click', () => setZoom(mapZoom * 1.2), { signal });
-  zoomReset.addEventListener('click', () => setZoom(1), { signal });
+  zoomReset.addEventListener('click', () => { pan.set(0, 0, 0); setZoom(1); }, { signal });
   container.addEventListener('wheel', event => {
-    if (exhibitOpen || event.ctrlKey || !event.deltaY) return;
+    if (!mapOpen || event.ctrlKey || !event.deltaY) return;
     event.preventDefault();
     const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? height : 1);
     setZoom(mapZoom * Math.exp(-THREE.MathUtils.clamp(delta, -200, 200) * .002));
@@ -339,51 +365,270 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
   const nearestButton = document.querySelector('#world-interact');
   const walkBar = document.querySelector('#world-walk');
   const look = new THREE.Vector3();
-  let nearest = null, roaming = false, lastTime = 0, walked = 0;
-  const spawn = new THREE.Vector3();
+  let nearest = null, lastTime = 0;
+  const guide = document.querySelector('#world-guide');
 
-  function beginRoaming() {
-    if (roaming) return;
-    roaming = true;
-    document.querySelector('#world-map').hidden = false;
+  const flyButton = document.querySelector('#world-flight');
+  const walkHint = walkBar.querySelector('.walk-hint');
+  const touchHint = walkBar.querySelector('.touch-hint');
+  const chart = document.querySelector('#flight-destination');
+  const descendButton = document.querySelector('#flight-descend');
+  const veil = document.querySelector('#portal-passage');
+  const caption = document.querySelector('#portal-caption');
+  const lookButton = document.querySelector('#world-look');
+  const speedButton = document.querySelector('#world-speed');
+  const jumpButton = document.querySelector('#world-jump');
+  const padHint = document.querySelector('#pad-hint');
+  const leftStick = new THREE.Vector2(), rightStick = new THREE.Vector2();
+  function connectedPad() {
+    try { return Array.from(navigator.getGamepads?.() || []).find(pad => pad?.mapping === 'standard'); }
+    catch { return undefined; }
+  }
+  let padIndex = connectedPad()?.index;
+  let padAction = false, padEnter = false, padFly = false, padFast = false;
+  function syncPad() {
+    padIndex = connectedPad()?.index;
+    padHint.hidden = padIndex === undefined;
+    padFast = padEnter = padAction = padFly = false;
+    refresh();
+  }
+  padHint.hidden = padIndex === undefined;
+  window.addEventListener('gamepadconnected', syncPad, { signal });
+  window.addEventListener('gamepaddisconnected', syncPad, { signal });
+  let shiftHeld = false, speedToggled = false;
+  let lastSpace = -Infinity;
+  const lastMovementTap = new Map();
+  const sprintKeys = new Set();
+  const fast = () => sprintKeys.size > 0 || speedToggled || padFast;
+  function resetSpeed() {
+    shiftHeld = speedToggled = false;
+    lastSpace = -Infinity;
+    lastMovementTap.clear();
+    sprintKeys.clear();
+    speedButton.setAttribute('aria-pressed', 'false');
+  }
+  function releaseMouse() {
+    if (document.pointerLockElement === canvas) document.exitPointerLock();
+  }
+  lookButton.addEventListener('click', async () => {
+    if (move || exhibitOpen) return;
+    try {
+      await canvas.requestPointerLock();
+    } catch {
+      // Browsers can decline capture. Drag-to-look remains available.
+      lookButton.focus();
+    }
+  }, { signal });
+  document.addEventListener('pointerlockchange', () => {
+    const locked = document.pointerLockElement === canvas;
+    lookButton.setAttribute('aria-pressed', String(locked));
+    lookButton.textContent = locked ? 'Esc to Release' : 'Mouse Look';
+    if (locked) canvas.focus({ preventScroll: true });
+    else clearInput();
+  }, { signal });
+  document.addEventListener('mousemove', event => {
+    if (document.pointerLockElement !== canvas || move || exhibitOpen) return;
+    controller.orbit(event.movementX, event.movementY);
+    refresh();
+  }, { signal });
+  speedButton.addEventListener('click', () => {
+    if (move || exhibitOpen) return;
+    speedToggled = !speedToggled;
+    speedButton.setAttribute('aria-pressed', String(speedToggled));
+    refresh();
+  }, { signal });
+  function jump() {
+    if (flying || move || exhibitOpen) return;
+    controller.jump();
+    lastTime = performance.now();
+    refresh();
+  }
+  for (const button of [jumpButton, descendButton]) {
+    button.addEventListener('pointerdown', event => {
+      if (move || exhibitOpen) return;
+      if (!flying) { jump(); return; }
+      button.setPointerCapture(event.pointerId);
+      setDirection(event.pointerId, button.dataset.vertical);
+      stepDirection(button.dataset.vertical, .045);
+    }, { signal });
+    button.addEventListener('lostpointercapture', event => held.delete(event.pointerId), { signal });
+    button.addEventListener('click', event => {
+      if (event.detail || move || exhibitOpen) return;
+      if (!flying) jump();
+      else {
+        stepDirection(button.dataset.vertical, .15);
+        refresh();
+      }
+    }, { signal });
+  }
+  const gateLocal = new THREE.Vector3(), previousFlight = new THREE.Vector3();
+  for (const { link, id } of portals) chart.add(new Option(link.textContent, id));
+  chart.addEventListener('change', () => {
+    if (chart.value) navigate(chart.value);
+    chart.value = '';
+  }, { signal });
+  const mapHint = walkHint.textContent;
+  const flightHint = 'WASD to Fly · Space to Rise · Shift to Descend · Double-Tap Space to Land';
+
+  function setFlight(active, direction, keepView = false, cameraPitch = 0) {
+    controller.reset(keepView ? undefined : direction + Math.PI, cameraPitch);
+    flying = active;
+    lookButton.hidden = !canvas.requestPointerLock || !matchMedia('(any-pointer: fine)').matches;
+    jumpButton.textContent = active ? 'Ascend' : 'Jump';
+    padHint.textContent = active ? 'L Stick to Fly · R Stick to Look · A/B Up/Down · X to Land · RT to Boost · Y to Enter'
+      : 'L Stick to Move · R Stick to Look · A to Jump · X to Fly · RT to Sprint · Y to Enter';
+    speedButton.textContent = active ? 'Boost' : 'Sprint';
+    nearest = null;
+    nearestButton.hidden = true;
+    flyButton.textContent = active ? 'Land' : 'Fly';
+    flyButton.title = active ? 'Land on the Plaza' : 'Fly Through Space';
+    chart.hidden = false;
+    descendButton.hidden = !active;
+    chart.disabled = false;
+    walkHint.textContent = active ? flightHint : mapHint;
+    touchHint.textContent = 'Drag to Look';
+    for (const button of walkBar.querySelectorAll('[data-dir]')) {
+      const dir = button.dataset.dir;
+      button.setAttribute('aria-label', (active ? 'Fly ' : 'Walk ') + ({ up: 'forward', down: 'backward' }[dir] || dir));
+    }
+    walkBar.querySelector('.walk-pad').setAttribute('aria-label', active ? 'Steer Timothy' : 'Move Timothy');
+    if (!keepView || motion.matches) traveler.glide(active);
+    if (active) {
+      pan.set(0, 0, 0);
+      pawn.rotation.y = direction;
+      lastTime = performance.now();
+    } else {
+      pawn.rotation.set(0, direction, 0);
+    }
+  }
+
+  function faceEntrance(portal, airborne) {
+    // Local +Z is the entrance side of every arch, including the rotated ones.
+    pawn.position.set(0, 0, 6);
+    portal.stand.localToWorld(pawn.position);
+    pawn.position.y = airborne ? 2.35 : floor;
+    setFlight(airborne, portal.stand.rotation.y + Math.PI, false, airborne ? 0 : -.36);
+  }
+
+  const overview = document.querySelector('#world-overview');
+  function updateMapControls() {
+    overview.setAttribute('aria-pressed', String(mapOpen));
+    overview.textContent = mapOpen ? 'Close Map' : 'Map';
+    chart.hidden = exhibitOpen || mapOpen;
+    zoomBar.hidden = !mapOpen;
+    container.toggleAttribute('data-pan', mapOpen);
+    camera.zoom = mapOpen ? mapZoom : 1;
+    walkHint.textContent = mapOpen ? 'Arrows to Pan · + / − to Zoom · 0 to Reset · M to Resume'
+      : flying ? flightHint : mapHint;
+    touchHint.textContent = mapOpen ? 'Drag to Pan' : 'Drag to Look';
+    for (const button of [descendButton, speedButton, jumpButton, lookButton, ...walkBar.querySelectorAll('[data-dir]')]) {
+      button.disabled = mapOpen;
+    }
+  }
+  function easeCamera() {
+    viewBlend = motion.matches ? undefined : {
+      start: performance.now(), position: camera.position.clone(), rotation: camera.quaternion.clone(),
+    };
+  }
+  function toggleMap() {
+    if (exhibitOpen || move) return;
+    if (transfer) {
+      pawn.position.copy(transfer.to);
+      traveler.glide(flying);
+    }
+    transfer = undefined;
+    easeCamera();
+    mapOpen = !mapOpen;
+    releaseMouse();
+    clearInput();
+    pan.set(0, 0, 0);
+    updateMapControls();
     resize();
   }
-  function walk(dx, dz, distance) {
-    const length = Math.hypot(dx, dz);
-    if (!length) return;
-    pawn.position.x += distance * dx / length;
-    pawn.position.z += distance * dz / length;
-    // Keep the traveler on the round stone platform, centered at (0, -1).
-    const radius = Math.hypot(pawn.position.x, pawn.position.z + 1);
-    if (radius > 12) {
-      pawn.position.x *= 12 / radius;
-      pawn.position.z = (pawn.position.z + 1) * 12 / radius - 1;
-    }
-    pawn.position.y = -.38;
-    pawn.rotation.y = Math.atan2(dx, dz);
-    walked += distance;
-  }
+  overview.addEventListener('click', toggleMap, { signal });
+
+  flyButton.addEventListener('click', () => {
+    if (move || exhibitOpen) return;
+    openDestination(flying ? 'board' : 'flight');
+  }, { signal });
+
   function setDirection(source, dir) {
-    beginRoaming();
     if (!held.size) lastTime = performance.now();
     held.set(source, dir);
     refresh();
   }
   function clearInput() {
     held.clear();
+    resetSpeed();
     refresh();
   }
   window.addEventListener('blur', clearInput, { signal });
   document.addEventListener('visibilitychange', () => { if (document.hidden) clearInput(); }, { signal });
   window.addEventListener('keydown', event => {
-    if (exhibitOpen || move || event.altKey || event.metaKey || event.ctrlKey) return;
+    if (event.defaultPrevented || guide.open || exhibitOpen || move || event.target.closest('select, input, textarea') || event.altKey || event.metaKey || event.ctrlKey) return;
     const key = event.key.toLowerCase();
-    if (walkKeys.has(key)) {
+    if (key === 'm' && !event.repeat) {
       event.preventDefault();
-      if (!event.repeat) setDirection(key, walkKeys.get(key));
+      toggleMap();
+    } else if (/^[1-5]$/.test(key) && !event.repeat) {
+      event.preventDefault();
+      navigate(portals[Number(key) - 1].id);
+    } else if (key === 'f' && !event.repeat) {
+      event.preventDefault();
+      flyButton.click();
+    } else if (mapOpen) {
+      if (key === 'escape') toggleMap();
+      else if (key === '+' || key === '=') setZoom(mapZoom * 1.2);
+      else if (key === '-') setZoom(mapZoom / 1.2);
+      else if (key === '0') zoomReset.click();
+      else if (key.startsWith('arrow')) panByPixels((Number(key === 'arrowleft') - Number(key === 'arrowright')) * 48,
+        (Number(key === 'arrowup') - Number(key === 'arrowdown')) * 48);
+      else return;
+      event.preventDefault();
+    } else if ('ijkl'.includes(key) && key.length === 1) {
+      event.preventDefault();
+      held.set(key, 'look-' + key);
+      refresh();
+    } else if (key === 'shift') {
+      shiftHeld = true;
+      refresh();
+    } else if (key === ' ' && !event.target.closest('button, summary, a')) {
+      event.preventDefault();
+      if (!event.repeat) {
+        const now = performance.now();
+        if (now - lastSpace <= 320) {
+          flyButton.click();
+          lastSpace = -Infinity;
+        } else {
+          lastSpace = now;
+          if (!flying) jump();
+        }
+        if (flying) setDirection(key, 'rise');
+      }
+    } else if (key === 'c') {
+      controller.recenter();
+      refresh();
+    } else if (walkKeys.has(key)) {
+      event.preventDefault();
+      if (!event.repeat) {
+        const now = performance.now();
+        if (now - (lastMovementTap.get(key) ?? -Infinity) <= 320) sprintKeys.add(key);
+        lastMovementTap.set(key, now);
+        setDirection(key, walkKeys.get(key));
+      }
     } else if (key === 'e' && nearest && !event.repeat) navigate(nearest.id);
   }, { signal });
-  window.addEventListener('keyup', event => { held.delete(event.key.toLowerCase()); }, { signal });
+  window.addEventListener('keyup', event => {
+    if (event.key === 'Shift') shiftHeld = false;
+    sprintKeys.delete(event.key.toLowerCase());
+    held.delete(event.key.toLowerCase());
+  }, { signal });
+  function stepDirection(dir, seconds) {
+    const dx = Number(dir === 'right') - Number(dir === 'left');
+    const dz = Number(dir === 'down') - Number(dir === 'up');
+    if (flying) controller.fly(seconds, dx, -dz, Number(dir === 'rise') - Number(dir === 'lower'), fast());
+    else controller.walk(seconds, dx, -dz, fast(), traveler, motion.matches, portals, shiftHeld);
+  }
   for (const button of walkBar.querySelectorAll('[data-dir]')) {
     button.addEventListener('pointerdown', event => {
       if (move || exhibitOpen) return;
@@ -391,14 +636,12 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
       const dir = button.dataset.dir;
       setDirection(event.pointerId, dir);
       // A quick tap takes one step even between animation frames.
-      walk(Number(dir === 'right') - Number(dir === 'left'), Number(dir === 'down') - Number(dir === 'up'), .18);
+      stepDirection(dir, .045);
     }, { signal });
     button.addEventListener('lostpointercapture', event => held.delete(event.pointerId), { signal });
     button.addEventListener('click', event => {
       if (event.detail || move || exhibitOpen) return;
-      beginRoaming();
-      const dir = button.dataset.dir;
-      walk(Number(dir === 'right') - Number(dir === 'left'), Number(dir === 'down') - Number(dir === 'up'), .65);
+      stepDirection(button.dataset.dir, .15);
       refresh();
     }, { signal });
   }
@@ -410,64 +653,157 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
   }
 
   function navigate(id) {
-    if (move) return;
+    if (move || exhibitOpen) return;
+    viewBlend = transfer = undefined;
+    releaseMouse();
     held.clear();
-    if (motion.matches) {
+    const portal = portals.find(portal => portal.id === id);
+    const atPlaque = portal.plaque.object.getWorldPosition(projected).distanceTo(pawn.position) < 5;
+    if (motion.matches || atPlaque) {
       openDestination(id);
       return;
     }
-    const destination = portals.find(portal => portal.id === id).stand.position;
-    move = {
-      id, start: performance.now(), from: pawn.position.clone(),
-      to: new THREE.Vector3(destination.x, destination.y - .26, destination.z + 1),
-    };
+    if (mapOpen) toggleMap();
+    const passage = createPassage(portal, pawn, camera);
+    move = { id, start: performance.now(), passage };
+    nearestButton.hidden = true;
+    chart.disabled = true;
+    container.classList.add('entering-portal');
+    traveler.glide(true);
+    caption.textContent = 'Entering ' + portal.link.textContent;
+    container.style.setProperty('--gate-color', '#' + portal.color.toString(16).padStart(6, '0'));
+    refresh();
   }
 
   function draw(now) {
-    if (disposed || !ready) return;
-    if (!move && !exhibitOpen) {
-      const dirs = new Set(held.values());
-      walk(Number(dirs.has('right')) - Number(dirs.has('left')), Number(dirs.has('down')) - Number(dirs.has('up')),
-        Math.min(.08, Math.max(0, (now - lastTime) / 1000)) * 4.2);
-      traveler.stride(!motion.matches && dirs.size ? Math.sin(walked * 6) : 0);
-      let closest = 2.1;
+    if (disposed || !ready || !initialized) return;
+    const dt = Math.min(.08, Math.max(0, (now - lastTime) / 1000));
+    const dirs = new Set(held.values());
+    const pad = padIndex !== undefined && document.hasFocus() && !guide.open && !mapOpen && !exhibitOpen && !move ? connectedPad() : null;
+    readStick(pad, 0, leftStick);
+    readStick(pad, 2, rightStick);
+    padFast = Boolean(pad?.buttons[7]?.pressed);
+    const action = Boolean(pad?.buttons[0]?.pressed), enter = Boolean(pad?.buttons[3]?.pressed);
+    const tapped = action && !padAction, interacted = enter && !padEnter;
+    padAction = action;
+    padEnter = enter;
+    const toggle = Boolean(pad?.buttons[2]?.pressed);
+    const toggleTapped = toggle && !padFly;
+    padFly = toggle;
+    if (pad && !transfer) {
+      controller.orbit(rightStick.x * dt * 400, -rightStick.y * dt * 300);
+      if (toggleTapped) flyButton.click();
+      if (tapped && !flying) controller.jump();
+      if (interacted && nearest) navigate(nearest.id);
+    }
+    const sideways = THREE.MathUtils.clamp(Number(dirs.has('right')) - Number(dirs.has('left')) + leftStick.x, -1, 1);
+    const forward = THREE.MathUtils.clamp(Number(dirs.has('up')) - Number(dirs.has('down')) - leftStick.y, -1, 1);
+    const exploring = !guide.open && !mapOpen && !exhibitOpen && !move && !transfer;
+    if (exploring) controller.orbit((Number(dirs.has('look-l')) - Number(dirs.has('look-j'))) * dt * 400,
+      (Number(dirs.has('look-k')) - Number(dirs.has('look-i'))) * dt * 300);
+    if (flying && exploring) {
+      previousFlight.copy(pawn.position);
+      const rise = dirs.has('rise') || action;
+      const lower = dirs.has('lower') || shiftHeld || Boolean(pad?.buttons[1]?.pressed);
+      const climb = Number(rise) - Number(lower);
+      controller.fly(dt, sideways, forward, climb, fast());
+      traveler.animateFlight(dt, sideways, forward, climb, fast(), motion.matches);
+      controller.frame(camera, true);
       nearest = null;
-      if (roaming) for (const portal of portals) {
+      let nearestDistance = 4.2;
+      for (const portal of portals) {
+        gateLocal.copy(pawn.position);
+        gateLocal.y += .85;
+        portal.stand.worldToLocal(gateLocal);
+        const { x, y, z } = gateLocal;
+        const distance = Math.hypot(x, y - 1.6, z);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearest = portal;
+        }
+        // Capture an approaching traveler only inside the arched opening.
+        if (Math.abs(z) < .85 && y > .24 && x * x + Math.max(0, y - 2.15) ** 2 < .90 ** 2) {
+          gateLocal.copy(previousFlight);
+          gateLocal.y += .85;
+          portal.stand.worldToLocal(gateLocal);
+          if (Math.abs(gateLocal.z) > Math.abs(z)) {
+            navigate(portal.id);
+            break;
+          }
+        }
+      }
+    } else if (exploring && !flying) {
+      controller.walk(dt, sideways, forward, fast(), traveler, motion.matches, portals, shiftHeld);
+      let closest = 4.5;
+      nearest = null;
+      for (const portal of portals) {
         const pos = portal.stand.position;
-        const distance = Math.hypot(pos.x - pawn.position.x, pos.z - pawn.position.z);
+        const distance = Math.min(Math.hypot(pos.x - pawn.position.x, pos.z - pawn.position.z),
+          portal.plaque.object.getWorldPosition(projected).distanceTo(pawn.position));
         if (distance < closest) { nearest = portal; closest = distance; }
       }
-      nearestButton.hidden = !nearest;
-      if (nearest && nearestButton.textContent !== 'Enter ' + nearest.link.textContent) {
-        nearestButton.textContent = 'Enter ' + nearest.link.textContent;
-      }
+    }
+    nearestButton.hidden = !nearest || mapOpen || exhibitOpen || Boolean(move);
+    if (nearest && nearestButton.textContent !== 'Enter ' + nearest.link.textContent) {
+      nearestButton.textContent = 'Enter ' + nearest.link.textContent;
     }
     lastTime = now;
     if (move) {
-      const progress = motion.matches ? 1 : THREE.MathUtils.clamp((now - move.start) / 430, 0, 1);
-      pawn.position.lerpVectors(move.from, move.to, progress);
-      pawn.position.y += Math.sin(progress * Math.PI * 3) ** 2 * .21;
-      if (progress === 1) {
-        const id = move.id;
-        move = undefined;
-        openDestination(id);
+      const progress = motion.matches ? 1 : THREE.MathUtils.clamp((now - move.start) / move.passage.duration, 0, 1);
+      move.passage.draw(progress);
+      veil.style.opacity = THREE.MathUtils.smoothstep(progress, .80, 1);
+      if (progress === 1 && !move.arrived) {
+        move.arrived = true;
+        openDestination(move.id);
       }
     }
     const time = motion.matches ? 0 : (now - start) * 0.001;
-    const offsetX = motion.matches ? 0 : aim.x * 0.70;
-    const offsetY = motion.matches ? 0 : aim.y * 0.38;
-    camera.position.x = THREE.MathUtils.lerp(camera.position.x, cameraRest.x + offsetX, 0.075);
-    camera.position.y = THREE.MathUtils.lerp(camera.position.y, cameraRest.y + offsetY, 0.075);
-    look.copy(target);
-    if (roaming && !exhibitOpen) {
-      look.set(pawn.position.x * .84, 1.1, pawn.position.z - 1.3);
-      camera.position.set(look.x + offsetX * .25, 5.4, look.z + (width < height ? 7.8 : 6.8));
+    if (transfer) {
+      const t = motion.matches ? 1 : THREE.MathUtils.clamp((now - transfer.start) / transfer.duration, 0, 1);
+      let travel, air, bend;
+      if (flying) {
+        const pushOff = transfer.from.y < floor + .045 ? .23 : 0;
+        const jump = THREE.MathUtils.clamp((t - pushOff) / (1 - pushOff), 0, 1);
+        travel = 1 - (1 - jump) ** 2;
+        air = THREE.MathUtils.smoothstep(jump, .04, .8);
+        const crouch = pushOff ? THREE.MathUtils.smoothstep(t, 0, pushOff) : 0;
+        bend = .72 * crouch * (1 - THREE.MathUtils.smoothstep(jump, 0, .2)) + .32 * Math.sin(Math.PI * jump);
+      } else {
+        const contact = 1 - 330 / transfer.duration;
+        const descent = Math.min(1, t / contact);
+        travel = descent * (.3 + .7 * descent);
+        air = 1 - THREE.MathUtils.smoothstep(descent, 0, .85);
+        const recovery = Math.max(0, (t - contact) / (1 - contact));
+        bend = .13 * air + .76 * Math.sin(Math.PI * recovery ** .65);
+      }
+      pawn.position.lerpVectors(transfer.from, transfer.to, travel);
+      traveler.jumpToFlightPose(air, bend, dt);
+      controller.frame(camera, flying);
+      if (!flying) camera.position.y += pawn.position.y - floor;
+      const blend = THREE.MathUtils.smoothstep(t, 0, 1);
+      camera.position.lerp(projected.copy(transfer.eyeOffset).add(pawn.position), 1 - blend);
+      camera.quaternion.slerp(transfer.rotation, 1 - blend);
+      if (t === 1) {
+        if (!flying) traveler.glide(false);
+        transfer = undefined;
+      }
+    } else if (mapOpen || exhibitOpen) {
+      camera.position.copy(cameraRest).add(pan);
+      camera.lookAt(look.copy(target).add(pan));
+    } else if (!flying && !move) {
+      controller.frame(camera, false, hits);
     }
-    camera.lookAt(look);
+    if (viewBlend) {
+      const t = THREE.MathUtils.smoothstep(now - viewBlend.start, 0, 420);
+      camera.position.lerp(viewBlend.position, 1 - t);
+      camera.quaternion.slerp(viewBlend.rotation, 1 - t);
+      if (t === 1) viewBlend = undefined;
+    }
+    flight.updateBackdrop(camera);
     camera.updateMatrixWorld();
 
-    if (!exhibitOpen) portals.forEach(({ id, stand, link, inlay, panel, orb, nameplate }, index) => {
-      const active = id === hovered || id === focused || link.hasAttribute('aria-current');
+    portals.forEach(({ id, stand, link, inlay, panel, orb, nameplate }, index) => {
+      const active = id === move?.id || id === nearest?.id || id === hovered || id === focused || link.hasAttribute('aria-current');
       link.classList.toggle('is-highlighted', active);
       inlay.material.emissiveIntensity = active ? 1.5 : 0.56;
       panel.material.uniforms.time.value = time;
@@ -477,25 +813,30 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
       orb.scale.setScalar(active ? 1.14 : 1);
       projected.copy(nameplate.position);
       stand.localToWorld(projected).project(camera);
-      link.style.visibility = projected.z < -1 || projected.z > 1 ? 'hidden' : '';
+      link.style.visibility = exhibitOpen || move || projected.z < -1 || projected.z > 1 ||
+        (flying && (Math.abs(projected.x) > 1 || Math.abs(projected.y) > 1)) ? 'hidden' : '';
       link.style.left = ((projected.x + 1) * 50).toFixed(2) + '%';
       link.style.top = ((1 - projected.y) * 50).toFixed(2) + '%';
     });
     renderer.render(scene, camera);
   }
 
+  function needsFrames() {
+    return Boolean(transfer || viewBlend) || !motion.matches || held.size || (flying && shiftHeld)
+      || (!flying && !exhibitOpen && controller.moving) || (padIndex !== undefined && !exhibitOpen);
+  }
+
   function loop(now) {
     frameId = 0;
     draw(now);
-    if ((!motion.matches || held.size) && !disposed && ready) frameId = requestAnimationFrame(loop);
+    if (!frameId && needsFrames() && !disposed && ready) frameId = requestAnimationFrame(loop);
   }
 
   function refresh() {
     if (disposed || !ready) return;
-    if (motion.matches && !held.size) {
+    if (!needsFrames()) {
       cancelAnimationFrame(frameId);
       frameId = 0;
-      camera.position.copy(cameraRest);
       draw(performance.now());
     } else if (!frameId) {
       frameId = requestAnimationFrame(loop);
@@ -508,46 +849,19 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
     width = Math.round(bounds.width);
     height = Math.round(bounds.height);
     const aspect = width / height;
-    const portrait = aspect < 1.34;
-    const positions = portrait && !roaming
-      ? [[-1.6, 5.26, -3.3], [1.6, 5.26, -3.3], [-1.6, 2.78, -0.82], [1.6, 2.78, -0.82], [0, 0.10, 1.66]]
-      : [[-5.8, 0, 1.1], [-2.93, 0.15, -0.92], [0, 0.45, -2.05], [2.93, 0.15, -0.92], [5.8, 0, 1.1]];
-
-    portals.forEach(({ stand, nameplate }, index) => {
-      stand.position.set(...positions[index]);
-      nameplate.position.y = roaming ? 2.94 : .48;
-      const w = roaming ? 1.65 : 2.1;
-      nameplate.scale.set(w, w / 3, 1);
-    });
-    const distance = portrait ? Math.max(16.5, 9.3 / aspect) : Math.max(13.4, 23.5 / aspect);
-    const pawnZ = portrait ? 3.1 : 3.55;
-    spawn.set(portrait ? -1.12 : 0, -.38, pawnZ);
-    if (!roaming) pawn.position.copy(spawn);
-    const route = portrait ? [4, 2, 3, 1, 0] : [0, 1, 2, 3, 4];
-    const trail = [[spawn.x, 0, pawnZ], ...route.map(index => {
-      const [x, y, z] = positions[index];
-      return [x, y, z + 1.08];
-    })];
-    tiles.forEach((tile, index) => {
-      const segment = Math.floor(index / 4);
-      const from = trail[segment];
-      const to = trail[segment + 1];
-      const step = ((index % 4) + 1) / 5;
-      tile.position.set(
-        THREE.MathUtils.lerp(from[0], to[0], step),
-        THREE.MathUtils.lerp(from[1], to[1], step) - .29,
-        THREE.MathUtils.lerp(from[2], to[2], step),
-      );
-      tile.visible = !exhibitOpen && (index % 2 === 0 || Math.hypot(to[0] - from[0], to[2] - from[2]) > 5);
-    });
+    camera.fov = exhibitOpen ? 36 : 47;
     if (exhibitOpen) {
-      target.set(0, 3.82, -1);
-      cameraRest.set(0, 3.82, Math.max(12.6, 13.4 / aspect) - 1);
-    } else {
-      target.set(0, portrait ? 4.25 : 1.64, -0.46);
-      cameraRest.set(0, portrait ? 10.5 : 5.75, distance);
+      readingPortal.plaque.object.getWorldPosition(target);
+      // Keep the eye between the gate and the plaque on tall screens.
+      const fit = Math.max(8, 9.4 / aspect);
+      const depth = Math.min(10, fit);
+      camera.fov = THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(Math.PI / 10) * fit / depth));
+      cameraRest.set(0, 0, depth).applyQuaternion(readingPortal.stand.quaternion).add(target);
+    } else if (mapOpen) {
+      target.set(0, 0, -6);
+      const distance = Math.max(40, 53 / aspect);
+      cameraRest.set(0, distance * .8, -6 + distance * .6);
     }
-    camera.position.copy(cameraRest);
     camera.aspect = aspect;
     camera.updateProjectionMatrix();
     // Render at display density, with a pixel budget for large high-DPI windows.
@@ -568,15 +882,67 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
     );
     ray.setFromCamera(aim, camera);
     if (exhibitOpen) {
-      const intersection = ray.intersectObject(plaque.face, false)[0];
-      return intersection ? plaque.actionAt(intersection.uv) : null;
+      const intersection = ray.intersectObject(readingPortal.plaque.face, false)[0];
+      return intersection ? readingPortal.plaque.actionAt(intersection.uv) : null;
     }
-    const hit = ray.intersectObjects(hits, false)[0];
+    const hit = ray.intersectObjects(selectable, false)[0];
     return hit?.object.userData.id ?? null;
   }
 
+  function panByPixels(dx, dy) {
+    const distance = camera.position.distanceTo(look);
+    const units = 2 * Math.tan(THREE.MathUtils.degToRad(camera.getEffectiveFOV() / 2)) * distance / height;
+    const tilt = Math.max(.24, (camera.position.y - look.y) / distance);
+    pan.x = THREE.MathUtils.clamp(pan.x - dx * units, -40, 40);
+    pan.z = THREE.MathUtils.clamp(pan.z - dy * units / tilt, -40, 40);
+    refresh();
+  }
+
+  container.addEventListener('pointerdown', event => {
+    if (event.button !== 0 || drag || document.pointerLockElement === canvas) return;
+    suppressClick = false;
+    if (exhibitOpen || move || event.target.closest('#world-zoom, #flight-destination, #world-overview')) return;
+    drag = { id: event.pointerId, x: event.clientX, y: event.clientY, moved: false };
+  }, { signal });
+  container.addEventListener('dragstart', event => { if (drag) event.preventDefault(); }, { signal });
+  container.addEventListener('pointermove', event => {
+    if (event.pointerId !== drag?.id) return;
+    const dx = event.clientX - drag.x, dy = event.clientY - drag.y;
+    if (!drag.moved && Math.hypot(dx, dy) < 5) return;
+    if (!drag.moved) {
+      canvas.focus({ preventScroll: true });
+      container.setPointerCapture(event.pointerId);
+      drag.moved = true;
+      container.classList.add('is-panning');
+      canvas.style.cursor = '';
+      hovered = null;
+    }
+    drag.x = event.clientX;
+    drag.y = event.clientY;
+    if (!mapOpen) {
+      controller.orbit(dx, dy);
+      refresh();
+    } else panByPixels(dx, dy);
+  }, { signal });
+  function finishDrag(event) {
+    if (event && drag?.id !== event.pointerId) return;
+    suppressClick = Boolean(drag?.moved);
+    drag = null;
+    container.classList.remove('is-panning');
+  }
+  window.addEventListener('pointerup', finishDrag, { signal });
+  window.addEventListener('pointercancel', finishDrag, { signal });
+  window.addEventListener('blur', () => finishDrag(), { signal });
+  container.addEventListener('click', event => {
+    if (suppressClick && event.detail) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      suppressClick = false;
+    }
+  }, { capture: true, signal });
+
   canvas.addEventListener('pointermove', (event) => {
-    if (event.pointerType === 'touch') return;
+    if (event.pointerType === 'touch' || drag || move) return;
     hovered = portalAt(event);
     canvas.style.cursor = hovered ? 'pointer' : '';
     refresh();
@@ -587,6 +953,7 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
     refresh();
   }, { signal });
   canvas.addEventListener('click', (event) => {
+    if (move || document.pointerLockElement === canvas) return;
     const id = portalAt(event);
     if (exhibitOpen) id?.run();
     else if (id) navigate(id);
@@ -627,27 +994,32 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
   function dispose() {
     if (disposed) return;
     disposed = true;
+    releaseMouse();
     events.abort();
     observer.disconnect();
     selection.disconnect();
     cancelAnimationFrame(frameId);
     const geometry = new Set();
     const materials = new Set();
+    const spriteMaps = new Set();
     scene.traverse((object) => {
       if (object.geometry) geometry.add(object.geometry);
       if (object.material) materials.add(object.material);
-      if (object.isSprite) object.material.map.dispose();
+      if (object.isSprite && object.material.map) spriteMaps.add(object.material.map);
     });
     geometry.forEach((item) => item.dispose());
     materials.forEach((item) => item.dispose());
-    zoomBar.hidden = true;
+    spriteMaps.forEach(map => map.dispose());
+    container.classList.remove('entering-portal');
+    chart.hidden = zoomBar.hidden = true;
     walkBar.hidden = true;
+    caption.textContent = '';
+    veil.style.opacity = 0;
     key.shadow.dispose();
     groundTexture.dispose();
     portals.forEach(({ panel }) => panel.material.uniforms.thumbnail.value.dispose());
     traveler.dispose();
-    skyTexture.dispose();
-    plaque.dispose();
+    portals.forEach(portal => portal.plaque.dispose());
     renderer.dispose();
     renderer.forceContextLoss();
     canvas.remove();
@@ -666,23 +1038,76 @@ export function mountPortfolio3D(container, { onNavigate, onError } = {}) {
 
   return {
     dispose,
-    showExhibit(exhibit) {
+    explorationHash: () => flying ? '#flight' : '#board',
+    pauseInput() {
+      releaseMouse();
+      clearInput();
+    },
+    showExhibit(exhibit, airborne = false) {
+      const previousPortal = readingPortal;
+      viewBlend = undefined;
+      const reveal = exhibit && move?.arrived && !motion.matches;
+      const changingMode = initialized && !exhibit && !previousPortal && airborne !== flying;
       move = undefined;
-      roaming = false;
-      pawn.rotation.y = 0;
+      transfer = undefined;
+      finishDrag();
+      if (!changingMode) {
+        releaseMouse();
+        held.clear();
+        resetSpeed();
+      }
+      pan.set(0, 0, 0);
+      mapOpen = false;
       exhibitOpen = Boolean(exhibit);
-      held.clear();
+      readingPortal = exhibit ? portals.find(portal => portal.id === exhibit.id) : null;
+      if (!initialized) {
+        faceEntrance(portals.find(portal => portal.id === 'projects'), false);
+      } else if (changingMode) {
+        const from = pawn.position.clone();
+        const to = from.clone();
+        if (airborne) to.y = Math.max(2.35, from.y + 1.5);
+        else {
+          constrainToPlaza(to);
+          to.y = floor;
+        }
+        setFlight(airborne, pawn.rotation.y, true);
+        if (motion.matches) pawn.position.copy(to);
+        else {
+          const duration = airborne ? 800 : 330 + THREE.MathUtils.clamp(Math.sqrt(from.distanceTo(to) / 9) * 1000, 450, 2400);
+          transfer = { from, to, start: performance.now(), duration,
+            eyeOffset: camera.position.clone().sub(from), rotation: camera.quaternion.clone() };
+        }
+      }
+      initialized = true;
+      if (readingPortal && readingPortal !== previousPortal) {
+        // Stand at the far end of this gate's tunnel while reading.
+        pawn.position.set(0, 0, -5);
+        readingPortal.stand.localToWorld(pawn.position);
+        pawn.position.y = flying ? 2.35 : floor;
+        setFlight(flying, readingPortal.stand.rotation.y);
+      } else if (previousPortal && !readingPortal) {
+        easeCamera();
+        faceEntrance(previousPortal, airborne);
+      }
+      if (readingPortal) readingPortal.plaque.paint(exhibit);
+      caption.textContent = '';
+      container.classList.remove('entering-portal');
+      veil.style.opacity = 0;
+      for (const animation of veil.getAnimations()) animation.cancel();
+      if (reveal) veil.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 520, easing: 'ease-out' });
       nearest = null;
       nearestButton.hidden = true;
-      walkBar.hidden = zoomBar.hidden = exhibitOpen;
-      camera.zoom = exhibitOpen ? 1 : mapZoom;
+      walkBar.hidden = chart.hidden = exhibitOpen;
+      chart.disabled = false;
       pawn.visible = !exhibitOpen;
-      for (const { stand, link } of portals) {
-        stand.visible = !exhibitOpen;
+      for (const { link, tunnel, panel, nameplate, orb, halo } of portals) {
+        tunnel.visible = false;
+        panel.material.uniforms.opening.value = 0;
+        nameplate.visible = orb.visible = halo.visible = true;
         link.hidden = exhibitOpen;
       }
-      plaque.paint(exhibit);
       aim.set(0, 0);
+      updateMapControls();
       resize();
     },
   };

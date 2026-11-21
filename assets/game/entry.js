@@ -1,67 +1,9 @@
 import { defaults, models, replyLimits, speechModel } from './chat-config.js';
 import { deleteAllModels, deleteModel, downloadModel, isStorageQuotaError, modelInventory, withModelStorageLock, withModelStorageLocks } from './chat-storage.js';
-import { animateStarflight } from './splash-flight.js';
 import { setupChatVoice } from './chat-voice.js';
 import { apiLabels, streamApiReply } from './chat-api.js';
 import { setupBackendSettings } from './chat-backends.js';
 import { hasRepeatedTail } from './chat-repetition.js';
-
-const splash = document.querySelector('#site-splash');
-const entryKey = 'timothydo-entered';
-let hasEntered = false;
-try {
-  hasEntered = sessionStorage.getItem(entryKey) === 'yes';
-} catch {
-  // The splash still works when storage is blocked.
-}
-
-if (typeof splash.showModal === 'function') {
-  let replayButton;
-  let stopFlight;
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  function openSplash(button) {
-    replayButton = button;
-    splash.classList.remove('is-opening');
-    splash.showModal();
-    if (!reducedMotion.matches) {
-      stopFlight = animateStarflight(splash.querySelector('.splash-flight canvas'));
-    }
-  }
-
-  for (const button of document.querySelectorAll('[data-splash-replay]')) {
-    button.hidden = false;
-    button.addEventListener('click', () => openSplash(button));
-  }
-  if (!hasEntered && !location.hash) openSplash();
-  const rememberEntry = () => {
-    try {
-      sessionStorage.setItem(entryKey, 'yes');
-    } catch {
-      // Private browsing settings can block storage.
-    }
-  };
-  splash.querySelector('form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    if (splash.classList.contains('is-opening')) return;
-    rememberEntry();
-    splash.classList.add('is-opening');
-    stopFlight?.();
-    if (!reducedMotion.matches && typeof splash.getAnimations === 'function') {
-      const animations = splash.getAnimations({ subtree: true })
-        .filter((animation) => Number.isFinite(animation.effect?.getComputedTiming().endTime));
-      await Promise.allSettled(animations.map((animation) => animation.finished));
-    }
-    if (splash.open) splash.close();
-  });
-  splash.addEventListener('cancel', (event) => {
-    if (splash.classList.contains('is-opening')) event.preventDefault();
-    else rememberEntry();
-  });
-  splash.addEventListener('close', () => {
-    stopFlight?.();
-    (replayButton || document.querySelector('.title-menu a')).focus({ preventScroll: true });
-  });
-}
 
 const launch = document.querySelector('#chat-launch');
 const chat = document.querySelector('#site-chat');
@@ -165,10 +107,8 @@ const backendSettings = setupBackendSettings(settingsDialog, changeBackend);
 let apiConnection = backendSettings.initial;
 if (apiConnection) state = 'ready';
 
-// Keep the site's keyboard navigation outside the two modal dialogs.
-for (const dialog of [splash, chat]) {
-  dialog.addEventListener('keydown', (event) => event.stopPropagation());
-}
+// Keep the site's keyboard navigation outside the chat dialog.
+chat.addEventListener('keydown', (event) => event.stopPropagation());
 
 function relevantFacts(question, previousQuestion = '') {
   if (/^(?:who are you|are you (?:really )?(?:timothy|an? ai|human|a (?:real )?person))\b/i.test(question.trim())) {
