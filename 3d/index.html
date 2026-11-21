@@ -10,31 +10,73 @@
 </head>
 <body class="portfolio-world">
   <main class="world">
-    <header class="world-toolbar">
-      <div class="world-player"><img src="../assets/game/img/logo.png" width="44" height="44" alt=""><h1>Timothy Do <span>3D Portfolio</span></h1></div>
-      <nav aria-label="View controls">
-        <a href="#board" id="world-map" hidden>Board Map</a>
-        <a href="../" id="world-exit">Return to 2D</a>
-      </nav>
-    </header>
-    <div id="world-stage" aria-label="Interactive 3D board">
-      <div id="world-zoom" role="group" aria-label="Map zoom" hidden>
-        <button type="button" aria-label="Zoom out">−</button>
-        <button type="button" aria-label="Reset map zoom" title="Reset map zoom">100%</button>
-        <button type="button" aria-label="Zoom in">+</button>
-      </div>
+    <div id="world-stage" aria-label="Interactive 3D portfolio">
+      <div id="portal-passage" aria-hidden="true"></div>
+      <div id="portal-caption" role="status"></div>
     </div>
-    <div id="world-walk" hidden>
-      <span class="walk-hint">Move with WASD or arrow keys · E to enter</span>
-      <div class="walk-pad" aria-label="Move Timothy" role="group">
-        <button data-dir="left" aria-label="Walk left">←</button>
-        <button data-dir="up" aria-label="Walk forward">↑</button>
-        <button data-dir="down" aria-label="Walk backward">↓</button>
-        <button data-dir="right" aria-label="Walk right">→</button>
+    <details id="world-menu">
+      <summary aria-label="World Menu" title="World Menu (P)"><span class="menu-icon" aria-hidden="true"></span>Menu</summary>
+      <div class="menu-panel">
+        <header class="world-player"><img src="../assets/game/img/logo.png" width="36" height="36" alt=""><h1>Timothy Do <span>3D Portfolio</span></h1></header>
+        <select id="flight-destination" aria-label="Fly to a Destination" hidden>
+          <option value="">Fly to a Destination…</option>
+        </select>
+        <div id="world-walk" hidden>
+          <span id="pad-hint" hidden></span>
+          <span class="walk-hint">WASD to Walk · Space to Jump · Double-Tap Space to Fly · ? Controls</span>
+          <span class="touch-hint">Drag to Pan</span>
+          <div class="walk-pad" aria-label="Move Timothy" role="group">
+            <button data-dir="left" aria-label="Walk left">←</button>
+            <button data-dir="up" aria-label="Walk forward">↑</button>
+            <button data-dir="down" aria-label="Walk backward">↓</button>
+            <button data-dir="right" aria-label="Walk right">→</button>
+          </div>
+          <button id="world-look" type="button" aria-pressed="false" hidden>Mouse Look</button>
+          <button type="button" id="world-overview" aria-pressed="false">Map</button>
+          <button id="world-speed" type="button" aria-pressed="false">Sprint</button>
+          <button id="world-jump" data-vertical="rise" type="button">Jump</button>
+          <button id="flight-descend" data-vertical="lower" type="button" hidden>Descend</button>
+          <button id="world-flight" type="button" title="Fly Through Space">Fly</button>
+          <button id="world-interact" hidden>Enter</button>
+        </div>
+        <div id="world-zoom" role="group" aria-label="Map zoom" hidden>
+          <button type="button" aria-label="Zoom out">−</button>
+          <button type="button" aria-label="Reset map zoom and pan" title="Reset Zoom and Pan">100%</button>
+          <button type="button" aria-label="Zoom in">+</button>
+        </div>
+        <article id="world-exhibit" class="world-alternative" hidden>
+          <h2 tabindex="-1"></h2>
+          <img id="world-thumbnail" alt="">
+          <p></p>
+          <nav aria-label="Exhibit controls"></nav>
+        </article>
+        <p id="reading-keys" hidden>← / → Browse · Enter to Open Link · Esc to Resume Exploring</p>
+        <nav class="menu-actions" aria-label="World actions">
+          <button type="button" id="world-help" aria-haspopup="dialog">Controls <kbd>?</kbd></button>
+          <a href="#board" id="world-map" hidden>Resume Exploring</a>
+          <a href="../" id="world-exit">Return to 2D</a>
+        </nav>
       </div>
-      <button id="world-interact" hidden>Enter</button>
-    </div>
-    <p id="world-status" role="status">Loading the 3D Board…</p>
+    </details>
+    <dialog id="world-guide" aria-labelledby="guide-title">
+      <h2 id="guide-title">Keyboard Controls</h2>
+      <dl>
+        <dt>Move or Strafe</dt><dd>W A S D or arrow keys</dd>
+        <dt>Look Around</dt><dd>I J K L · C to recenter</dd>
+        <dt>Take Off or Land</dt><dd>Double-tap Space or press F</dd>
+        <dt>Jump or Fly Up</dt><dd>Space</dd>
+        <dt>Sneak or Fly Down</dt><dd>Hold Shift</dd>
+        <dt>Hover</dt><dd>Release movement keys</dd>
+        <dt>Sprint or Boost</dt><dd>Double-tap any movement key and hold · Combine directions to move diagonally</dd>
+        <dt>Enter Nearby Portal</dt><dd>E</dd>
+        <dt>Travel to a Destination</dt><dd>1 About · 2 Experience · 3 Projects · 4 Interests · 5 Contact</dd>
+        <dt>World Map</dt><dd>M · Arrows to pan · + / − to zoom · 0 to reset</dd>
+        <dt>Read an Exhibit</dt><dd>← / → to browse · Enter to open its link · Esc to return</dd>
+        <dt>Page Controls</dt><dd>P to open the menu · Tab / Shift + Tab · Enter to activate</dd>
+      </dl>
+      <form method="dialog"><button autofocus>Resume</button></form>
+    </dialog>
+    <p id="world-status" role="status">Entering the Plaza…</p>
     <nav id="world-destinations" class="world-alternative" aria-label="Board destinations">
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
@@ -42,12 +84,6 @@
       <a href="#interests">Interests</a>
       <a href="#contact">Contact</a>
     </nav>
-    <article id="world-exhibit" class="world-alternative" hidden>
-      <h2 tabindex="-1"></h2>
-      <img id="world-thumbnail" alt="">
-      <p></p>
-      <nav aria-label="Exhibit controls"></nav>
-    </article>
     <noscript><p>Enable JavaScript to explore the board, or choose Return to 2D.</p></noscript>
   </main>
   <script src="../assets/game/projects.js"></script>
